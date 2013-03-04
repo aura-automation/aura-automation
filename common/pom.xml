@@ -33,6 +33,11 @@
 		<artifactId>com.ibm.ws.security.crypto</artifactId>
 		<version>6.1.0</version>
 	</dependency>
+	<dependency>
+		<groupId>com.apartech</groupId>
+		<artifactId>aura-admin</artifactId>
+		<version>1.0</version>
+	</dependency>
             
   </dependencies>
 </project>
