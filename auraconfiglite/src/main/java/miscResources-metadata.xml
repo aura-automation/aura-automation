@@ -1,0 +1,74 @@
+<resources-metadata>
+
+	<ConfigObject type="CacheProvider" syncFindModeContainmentPath="true" relation="CacheProvider">
+		<containment>
+			<attribute value="name" />
+		</containment>
+		<ConfigObject type="ObjectCacheInstance" 
+			relation="ObjectCacheInstance"
+			findAndResolve="true" syncFindModeContainmentPath="true" >
+			<containment>
+				<attribute value="name" />
+			</containment>
+			<ConfigObject type="DiskCacheCustomPerformanceSettings" shouldCreate="false">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="DiskCacheEvictionPolicy" shouldCreate="false">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+
+		</ConfigObject>
+
+	</ConfigObject>
+
+	<ConfigObject type="Library" syncFindModeContainmentPath="true"
+		relation="Library" 
+		shouldCreate="false" >
+		<containment>
+			<attribute value="name" />
+		</containment>
+	</ConfigObject>
+
+	
+	<ConfigObject type="VariableMap" syncFindModeContainmentPath="true" isAttributeCount0="true" relation="VariableMap" shouldCreate="true">
+		<containment>
+			<attribute value="null" />
+		</containment>
+		<ConfigObject type="VariableSubstitutionEntry" syncFindModeContainmentPath="true"
+			attributeName="entries" isArray="true" isProperty="true"
+			shouldCreate="true" findAndResolve="true">
+			<containment>
+				<attribute value="symbolicName" />
+			</containment>
+		</ConfigObject>
+	</ConfigObject>
+
+	<ConfigObject type="EjbNameSpaceBinding"  syncFindModeContainmentPath="true" relation="EjbNameSpaceBinding">
+		<containment>
+			<attribute value="name" />
+		</containment>
+	</ConfigObject>
+	
+	<ConfigObject type="StringNameSpaceBinding"  syncFindModeContainmentPath="true" relation="StringNameSpaceBinding">
+		<containment>
+			<attribute value="name" />
+		</containment>
+	</ConfigObject>
+
+	<ConfigObject type="CORBAObjectNameSpaceBinding" syncFindModeContainmentPath="true" relation="CORBAObjectNameSpaceBinding">
+		<containment>
+			<attribute value="name" />
+		</containment>
+	</ConfigObject>
+
+	<ConfigObject type="IndirectLookupNameSpaceBinding" syncFindModeContainmentPath="true" relation="IndirectLookupNameSpaceBinding">
+		<containment>
+			<attribute value="name" />
+		</containment>
+	</ConfigObject>
+	
+</resources-metadata>

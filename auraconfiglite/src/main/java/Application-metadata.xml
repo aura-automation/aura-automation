@@ -1,0 +1,596 @@
+<resources-metadata>
+	<ConfigObject type="EARApplication" shouldCreate="false"
+		isApplicationManaged="true" >
+		<containment>
+			<attribute value="name" />
+		</containment>
+
+
+		<ConfigObject type="EmbeddedRAR" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="RARModule" />
+					<additional>
+							<attribute value="uri" />
+					</additional>
+					
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject type="AppDeploymentOptions" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject type="MapModulesToServers" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="module" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject type="MapRolesToUsers" shouldCreate="false"
+			isApplicationManaged="true"  isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="role" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+		
+		
+		<ConfigObject type="MapRunAsRolesToUsers" shouldCreate="false"
+			isApplicationManaged="true"  isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="role" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject type="CorrectUseSystemIdentity" shouldCreate="false"
+			isApplicationManaged="true"  isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="EJB" />
+					<additional>
+							<attribute value="EJBModule" />
+					</additional>
+					
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject type="BindJndiForEJBNonMessageBinding" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="EJB" />
+					<additional>
+							<attribute value="EJBModule" />
+					</additional>
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject type="BindJndiForEJBMessageBinding" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="EJB" />
+					<additional>
+							<attribute value="EJBModule" />
+					</additional>
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+		
+		<ConfigObject type="MapEJBRefToEJB" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="referenceBinding" />
+					<additional>
+							<attribute value="module" />
+							<attribute value="EJB" />
+					</additional>
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+		
+		<ConfigObject type="MapResRefToEJB" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="referenceBinding" />
+					<additional>
+						<attribute value="module" />
+						<attribute value="EJB" />
+					</additional>
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject type="MapResEnvRefToRes" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="referenceBinding" />
+					<additional>
+						<attribute value="module" />
+						<attribute value="EJB" />
+					</additional>
+				</containment>
+			</ConfigObject>
+		</ConfigObject>		
+
+		<ConfigObject type="DataSourceFor10EJBModules" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="EJBModule" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>		
+
+		<ConfigObject type="DataSourceFor20EJBModules" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="EJBModule" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>		
+		
+		<ConfigObject type="DataSourceFor10CMPBeans" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="EJB" />
+					<additional>
+							<attribute value="EJBModule" />
+					</additional>
+				</containment>
+			</ConfigObject>
+		</ConfigObject>		
+
+		<ConfigObject type="DataSourceFor20CMPBeans" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="EJB" />
+					<additional>
+							<attribute value="EJBModule" />
+					</additional>
+				</containment>
+			</ConfigObject>
+		</ConfigObject>		
+
+		<ConfigObject type="MapWebModToVH" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="webModule" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject type="CtxRootForWebMod" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="webModule" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>		
+
+		<!-- WAS 6.1 
+		 -->
+		<ConfigObject type="MapInitParamForServlet" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="webModule" />
+					<additional>
+							<attribute value="web.servlet" />
+							<attribute value="prop.name" />
+					</additional>
+				</containment>
+			</ConfigObject>
+		</ConfigObject>		
+
+		<ConfigObject type="MapEnvEntryForWebMod" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="webModule" />
+					<additional>
+							<attribute value="prop.name" />
+					</additional>
+				</containment>
+			</ConfigObject>
+		</ConfigObject>		
+
+		<ConfigObject type="EnsureMethodProtectionFor10EJB" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="EJBModule" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>		
+
+		<ConfigObject type="EnsureMethodProtectionFor20EJB" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="EJBModule" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>		
+
+		<ConfigObject type="CorrectOracleIsolationLevel" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="referenceBinding" />
+					<additional>
+							<attribute value="module" />
+					</additional>
+				</containment>
+			</ConfigObject>
+		</ConfigObject>		
+
+		<ConfigObject type="MapSharedLibForMod" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="module" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>				
+
+		<ConfigObject type="MapMessageDestinationRefToEJB" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="messageDestinationRefName" />
+					<additional>
+							<attribute value="module" />
+							<attribute value="EJB" />
+					</additional>
+					
+				</containment>
+			</ConfigObject>
+		</ConfigObject>				
+
+		<ConfigObject type="EJBDeployOptions" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="null" />
+				
+				</containment>
+			</ConfigObject>
+		</ConfigObject>				
+
+		<ConfigObject type="BackendIdSelection" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="EJBModule" />
+					
+				</containment>
+			</ConfigObject>
+		</ConfigObject>				
+
+		<ConfigObject type="JSPReloadForWebMod" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="webModule" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>				
+
+		<ConfigObject type="JSPCompileOptions" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="webModule" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>				
+		
+		<ConfigObject type="EJBDeployOptions" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>				
+		
+		<ConfigObject type="WebServicesServerCustomProperty" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>						
+
+		<ConfigObject type="WebServicesPublishWSDLInfo" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="module" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>						
+
+		<ConfigObject type="WebServicesServerBindPort" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="webservices.cfgbnd_Web_Service" />
+					<additional>
+						<attribute value="webservices.cfgbnd_Module_Name" />
+					</additional>	
+				</containment>
+			</ConfigObject>
+		</ConfigObject>						
+
+		<ConfigObject type="WebServicesServerCustomProperty" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="webservices.cfgbnd_Property" />
+					<additional>
+						<attribute value="webservices.cfgbnd_Module_Name" />
+						<attribute value="webservices.cfgbnd_Web_Service" />
+					</additional>	
+				</containment>
+			</ConfigObject>
+		</ConfigObject>						
+
+		<ConfigObject type="WebServicesClientBindPortInfo" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="webservices.cfgbnd_Web_Service" />
+					<additional>
+						<attribute value="webservices.cfgbnd_Module_Name" />
+						<attribute value="webservices.cfgbnd_EJB" />
+					</additional>	
+				</containment>
+			</ConfigObject>
+		</ConfigObject>						
+
+		<ConfigObject type="WebServicesClientBindDeployedWSDL" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="webservices.cfgbnd_Web_Service" />
+					<additional>
+						<attribute value="webservices.cfgbnd_Module_Name" />
+						<attribute value="webservices.cfgbnd_EJB" />
+					</additional>	
+				</containment>
+			</ConfigObject>
+		</ConfigObject>						
+
+		<ConfigObject type="WebServicesClientBindPreferredPort" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="webservices.cfgbnd_Web_Service" />
+					<additional>
+						<attribute value="webservices.cfgbnd_Module_Name" />
+						<attribute value="webservices.cfgbnd_EJB" />
+					</additional>	
+				</containment>
+			</ConfigObject>
+		</ConfigObject>						
+
+		<ConfigObject type="WebServicesClientCustomProperty" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="webservices.cfgbnd_Property" />
+					<additional>
+						<attribute value="webservices.cfgbnd_Module_Name" />
+						<attribute value="webservices.cfgbnd_EJB" />
+					<attribute value="webservices.cfgbnd_Web_Service" />
+					</additional>	
+				</containment>
+			</ConfigObject>
+		</ConfigObject>						
+		
+		<ConfigObject type="CorrectUseSystemIdentity" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>					
+
+		<ConfigObject type="ActSpecJNDI" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="j2cid" />
+					<additional>
+							<attribute value="j2cid" />
+					</additional>
+				</containment>
+			</ConfigObject>
+		</ConfigObject>					
+		
+	</ConfigObject>
+</resources-metadata>

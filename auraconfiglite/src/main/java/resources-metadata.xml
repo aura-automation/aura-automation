@@ -1,0 +1,588 @@
+<resources-metadata>
+	<!-- This file defines meta data for resources in resource.xml file.
+		Type: Each ConfigObject element must have type. This defines the Config Object type of this metadata element
+		and is used to match the resource type from resources.xml.
+		
+		shouldIncludeAllChildren: Used in comparison, includes all children in compare operation, For Security 
+			has children which can be compared easily when included with parent
+			
+		shouldCreate: If shouldCreate is false then Aura will ignore any modification/creation of this type
+		
+		containment:
+		
+		syncPreMatchAttribute: is used to match the type of the object specially in the case of J2CConnectionFactory,activation spec etc 
+		syncFindModeContainmentPath: Use parent containment path to all resources of this type.
+					This allows us to list all the type under current resource
+								 
+		matchAttribute: Is used when the containment path cannot be used in findandresolve mode
+		tim
+		attribute: 	Aura uses containment attribute value to form containment string which is used to get configid of object
+					e.g. Cell=Ce66:SIBus=SCA...
+					If attribute is null then all the object type are listed, This is used only in the case where only one 
+					child of this object type can exists for given parent.
+
+		relation: 		Defines the relation between parent and child. Must be defined for all objects that can be created/modified.
+		attributeName: 	In case of a object being property/attribute of a config object, attribute name is used. 
+					TODO: This can be merged with relation.
+
+		findAndResolve: If parent has more then one child of given ConfigObject Type and this ConfigObject 
+					cannot be resolved by its containment path then use findAndResolve for this object under given scope.
+					Containment attribute value is used to match the ConfigObject from the search result.
+
+		isArray:	If ConfigObject is array.
+
+		isProperty:	If ConfigObject is property.
+		
+		isAttributeCount0: Set to true if attribute count is 0
+		
+		attributeName: 	If a Parent ConfigObject has more then one child of same ConfigTye but with different attribute name then 
+		add attributeName to the metadata to differentiate metadata for each.					
+		link-attribute: If attribute value of a Config Object is either Config Id of another Config Object or is value of 
+		attribute from another config Object then use link-attribute, 
+		NOTE that Link attribute could be nested to one more level, for eg. SIBLinkRef link to SIBusMemberTarget and then to MessagingEngine 
+		************************************Link Attribute *******************		
+		linkAttibuteName: 				Name of the attribute in the given Config Object which has value of another Config Object
+			targetObject: 					Config Object type of the target object from which value will be resolved
+	
+			targetObjectMatchAttributeName: Attribute name whose value will be used to match the target ConfigObject.
+	
+			targetAttribute: 				Value of the target Attribute whose value will be used to modify the link 
+			attribute of given config object. If target Attribute is null then return configId of 
+			Target Object.				
+
+		attributeNameInResourceXML="true" 
+	-->
+	<import file="Portal-metadata.xml" /> 
+
+	<ConfigObject type="Cell" shouldCreate="false" shouldIncludeAllChildren="true">
+		<containment>
+			<attribute value="name" />
+		</containment>
+
+		<import file="Security-metadata.xml" />
+
+  		<import file="miscResources-metadata.xml" /> 
+
+  		<import file="pmeResources-metadata.xml" /> 
+
+  		<import file="Application-metadata.xml" /> 
+
+		<ConfigObject type="SCAModule" shouldCreate="false" findAndResolve="true" >
+			<containment>
+				<attribute value="identifier" />
+			</containment>
+			<ConfigObject type="sCAModuleProperty" shouldCreate="false" findAndResolve="true" isArray="true" isProperty="true">
+				<containment>
+					<attribute value="identifier" />
+				</containment>
+			</ConfigObject>			
+
+
+		</ConfigObject>			
+
+		<ConfigObject type="ServerEntry" shouldCreate="false" syncFindModeContainmentPath="true">
+			<containment>
+				<attribute value="serverName" />
+			</containment>
+		
+			<ConfigObject type="NamedEndPoint" findAndResolve="true" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="endPointName" />
+				</containment>
+				<ConfigObject type="EndPoint" findAndResolve="true" isArray="true" isProperty="true" attribute="endPoint">
+					<containment>
+						<attribute value="host" />
+					</containment>
+	
+				</ConfigObject>
+
+			</ConfigObject>
+		</ConfigObject>			
+
+		<ConfigObject type="SIBus" relation="SIBus"  isCommandManaged="false">
+			<containment>
+				<attribute value="name" />
+			</containment>
+				<command createCommand="createSIBus" 
+							modifyCommand="modifySIBus">
+
+					<attribute-mapping  commandAttribute="bus" type="mapping" configAttribute="name" />
+				</command>
+
+			<!-- This array type that has be looked up using containment path
+				but with null containment. 
+				Then an extra match attribute is need to get unique object.  
+			 -->
+			<ConfigObject type="SIBusMember" shouldCreate="true"
+				relation="busMembers"  isArray="true" customCodeManaged="SIBusMember" isCommandManaged="true"
+				attributeName="busMembers" matchAttribute="cluster" syncFindModeContainmentPath="true"
+				 >
+				<containment>
+					<attribute value="null" />
+				</containment>
+
+				<command createCommand="addSIBusMember" 
+							modifyCommand="">
+
+					<attribute-mapping  commandAttribute="bus" type="parent" configAttribute="bus" />
+					<attribute-mapping commandAttribute="datasourceJndiName" type="mapping" configAttribute="dataSourceName" />
+
+
+				</command>
+
+				<ConfigObject type="SIBusMemberTarget" syncFindModeContainmentPath="true"
+					shouldCreate="true" relation="target" attributeName="target" >
+					<!--  
+					<link-attribute linkAttibuteName="engineUuid"
+						targetObject="SIBMessagingEngine"
+						targetObjectMatchAttributeName="name" targetAttribute="uuid" /> -->
+						<containment>
+							<attribute value="null" />
+						</containment>
+				</ConfigObject>
+			</ConfigObject>
+			
+			<ConfigObject type="SIBForeignBus" shouldCreate="true"
+				relation="foreignBus" syncFindModeContainmentPath="true"
+				isCommandManaged="true" customCodeManaged="SIBForeignBus">
+				<containment>
+					<attribute value="name" />
+				</containment>
+				<command createCommand="createSIBForeignBus" 
+							modifyCommand="modifySIBForeignBus">
+					<attribute-mapping  commandAttribute="bus" type="parent" configAttribute="bus" />
+					<attribute-mapping  commandAttribute="name" type="mapping" configAttribute="name" />
+
+					<attribute-mapping commandAttribute="type" type="additional" configAttribute="type" />
+					<attribute-mapping commandAttribute="routingType" type="additional" configAttribute="routingType" />
+				<!--	
+				  	<attribute-mapping commandAttribute="inboundUserid" type="additional" configAttribute="inboundUserid" >
+						<Commandlink-attribute
+							targetObjectRelation="child"
+							targetAttribute="virtualLink"
+							targetObjectType="SIBVirtualMQLink"  
+							targetObjectAttribute="inboundUserid" />
+						
+					</attribute-mapping>
+						-->
+						
+
+				</command>
+				
+				
+
+				<ConfigObject type="SIBDestinationDefault" syncFindModeContainmentPath="true"
+					shouldCreate="true" relation="destinationDefault" attributeName="destinationDefault">
+					<containment>
+						<attribute value="null" />
+					</containment>
+				</ConfigObject>
+				
+				<!--  isProperty=true was set  but that caused containment path to be messed. so removed -->
+				<ConfigObject type="SIBVirtualMQLink" findAndResolve="true"
+					shouldCreate="true" relation="virtualLink" attributeName="virtualLink">
+					<containment>
+						<attribute value="name" />
+					</containment>
+					<ConfigObject type="SIBLinkRef" syncFindModeContainmentPath="true"
+						relation="linkRef" attributeName="linkRef" findAndResolve="true" >
+						<containment>
+							<attribute value="name" />
+						</containment>
+						<!-- This is special link as the the target attribute is the 
+						config object itself, so please don't specify target object Attribute-->
+						<link-attribute linkAttibuteName="engine"
+							targetObject="SIBusMemberTarget"
+							targetObjectMatchAttributeName="engineUuid" >
+							
+							<link-attribute linkAttibuteName="engineUuid"
+								targetObject="SIBMessagingEngine"
+								targetObjectMatchAttributeName="name" targetAttribute="uuid"/>
+						</link-attribute>
+						<link-attribute linkAttibuteName="nextHop"
+							targetObject="SIBForeignBus"
+							targetObjectMatchAttributeName="name" >
+							
+						</link-attribute>
+					</ConfigObject>
+				</ConfigObject>
+
+			</ConfigObject>
+
+			<ConfigObject type="SIBQueue" shouldCreate="true"
+				relation="SIBQueue" syncFindModeContainmentPath="true" findAndResolve="true" 
+				isCommandManaged="true">
+				<containment>
+					<attribute value="identifier" />
+				</containment>
+				<!-- attribute mapping type
+				mapping is when command has attribute in different name to xml/config object
+				additional when a extra attribute is required in addition.
+				parent is attribute name that links to the parent. configAttribute here is attribute name from parent
+				 -->
+				<command createCommand="createSIBDestination" 
+							modifyCommand="modifySIBDestination">
+					<attribute-mapping  commandAttribute="bus" type="parent" configAttribute="bus" />
+					<attribute-mapping  commandAttribute="name" type="mapping" configAttribute="identifier" />
+					<attribute-mapping commandAttribute="type" type="constant" configAttribute="type" constantValue="Queue"/>
+					
+					<attribute-mapping commandAttribute="cluster" type="additional" configAttribute="cluster" >
+						<Commandlink-attribute
+							targetObjectRelation="child"
+							targetAttribute="localizationPointRefs"
+							targetObjectType="SIBLocalizationPointRef"  
+							targetObjectAttribute="cluster" />
+						
+					</attribute-mapping>
+					
+				</command>
+
+				<ConfigObject type="SIBLocalizationPointRef"
+					findAndResolve="true" attributeName="localizationPointRefs"
+					isArray="true" isProperty="true" syncFindModeContainmentPath="true">
+					<containment>
+						<attribute value="cluster" />
+					</containment>
+					<link-attribute linkAttibuteName="engineUuid"
+						targetObject="SIBMessagingEngine"
+						targetObjectMatchAttributeName="name" targetAttribute="uuid" />
+				</ConfigObject>
+				<ConfigObject type="SIBQualifiedDestinationName"
+					findAndResolve="true" attributeName="defaultForwardRoutingPath"
+					isArray="true" isProperty="true">
+					<containment>
+						<attribute value="destination" />
+					</containment>
+				</ConfigObject>
+				
+				
+			</ConfigObject>
+
+			<ConfigObject type="SIBDestinationAlias" shouldCreate="true" 
+				findAndResolve="true" relation="SIBDestinationAlias" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="identifier" />
+				</containment>
+
+			<!-- 	<command createCommand="createSIBDestination" 
+							showCommand="" 
+							modifyCommand="modifySIBDestination">
+					<attribute-mapping  commandAttribute="bus" type="parent" configAttribute="bus" />
+					<attribute-mapping  commandAttribute="name" type="mapping" configAttribute="identifier" />
+
+					<attribute-mapping commandAttribute="type" type="additional" configAttribute="type" />
+				</command>
+				 -->
+				<ConfigObject type="SIBContextInfo" shouldCreate="true" isArray="true" isProperty="true" 
+					findAndResolve="true" attributeName="contextInfo">
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+			</ConfigObject>
+
+			<ConfigObject type="SIBTopicSpace" shouldCreate="true"
+				findAndResolve="true" relation="SIBTopicSpace" syncFindModeContainmentPath="true"
+				isCommandManaged="true" >
+				<containment>
+					<attribute value="identifier" />
+				</containment>
+				<command createCommand="createSIBDestination" 
+							modifyCommand="modifySIBDestination">
+					<attribute-mapping commandAttribute="name" type="mapping" configAttribute="identifier" />
+					<attribute-mapping commandAttribute="cluster" type="additional" configAttribute="cluster" />
+					<attribute-mapping commandAttribute="bus" type="parent" configAttribute="bus" />
+					<attribute-mapping commandAttribute="type" type="additional" configAttribute="type" />
+
+				</command>
+
+				<ConfigObject type="SIBLocalizationPointRef"
+					findAndResolve="true" attributeName="localizationPointRefs"
+					isArray="true" isProperty="true" syncFindModeContainmentPath="true">
+					<containment>
+						<attribute value="cluster" />
+					</containment>
+					<link-attribute linkAttibuteName="engineUuid"
+						targetObject="SIBMessagingEngine"
+						targetObjectMatchAttributeName="name" targetAttribute="uuid" />
+				</ConfigObject>
+			</ConfigObject>
+
+		</ConfigObject>
+
+
+		<ConfigObject type="Node" relation="node"
+			shouldCreate="false">
+			<containment>
+				<attribute value="name" />
+			</containment>
+
+  			<import file="J2CResources-metadata.xml" />
+
+			<import file="miscResources-metadata.xml" />
+
+			<ConfigObject type="ServerEntry" shouldCreate="false" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="serverName" />
+				</containment>
+			
+				<ConfigObject type="NamedEndPoint" findAndResolve="true" syncFindModeContainmentPath="true">
+					<containment>
+						<attribute value="endPointName" />
+					</containment>
+					<ConfigObject type="EndPoint" findAndResolve="true" isArray="true" isProperty="true" attribute="endPoint">
+						<containment>
+							<attribute value="host" />
+						</containment>
+		
+					</ConfigObject>
+	
+				</ConfigObject>
+			</ConfigObject>			
+
+			<import file="Server-metadata.xml"/>
+			
+			<ConfigObject type="ServerEntry" findAndResolve="true" relation="serverName" shouldCreate="false">
+				<containment>
+					<attribute value="serverName" />
+				</containment>
+			</ConfigObject>
+			
+		</ConfigObject>
+
+		<import file="J2CResources-metadata.xml" />
+		
+		<ConfigObject type="ServerCluster" relation="ServerCluster" 
+			shouldIncludeAllChildren="true" shouldCreate="false">
+			<containment>
+				<attribute value="name" />
+			</containment>
+			
+			<import file="BPCJVM-metadata.xml" />
+
+	  		<import file="pmeResources-metadata.xml" /> 
+
+			<import file="miscResources-metadata.xml" />
+
+	  		<ConfigObject type="ClusterMember" isArray="true" syncFindModeContainmentPath="true"
+				attributeName="members" isCommandManaged="true">
+				
+				<containment>
+					<attribute value="memberName" />
+				</containment>
+				<command createCommand="createClusterMember" 
+						modifyCommand="">
+						<attribute-mapping commandAttribute="clusterName" type="parent" configAttribute="clusterName" />
+
+					<step name="memberConfig">
+						<attribute-mapping commandAttribute="memberNode" type="mapping" configAttribute="nodeName" />
+						<attribute-mapping commandAttribute="memberWeight" type="mapping" configAttribute="weight" />
+						<attribute-mapping commandAttribute="memberName" type="mapping" configAttribute="memberName" />
+
+					</step>
+				</command>
+
+			</ConfigObject>
+
+			<ConfigObject type="SIBMessagingEngine" shouldCreate="false"
+				relation="SIBMessagingEngine" syncFindModeContainmentPath="true">
+				<!-- not sure why was returnattribute used here   
+				<containment>
+					<attribute value="busName" returnAttribute="name" />
+				</containment>
+				-->
+				<containment>
+					<attribute value="name" />
+				</containment>
+
+				<ConfigObject type="SIBDatastore"
+					shouldCreate="true" attributeName="dataStore">
+					<containment>
+						<attribute value="null" />
+					</containment>
+				</ConfigObject>
+
+				<ConfigObject type="SIBQueueLocalizationPoint"
+					shouldCreate="true" attributeName="localizationPoints" relation="localizationPoints" 
+					syncFindModeContainmentPath="true"
+					isArray="true" findAndResolve="true">
+					<containment>
+						<attribute value="identifier" />
+					</containment>
+					<link-attribute linkAttibuteName="targetUuid"
+						targetObjectMatchAttributeName="identifier"
+						targetObject="SIBQueue" targetAttribute="uuid">
+					</link-attribute>
+					<!--  link-attribute linkAttibuteName="engineUuid" targetObject="SIBMessagingEngine" 
+						targetObjectMatchAttributeName="name" targetAttribute="uuid"/>
+					-->
+				</ConfigObject>
+
+ 
+
+				<ConfigObject
+					type="SIBTopicSpaceLocalizationPoint"
+					attributeName="localizationPoints" isProperty="true" isArray="true"
+					findAndResolve="true">
+					<containment>
+						<attribute value="identifier" />
+					</containment>
+					<link-attribute linkAttibuteName="targetUuid"
+						targetObjectMatchAttributeName="identifier" targetObject="SIBTopicSpace"
+						targetAttribute="uuid">
+					</link-attribute>
+
+				</ConfigObject>
+
+				<ConfigObject
+					type="SIBMQLinkSenderChannelLocalizationPoint"
+					attributeName="localizationPoints" isProperty="true" isArray="true"
+					findAndResolve="true">
+					<containment>
+						<attribute value="identifier" />
+					</containment>
+					<link-attribute linkAttibuteName="targetUuid"
+						targetObjectMatchAttributeName="name" targetObject="SIBMQLink"
+						targetAttribute="uuid">
+					</link-attribute>
+
+				</ConfigObject>
+
+				<ConfigObject type="SIBMQLink" shouldCreate="true" isArray="true" syncFindModeContainmentPath="true"
+					relation="mqLink" attributeName="mqLink"  isCommandManaged="true" customCodeManaged="SIBMQLink">
+					<containment>
+						<attribute value="name" />
+					</containment>
+					<command createCommand="createSIBMQLink" 
+								modifyCommand="modifySIBMQLink">
+						
+						<attribute-mapping commandAttribute="foreignBusName" type="additional" configAttribute="foreignBusName" />
+						<attribute-mapping commandAttribute="senderChannelTransportChain" type="additional" configAttribute="protocolName" />
+						<attribute-mapping commandAttribute="bus" type="additional" configAttribute="bus" />
+						<attribute-mapping commandAttribute="messagingEngine" type="parent" configAttribute="messagingEngine" />
+						<attribute-mapping commandAttribute="queueManagerName" type="mapping" configAttribute="qmName" />
+	
+	
+					</command>
+
+					<link-attribute linkAttibuteName="targetUuid"
+						targetObjectMatchAttributeName="name"
+						targetAttribute="uuid"
+						targetObject="SIBVirtualMQLink">
+					</link-attribute>
+
+					<ConfigObject type="SIBMQLinkSenderChannel"
+						shouldCreate="true" relation="senderChannel">
+						<containment>
+							<attribute value="null" />
+						</containment>
+						<link-attribute linkAttibuteName="sendStream"
+							targetObjectMatchAttributeName="identifier"
+							targetObject="SIBMQLinkSenderChannelLocalizationPoint">
+						</link-attribute>
+					</ConfigObject>
+					<ConfigObject type="SIBMQLinkReceiverChannel"
+						shouldCreate="true" relation="receiverChannel">
+						<containment>
+							<attribute value="null" />
+						</containment>
+					</ConfigObject>
+				</ConfigObject>
+			</ConfigObject>
+
+			<import file="J2CResources-metadata.xml" />
+
+		</ConfigObject>
+	</ConfigObject>
+	<ConfigObject type="ReferencedConfigObject" shouldCreate="false">
+
+		<containment>
+			<attribute value="null" />
+		</containment>
+
+
+		<ConfigObject type="__builtin_rra" shouldCreate="false">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="J2CResourceAdapter"
+				shouldCreate="false">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+
+		</ConfigObject>
+
+		<ConfigObject type="__AdminObject_JMS_Queue"
+			shouldCreate="false">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="AdminObject" shouldCreate="false"
+				isProperty="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject
+			type="__ConnectionDefinition_JMS_ConnectionFactory"
+			shouldCreate="false">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="ConnectionDefinition"
+				shouldCreate="false">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject
+			type="__ConnectionDefinition_JMS_JMSJCAConnectionFactory"
+			shouldCreate="false">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="ConnectionDefinition"
+				shouldCreate="false">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject
+			type="__ConnectionDefinition_ECIManaged_ConnectionFactory"
+			shouldCreate="false">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="ConnectionDefinition"
+				shouldCreate="false">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject type="__ActivationSpec_JMS_ActivationSpec"
+			shouldCreate="false">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="ActivationSpec" shouldCreate="false">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+	</ConfigObject>
+
+
+
+</resources-metadata>

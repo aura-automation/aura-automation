@@ -1,0 +1,45 @@
+<resources>       
+	
+ 	<ReferencedConfigObject>       
+
+           <__AdminObject_JMS_Queue>
+                   <AdminObject adminObjectInterface="javax.jms.Queue" adminObjectClass="com.ibm.ws.sib.api.jms.impl.JmsQueueImpl"/>
+           </__AdminObject_JMS_Queue>
+
+           <__ConnectionDefinition_JMS_ConnectionFactory>
+                   <ConnectionDefinition managedConnectionFactoryClass="com.ibm.ws.sib.api.jmsra.impl.JmsJcaManagedQueueConnectionFactoryImpl" 
+                   	connectionFactoryInterface="javax.jms.QueueConnectionFactory" 
+                   	connectionFactoryImplClass="com.ibm.ws.sib.api.jms.impl.JmsQueueConnFactoryImpl" 
+                   	connectionInterface="javax.jms.QueueConnection" 
+                   	connectionImplClass="com.ibm.ws.sib.api.jms.impl.JmsQueueConnectionImpl"/>
+           </__ConnectionDefinition_JMS_ConnectionFactory>
+
+           <__ConnectionDefinition_JMS_JMSJCAConnectionFactory>
+		 <ConnectionDefinition 
+			managedConnectionFactoryClass="com.ibm.ws.sib.api.jmsra.impl.JmsJcaManagedConnectionFactoryImpl" 
+			connectionFactoryInterface="javax.jms.ConnectionFactory" 
+			connectionFactoryImplClass="com.ibm.ws.sib.api.jms.impl.JmsConnFactoryImpl" 
+			connectionInterface="javax.jms.Connection" 
+			connectionImplClass="com.ibm.ws.sib.api.jms.impl.JmsConnectionImpl"/>
+           </__ConnectionDefinition_JMS_JMSJCAConnectionFactory>
+
+
+	   <__ConnectionDefinition_ECIManaged_ConnectionFactory>
+                   <ConnectionDefinition managedConnectionFactoryClass="com.ibm.connector2.cics.ECIManagedConnectionFactory" 
+                   connectionFactoryInterface="javax.resource.cci.ConnectionFactory" 
+                   connectionFactoryImplClass="com.ibm.connector2.cics.ECIConnectionFactory" 
+                   connectionInterface="javax.resource.cci.Connection" 
+                   connectionImplClass="com.ibm.connector2.cics.ECIConnection"/>
+           </__ConnectionDefinition_ECIManaged_ConnectionFactory>
+           
+           <__ActivationSpec_JMS_ActivationSpec>
+				<ActivationSpec activationSpecClass="com.ibm.ws.sib.api.jmsra.impl.JmsJcaActivationSpecImpl"/>
+           </__ActivationSpec_JMS_ActivationSpec>
+
+           <__builtin_rra>
+				<J2CResourceAdapter name="WebSphere Relational Resource Adapter"/>
+           </__builtin_rra>
+
+                  
+	</ReferencedConfigObject>
+</resources>

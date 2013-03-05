@@ -1,0 +1,53 @@
+<resources-metadata>
+
+	<ConfigOject type="BPCConfigExtension"  isAttributeCount0="true">
+		<containment>
+			<attribute value="null" />
+		</containment>
+	
+		<ConfigOject type="BPELFlowManager" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="Property" syncFindModeContainmentPath="true"
+				attributeName="properties" isArray="true" isProperty="true"
+				findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+		</ConfigOject>
+	
+		<ConfigOject type="HumanTaskManager" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="Property" syncFindModeContainmentPath="true"
+				attributeName="properties" isArray="true" isProperty="true"
+				findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+	
+			<ConfigObject type="StaffResolution" isAttributeCount0="true"
+				attributeName="staffResolution">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+	
+			<ConfigObject type="EMailService" isAttributeCount0="true"
+				attributeName="eMailService">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+	
+		</ConfigOject>
+	
+	
+	</ConfigOject>
+
+
+</resources-metadata>

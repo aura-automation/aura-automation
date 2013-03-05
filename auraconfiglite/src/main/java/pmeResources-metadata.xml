@@ -1,0 +1,88 @@
+<resources-metadata>
+
+	<ConfigObject type="CacheProvider" shouldCreate="true"
+		relation="CacheProvider" syncFindModeContainmentPath="true">
+		<containment>
+			<attribute value="name" />
+		</containment>
+	
+		<ConfigObject type="CacheInstance" 
+				relation="CacheInstance"  syncFindModeContainmentPath="true">
+			<containment>
+				<attribute value="name" />
+			</containment>
+		</ConfigObject>
+	</ConfigObject>
+
+	<ConfigObject type="ObjectPoolProvider" shouldCreate="true"
+		relation="ObjectPoolProvider" syncFindModeContainmentPath="true">
+		<containment>
+			<attribute value="name" />
+		</containment>
+	
+		<ConfigObject type="ObjectPoolManagerInfo" 
+				relation="ObjectPoolManagerInfo"  syncFindModeContainmentPath="true">
+			<containment>
+				<attribute value="name" />
+			</containment>
+			<ConfigObject type="ObjectPool" findAndResolve="true"
+					relation="objectPools" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="poolClassName" />
+				</containment>
+	
+			</ConfigObject>
+
+		</ConfigObject>
+
+		<ConfigObject type="J2EEResourceProperty"
+			attributeName="propertySet" isProperty="true" isArray="true"
+			findAndResolve="true">
+			<containment>
+				<attribute value="name" />
+			</containment>
+
+		</ConfigObject>
+	</ConfigObject>
+
+	<ConfigObject type="WorkManagerProvider" 
+			syncFindModeContainmentPath="true" relation="WorkManagerProvider">
+		<containment>
+			<attribute value="name" />
+		</containment>
+
+		<ConfigObject type="WorkManagerInfo" 
+				syncFindModeContainmentPath="true" relation="WorkManagerInfo">
+			<containment>
+				<attribute value="name" />
+			</containment>
+			<link-attribute linkAttibuteName="provider"
+				targetObject="WorkManagerProvider"
+				targetObjectMatchAttributeName="name" />
+
+		</ConfigObject>
+		<ConfigObject type="String" isArray="true"
+			attributeName="services">
+			<containment>
+				<attribute value="null" />
+			</containment>
+		</ConfigObject>
+
+	</ConfigObject>
+
+	<ConfigObject type="TimerManagerProvider" 
+			syncFindModeContainmentPath="true" relation="TimerManagerProvider">
+		<containment>
+			<attribute value="name" />
+		</containment>
+
+		<ConfigObject type="TimerManagerInfo" 
+				syncFindModeContainmentPath="true" relation="TimerManagerInfo">
+			<containment>
+				<attribute value="name" />
+			</containment>
+		</ConfigObject>
+	</ConfigObject>
+
+	
+</resources-metadata>

@@ -1,0 +1,371 @@
+<resources-metadata>
+
+	<ConfigObject type="JMSProvider" shouldCreate="true"
+		relation="JMSProvider" syncFindModeContainmentPath="true">
+		<containment>
+			<attribute value="name" />
+		</containment>
+
+		<ConfigObject type="MQConnectionFactory" findAndResolve="true"
+			shouldCreate="true" relation="MQConnectionFactory" matchAttribute="jndiName"
+			>
+			<containment>
+				<attribute value="name" />
+			</containment>
+			<ConfigObject type="J2EEResourcePropertySet" isAttributeCount0="true"
+				attributeName="propertySet" isProperty="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="J2EEResourceProperty"
+					attributeName="resourceProperties" isProperty="true" isArray="true"
+					findAndResolve="true">
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+			</ConfigObject>
+		</ConfigObject>
+					
+		<ConfigObject type="MQQueueConnectionFactory" findAndResolve="true"
+			shouldCreate="true" relation="MQQueueConnectionFactory" matchAttribute="jndiName"
+			>
+			<containment>
+				<attribute value="name" />
+			</containment>
+			<ConfigObject type="J2EEResourcePropertySet" isAttributeCount0="true"
+				attributeName="propertySet" isProperty="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="J2EEResourceProperty"
+					attributeName="resourceProperties" isProperty="true" isArray="true"
+					findAndResolve="true">
+					<containment>
+						<attribute value="name" />
+					</containment>
+	
+				</ConfigObject>
+			</ConfigObject>
+			<ConfigObject type="ConnectionPool" shouldCreate="true" attributeNameInResourceXML="true" 
+				relation="sessionPool" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+
+		</ConfigObject>
+
+		<ConfigObject type="MQQueue" findAndResolve="true"
+			shouldCreate="true" relation="MQQueue" matchAttribute="jndiName"
+			>
+			<containment>
+				<attribute value="name" />
+			</containment>
+			<ConfigObject type="J2EEResourceProperty" syncFindModeContainmentPath="true"
+				attributeName="properties" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+	</ConfigObject>
+
+	<ConfigObject type="J2CResourceAdapter" shouldCreate="true"
+		relation="resources" syncFindModeContainmentPath="true">
+		<containment>
+			<attribute value="name" />
+		</containment>
+
+		<ConfigObject type="J2EEResourcePropertySet" isAttributeCount0="true"
+			attributeName="propertySet" isProperty="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="J2EEResourceProperty"
+				attributeName="resourceProperties" isProperty="true" isArray="true"
+				findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+
+			</ConfigObject>
+		</ConfigObject>
+		<!-- syncFindModeContainmentPath=TRUE removed as this was causing all the sibling objects to be extracted. i.e. when extracting 
+			Q, Act Spec was also getting extracted when includeAllChildren was true.
+			But  includeAllChildren was false nothing was getting extracted..
+			
+			After fixing above issue was that with includeAllChildren = false in ant command resulted in no properties being extracted for 
+			J2CAdminObject, code is fixed by adding 
+		 -->
+		<ConfigObject type="J2CAdminObject" findAndResolve="true" shouldIncludeAllChildren="true"
+			shouldCreate="true" relation="J2CAdminObject" syncPreMatchAttribute="adminObject" matchAttribute="jndiName">
+			<containment>
+				<attribute value="name" />
+			</containment>
+
+				<ConfigObject type="J2EEResourceProperty" syncFindModeContainmentPath="true"
+					isProperty="true" isArray="true" findAndResolve="true"
+					attributeName="resourceProperties">
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+							
+		
+		</ConfigObject>
+
+		<!-- syncFindModeContainmentPath=TRUE removed as this was causing all the sibling objects to be extracted. i.e. when extracting 
+			Q, Act Spec was also getting extracted when includeAllChildren was true.
+			But  includeAllChildren was false nothing was getting extracted..
+		 -->
+
+		<ConfigObject type="J2CConnectionFactory" shouldCreate="true" shouldIncludeAllChildren="true"
+			relation="J2CConnectionFactory" matchAttribute="jndiName" findAndResolve="true" 
+			syncPreMatchAttribute="connectionDefinition" >
+			<containment>
+				<attribute value="name" />
+			</containment>
+			<ConfigObject type="J2EEResourcePropertySet" isAttributeCount0="true"
+				attributeName="propertySet" isProperty="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="J2EEResourceProperty"
+					attributeName="resourceProperties" isProperty="true" isArray="true"
+					findAndResolve="true">
+					<containment>
+						<attribute value="name" />
+					</containment>
+
+				</ConfigObject>
+			</ConfigObject>
+			<ConfigObject type="ConnectionPool" shouldCreate="true"
+				relation="connectionPool" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="J2EEResourceProperty" syncFindModeContainmentPath="true"
+					attributeName="properties" isArray="true" isProperty="true"
+					shouldCreate="false" findAndResolve="true">
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+			</ConfigObject>
+			<ConfigObject type="MappingModule" shouldCreate="true"
+				relation="mapping" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+
+		</ConfigObject>
+		<!-- syncFindModeContainmentPath=TRUE removed as this was causing all the sibling objects to be extracted. i.e. when extracting 
+			Q, Act Spec was also getting extracted when includeAllChildren was true.
+			But  includeAllChildren was false nothing was getting extracted..
+		 -->
+
+		<ConfigObject type="J2CActivationSpec" shouldCreate="true" shouldIncludeAllChildren="true"
+			findAndResolve="true" relation="J2CActivationSpec" matchAttribute="jndiName" syncPreMatchAttribute="activationSpec"
+				>
+			<containment>
+				<attribute value="name" />
+			</containment>
+			<ConfigObject type="J2EEResourceProperty"
+				attributeName="resourceProperties" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+	</ConfigObject>
+
+	<ConfigObject type="JDBCProvider" shouldCreate="true"
+		relation="JDBCProvider" syncFindModeContainmentPath="true">
+		<containment>
+			<attribute value="name" />
+		</containment>
+		<ConfigObject type="String" shouldCreate="true" isArray="true"
+			attributeName="classpath">
+			<containment>
+				<attribute value="null" />
+			</containment>
+		</ConfigObject>
+
+		<ConfigObject type="DataSource" shouldCreate="true"
+			relation="DataSource" matchAttribute="jndiName" findAndResolve="true" syncFindModeContainmentPath="true">
+			<containment>
+				<attribute value="name" />
+			</containment>
+			<ConfigObject type="J2EEResourcePropertySet" isAttributeCount0="true"
+				attributeName="propertySet" isProperty="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+				
+				<ConfigObject type="J2EEResourceProperty" syncFindModeContainmentPath="true"
+					isProperty="true" isArray="true" findAndResolve="true"
+					attributeName="resourceProperties">
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+			</ConfigObject>
+			
+			<ConfigObject type="ConnectionPool" shouldCreate="true"
+				relation="connectionPool" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+			<!--   <ConfigObject type="J2EEResourceProperty" syncFindModeContainmentPath="true"
+				attributeName="properties" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject> -->
+			
+			<ConfigObject type="MappingModule" shouldCreate="true"
+				relation="mapping" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+
+		</ConfigObject>
+	</ConfigObject>
+
+	<ConfigObject type="MailProvider" shouldCreate="true"
+		relation="MailProvider" syncFindModeContainmentPath="true">
+		<containment>
+			<attribute value="name" />
+		</containment>
+
+		<ConfigObject type="MailSession" syncFindModeContainmentPath="true"
+			relation="MailSession">
+			<containment>
+				<attribute value="name" />
+			</containment>
+			<link-attribute linkAttibuteName="mailStoreProtocol"
+					targetObject="ProtocolProvider"
+					targetObjectMatchAttributeName="protocol" />
+					
+			<link-attribute linkAttibuteName="mailTransportProtocol"
+					targetObject="ProtocolProvider"
+					targetObjectMatchAttributeName="protocol" />
+					
+			<link-attribute linkAttibuteName="provider"
+					targetObject="MailProvider"
+					targetObjectMatchAttributeName="name" />
+
+			<ConfigObject type="J2EEResourcePropertySet" isAttributeCount0="true"
+				attributeName="propertySet" isProperty="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="J2EEResourceProperty"
+					attributeName="resourceProperties" isProperty="true" isArray="true"
+					findAndResolve="true">
+					<containment>
+						<attribute value="name" />
+					</containment>
+	
+				</ConfigObject>
+			</ConfigObject>
+
+		</ConfigObject>
+
+		
+<!--  		<ConfigObject type="ProtocolProvider" isArray="true"
+			attributeName="protocolProviders" isProperty="true"> -->
+  		<ConfigObject type="ProtocolProvider" findAndResolve="true" syncFindModeContainmentPath="true"
+			attributeName="protocolProviders" relation="ProtocolProvider"> 
+			
+			<containment>
+				<attribute value="protocol" />
+			</containment>
+		</ConfigObject>
+		<ConfigObject type="J2EEResourceProperty"
+			attributeName="propertySet" isProperty="true" isArray="true"
+			findAndResolve="true">
+			<containment>
+				<attribute value="name" />
+			</containment>
+
+		</ConfigObject>
+	</ConfigObject>
+
+	<ConfigObject type="URLProvider" shouldCreate="true"
+		relation="resources" syncFindModeContainmentPath="true">
+		<containment>
+			<attribute value="name" />
+		</containment>
+	
+		<ConfigObject type="J2EEResourceProperty"
+			attributeName="propertySet" isProperty="true" isArray="true"
+			findAndResolve="true">
+			<containment>
+				<attribute value="name" />
+			</containment>
+
+		</ConfigObject>
+	</ConfigObject>
+
+	<ConfigObject type="ResourceEnvironmentProvider" shouldCreate="true"
+		relation="ResourceEnvironmentProvider" syncFindModeContainmentPath="true">
+		<containment>
+			<attribute value="name" />
+		</containment>
+
+		<ConfigObject type="Referenceable" shouldCreate="true" findAndResolve="true"
+			relation="referenceables" syncFindModeContainmentPath="true">
+			<containment>
+				<attribute value="factoryClassname" />
+			</containment>
+		</ConfigObject>
+		
+		<ConfigObject type="ResourceEnvEntry" shouldCreate="true"
+			relation="ResourceEnvEntry" syncFindModeContainmentPath="true">
+			<containment>
+				<attribute value="name" />
+			</containment>
+			<link-attribute linkAttibuteName="referenceable"
+					targetObject="Referenceable"
+					targetObjectMatchAttributeName="factoryClassname" />
+			<ConfigObject type="J2EEResourcePropertySet" isAttributeCount0="true"
+				attributeName="propertySet" isProperty="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="J2EEResourceProperty"
+					attributeName="resourceProperties" isProperty="true" isArray="true"
+					findAndResolve="true">
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+			</ConfigObject>
+		</ConfigObject>
+			
+		<ConfigObject type="J2EEResourcePropertySet" isAttributeCount0="true"
+			attributeName="propertySet" isProperty="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="J2EEResourceProperty"
+				attributeName="resourceProperties" isProperty="true" isArray="true"
+				findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>		
+	</ConfigObject>
+
+
+</resources-metadata>

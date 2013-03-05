@@ -1,0 +1,27 @@
+<antlib>
+
+
+	<taskdef
+        name="DDCreator"
+        classname="com.apartech.auraconfig.ant.AntDDCreator"
+        />
+    
+	<taskdef
+        name="AuraConfigLiteXML"
+        classname="com.apartech.auraconfig.ant.AntXML"
+        />
+        
+    <taskdef
+        name="AuraConfigLiteResource"
+        classname="com.apartech.auraconfig.ant.AntResources"
+        />
+        
+    <typedef
+        name="AuraConfigLiteCompare"
+        classname="com.apartech.auraconfig.ant.AntResourcesCompare"
+         />
+    <typedef
+        name="AuraSyncNode"
+        classname="com.apartech.common.ant.AntSynNode"
+        />        
+ </antlib>

@@ -1,0 +1,762 @@
+<resources-metadata>
+	<ConfigObject type="Server" shouldCreate="true"
+		relation="Server" shouldIncludeAllChildren="true">
+		<containment>
+			<attribute value="name" />
+		</containment>
+		
+	 	<import file="J2CResources-metadata.xml" />
+	
+		<import file="BPCJVM-metadata.xml" />
+	
+		<import file="miscResources-metadata.xml" />
+	
+		<ConfigObject attributeName="stateManagement" type="StateManageable" >
+			<containment>
+				<attribute value="null" />
+			</containment>
+		</ConfigObject>
+		
+		<ConfigObject attributeName="statisticsProvider" type="StatisticsProvider" >
+			<containment>
+				<attribute value="null" />
+			</containment>
+		</ConfigObject>
+
+		<ConfigObject type="PMIService" >
+			<containment>
+				<attribute value="null" />
+			</containment>
+		</ConfigObject>
+
+		<ConfigObject type="AdminService"  
+			shouldIncludeAllChildren="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="SOAPConnector" syncFindModeContainmentPath="true">
+					<containment>
+						<attribute value="null" />
+					</containment>
+					<ConfigObject type="Property" syncFindModeContainmentPath="true"
+						attributeName="properties" isArray="true" isProperty="true"
+						shouldCreate="false" findAndResolve="true">
+						<containment>
+							<attribute value="name" />
+						</containment>
+					</ConfigObject>
+					<ConfigObject type="EndPoint" 
+						>
+						<containment>
+							<attribute value="null" />
+						</containment>
+					</ConfigObject>
+
+					
+					
+				</ConfigObject>
+				<ConfigObject type="RMIConnector" syncFindModeContainmentPath="true">
+					<containment>
+						<attribute value="null" />
+					</containment>
+					<ConfigObject type="Property" syncFindModeContainmentPath="true"
+						attributeName="properties" isArray="true" isProperty="true"
+						shouldCreate="false" findAndResolve="true">
+						<containment>
+							<attribute value="name" />
+						</containment>
+					</ConfigObject>
+				</ConfigObject>
+				<ConfigObject type="RepositoryService" syncFindModeContainmentPath="true">
+					<containment>
+						<attribute value="null" />
+					</containment>
+					<ConfigObject type="J2EEResourceProperty" syncFindModeContainmentPath="true"
+						attributeName="properties" isArray="true" isProperty="true"
+						shouldCreate="false" findAndResolve="true">
+						<containment>
+							<attribute value="name" />
+						</containment>
+					</ConfigObject>
+				</ConfigObject>
+				<ConfigObject type="PluginConfigService" syncFindModeContainmentPath="true">
+					<containment>
+						<attribute value="null" />
+					</containment>
+					<ConfigObject type="J2EEResourceProperty" syncFindModeContainmentPath="true"
+						attributeName="properties" isArray="true" isProperty="true"
+						shouldCreate="false" findAndResolve="true">
+						<containment>
+							<attribute value="name" />
+						</containment>
+					</ConfigObject>
+				</ConfigObject>
+		</ConfigObject>
+	
+		<ConfigObject type="TraceService" 	shouldIncludeAllChildren="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="TraceLog" >
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject type="DiagnosticProviderService" 	shouldIncludeAllChildren="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="Property" syncFindModeContainmentPath="true"
+						attributeName="properties" isArray="true" isProperty="true"
+						shouldCreate="false" findAndResolve="true">
+						<containment>
+							<attribute value="name" />
+						</containment>
+			</ConfigObject>
+		</ConfigObject>		
+		
+	
+		<ConfigObject type="RASLoggingService" shouldIncludeAllChildren="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="ServiceLog" >
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+	
+		<ConfigObject type="CoreGroupBridgeService">
+			<containment>
+				<attribute value="null" />
+			</containment>
+		</ConfigObject>
+	
+		<ConfigObject type="TPVService">
+			<containment>
+				<attribute value="null" />
+			</containment>
+		</ConfigObject>
+		
+		<ConfigObject type="ObjectRequestBroker" syncFindModeContainmentPath="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+
+ 			<ConfigObject type="EndPoint" attributeNameInResourceXML="true" syncFindModeContainmentPath="true"
+						attributeName="CSIV2_SSL_MUTUALAUTH_LISTENER_ADDRESS" 
+						>
+						<containment>
+							<attribute value="null" />
+						</containment>
+			</ConfigObject>
+
+			<ConfigObject type="EndPoint" attributeNameInResourceXML="true" syncFindModeContainmentPath="true"
+						attributeName="SAS_SSL_SERVERAUTH_LISTENER_ADDRESS" 
+						>
+						<containment>
+							<attribute value="null" />
+						</containment>
+			</ConfigObject>
+
+			<ConfigObject type="EndPoint" attributeNameInResourceXML="true" syncFindModeContainmentPath="true"
+						attributeName="ORB_LISTENER_ADDRESS" 
+						>
+						<containment>
+							<attribute value="null" />
+						</containment>
+			</ConfigObject>
+
+			<ConfigObject type="EndPoint" attributeNameInResourceXML="true" syncFindModeContainmentPath="true"
+						attributeName="CSIV2_SSL_SERVERAUTH_LISTENER_ADDRESS" 
+						>
+						<containment>
+							<attribute value="null" />
+						</containment>
+			</ConfigObject>
+
+
+			<ConfigObject type="Property" syncFindModeContainmentPath="true"
+				attributeName="properties" isArray="true" isProperty="true"
+				findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+	
+			<ConfigObject type="Interceptor" syncFindModeContainmentPath="true"
+				attributeName="interceptors" isArray="true" isProperty="true"
+				findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			
+			<ConfigObject type="ORBPlugin" syncFindModeContainmentPath="true"
+				attributeName="plugins" isArray="true" isProperty="true"
+				findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+	
+			<ConfigObject type="ThreadPool" 
+					attributeName="threadPool" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			
+	
+		</ConfigObject>
+	
+		<ConfigObject type="TransportChannelService" shouldIncludeAllChildren="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="TCPInboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+				<!-- This is special link as the the target attribute is the 
+					config object itself, so please don't specify target object -->
+					<link-attribute linkAttibuteName="threadPool"
+						targetObject="ThreadPool" 
+						targetObjectMatchAttributeName="name" /> 
+			</ConfigObject>
+
+			<ConfigObject type="SSLInboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+
+			<ConfigObject type="HTTPInboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="WebContainerInboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="DCSInboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="JFAPInboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="MQFAPInboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="SIPInboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="SIPContainerInboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="UDPInboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+	
+	
+	
+			<ConfigObject type="UDPOutboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+	
+			<ConfigObject type="TCPOutboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+					<!-- This is special link as the the target attribute is the 
+					config object itself, so please don't specify target object -->
+					<link-attribute linkAttibuteName="threadPool"
+						targetObject="ThreadPool" 
+						targetObjectMatchAttributeName="name" />				
+			</ConfigObject>
+			
+			<ConfigObject type="SSLOutboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="HTTPOutboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="HTTPTunnelOutboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="JFAPOutboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="SIPOutboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="SIPContainerOutboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="RMQOutboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+	
+	
+	
+	
+			<ConfigObject type="MQFAPOutboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="MQFAPOutboundChannel" syncFindModeContainmentPath="true"
+				attributeName="transportChannels" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="WCInboundAdmin" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="WCInboundDefault" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="WCInboundAdminSecure" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="WCInboundDefaultSecure" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="DCS" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="DCS-Secure" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="InboundBasicMessaging" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="InboundSecureMessaging" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="InboundBasicMQLink" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="InboundSecureMQLink" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="BootstrapBasicMessaging" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="BootstrapSecureMessaging" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="BootstrapTunneledMessaging" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="BootstrapTunneledSecureMessaging" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="OutboundBasicMQLink" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="OutboundSecureMQLink" syncFindModeContainmentPath="true"
+				attributeName="chains" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+	
+			
+		</ConfigObject>
+	
+	
+		<ConfigObject type="ThreadPoolManager" shouldIncludeAllChildren="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="ThreadPool" 
+				isArray="true" attributeName="threadPools" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+		
+		
+	
+		<ConfigObject type="HTTPAccessLoggingService" shouldIncludeAllChildren="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="LogFile" 
+				attributeName="errorLog" attributeNameInResourceXML="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="LogFile" 
+				attributeName="accessLog" attributeNameInResourceXML="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+	
+		</ConfigObject>
+		
+		<ConfigObject type="StreamRedirect" isProperty="true"
+			attributeName="errorStreamRedirect" attributeNameInResourceXML="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+		</ConfigObject>
+		
+		<ConfigObject type="StreamRedirect" isProperty="true"
+			attributeName="outputStreamRedirect" attributeNameInResourceXML="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+		</ConfigObject>
+	
+		<ConfigObject type="CustomService" isProperty="true" isArray="true"
+			attributeName="customServices" syncFindModeContainmentPath="true">
+			<containment>
+				<attribute value="displayName" />
+			</containment>
+		</ConfigObject>				
+		
+		<ConfigObject type="NameServer">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="StateManageable" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+	
+		</ConfigObject>	
+	
+		<ConfigObject type="ApplicationServer" isAttributeCount0="true" syncFindModeContainmentPath="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+	
+			<ConfigObject type="StateManageable" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+	
+			<ConfigObject type="TransactionService" >
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+	
+			<ConfigObject type="DynamicCache" syncFindModeContainmentPath="true">>
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="ExternalCacheGroup" isArray="true" attributeName="cacheGroups" syncFindModeContainmentPath="true">
+					<containment>
+						<attribute value="name" />
+					</containment>
+					<ConfigObject type="ExternalCacheGroupMember" isArray="true" isProperty="true" 
+						attributeName="members">
+						<containment>
+							<attribute value="address" />
+						</containment>
+					</ConfigObject>
+				</ConfigObject>
+			</ConfigObject>
+			
+			<ConfigObject type="WebContainer" >
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="StateManageable" syncFindModeContainmentPath="true">
+					<containment>
+						<attribute value="null" />
+					</containment>
+				</ConfigObject>
+				<ConfigObject type="SessionManager" syncFindModeContainmentPath="true">
+					<containment>
+						<attribute value="null" />
+					</containment>
+					<ConfigObject type="Cookie" syncFindModeContainmentPath="true">
+						<containment>
+							<attribute value="null" />
+						</containment>
+					</ConfigObject>
+					<ConfigObject type="SessionDatabasePersistence" syncFindModeContainmentPath="true">
+						<containment>
+							<attribute value="null" />
+						</containment>
+					</ConfigObject>
+					<ConfigObject type="TuningParams" syncFindModeContainmentPath="true">
+						<containment>
+							<attribute value="null" />
+						</containment>
+						<ConfigObject type="InvalidationSchedule" syncFindModeContainmentPath="true">
+							<containment>
+								<attribute value="null" />
+							</containment>
+						</ConfigObject>
+					</ConfigObject>
+				</ConfigObject>
+			</ConfigObject>
+		 
+			<ConfigObject type="EJBContainer" >
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="StateManageable" syncFindModeContainmentPath="true">
+					<containment>
+						<attribute value="null" />
+					</containment>
+				</ConfigObject>
+				
+				<ConfigObject type="MessageListenerService" >
+					<containment>
+						<attribute value="null" />
+					</containment>
+					<ConfigObject type="ThreadPool" syncFindModeContainmentPath="true">>
+						<containment>
+							<attribute value="name" />
+						</containment>
+					</ConfigObject>					
+				</ConfigObject>
+									
+				<ConfigObject type="EJBCache" >
+					<containment>
+						<attribute value="null" />
+					</containment>
+				</ConfigObject>
+				
+				<ConfigObject type="EJBTimer">
+					<containment>
+						<attribute value="null" />
+					</containment>
+				</ConfigObject> 
+			</ConfigObject>			
+	
+			<ConfigObject type="PortletContainer" >
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+
+			<ConfigObject type="Classloader" isAttributeCount0="true"
+				attributeName="classloaders" isArray="true" isProperty="true" syncFindModeContainmentPath="true" >
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="LibraryRef" 
+					isArray="true" isProperty="true" attributeName="libraries" >
+					<containment>
+						<attribute value="libraryName" />
+					</containment>
+				</ConfigObject>						
+	
+			</ConfigObject>						
+	
+			<ConfigObject type="WebserverPluginSettings">
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+		</ConfigObject>
+	
+		<ConfigObject type="JavaProcessDef">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="Property" attributeNameInResourceXML="true"
+				attributeName="environment" isProperty="true" isArray="true"
+				findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+		
+			</ConfigObject>
+
+			<ConfigObject type="Property" attributeNameInResourceXML="true"
+				attributeName="systemProperties" isProperty="true" isArray="true"
+				findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+		
+			</ConfigObject>
+
+			<ConfigObject type="OutputRedirect" >
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="ProcessExecution">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="MonitoringPolicy">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+			<ConfigObject type="JavaVirtualMachine">
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="Property"
+					attributeName="systemProperties" isProperty="true" isArray="true"
+					findAndResolve="true">
+					<containment>
+						<attribute value="name" />
+					</containment>
+			
+				</ConfigObject>
+				<ConfigObject type="String" isArray="true"
+					attributeName="classpath">
+					<containment>
+						<attribute value="null" />
+					</containment>
+				</ConfigObject>
+			</ConfigObject>
+	
+		</ConfigObject>
+
+	</ConfigObject>
+</resources-metadata>

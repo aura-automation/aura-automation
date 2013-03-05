@@ -1,0 +1,359 @@
+<resources-metadata>
+	<ConfigObject type="request" shouldCreate="false"
+		isPortalManaged="true" isAttributeCount0="true">
+		<containment>
+			<attribute value="null" />
+		</containment>
+		
+		<ConfigObject type="portal" 
+			isPortalManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+
+  			<ConfigObject type="global-settings" 
+				isPortalManaged="true" >
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="parameter" 
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+
+			</ConfigObject>
+
+
+			<ConfigObject type="services-settings" 
+				isPortalManaged="true" >
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+
+			<ConfigObject type="language" 
+				isPortalManaged="true" >
+				<containment>
+					<attribute value="locale" />
+				</containment>
+				<ConfigObject type="localedata" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="locale" />
+					</containment>
+					<ConfigObject type="title" 
+						isPortalManaged="true" >
+						<containment>
+							<attribute value="_defaultAttr" />
+						</containment>
+					</ConfigObject>
+				</ConfigObject>
+			</ConfigObject>
+
+
+			<ConfigObject type="action" 
+				isPortalManaged="true" >
+				<containment>
+					<attribute value="name" />
+				</containment>
+				<ConfigObject type="localedata" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="locale" />
+					</containment>
+					<ConfigObject type="title" 
+						isPortalManaged="true" >
+						<containment>
+							<attribute value="_defaultAttr" />
+						</containment>
+					</ConfigObject>
+					<ConfigObject type="description" 
+						isPortalManaged="true" >
+						<containment>
+							<attribute value="_defaultAttr" />
+						</containment>
+					</ConfigObject>
+				</ConfigObject>
+			</ConfigObject>
+
+			<ConfigObject type="virtual-resource" 
+				isPortalManaged="true" >
+				<containment>
+					<attribute value="name" />
+				</containment>
+				<ConfigObject type="access-control" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="owner" />
+					</containment>
+					<ConfigObject type="role" 
+						isPortalManaged="true" >
+						<containment>
+							<attribute value="actionset" />
+						</containment>
+						<ConfigObject type="mapping" 
+							isPortalManaged="true" >
+							<containment>
+								<attribute value="subjectid" />
+							</containment>
+						</ConfigObject>
+					</ConfigObject>
+				</ConfigObject>
+			</ConfigObject>
+
+
+			<ConfigObject type="resource-type" 
+				isPortalManaged="true" >
+				<containment>
+					<attribute value="name" />
+				</containment>
+				<ConfigObject type="valid-virtual-parent" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+				<ConfigObject type="allowed-owner-action" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+				<ConfigObject type="allowed-private-owner-action" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+				<ConfigObject type="applicable-actionset" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+				<ConfigObject type="applicable-actionset" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+				<ConfigObject type="localedata" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="locale" />
+					</containment>
+					<ConfigObject type="title" 
+						isPortalManaged="true" >
+						<containment>
+							<attribute value="_defaultAttr" />
+						</containment>
+					</ConfigObject>
+					<ConfigObject type="description" 
+						isPortalManaged="true" >
+						<containment>
+							<attribute value="_defaultAttr" />
+						</containment>
+					</ConfigObject>
+				</ConfigObject>
+			</ConfigObject>
+
+
+			<ConfigObject type="markup" 
+				isPortalManaged="true" >
+				<containment>
+					<attribute value="name" />
+				</containment>
+				<ConfigObject type="localedata" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="locale" />
+					</containment>
+					<ConfigObject type="title" 
+						isPortalManaged="true" >
+						<containment>
+							<attribute value="_defaultAttr" />
+						</containment>
+					</ConfigObject>
+				</ConfigObject>
+			</ConfigObject>
+
+
+			<ConfigObject type="client" 
+				isPortalManaged="true" >
+				<containment>
+					<attribute value="name" />
+				</containment>
+				<ConfigObject type="useragent-pattern" 
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="_defaultAttr" />
+					</containment>
+				</ConfigObject>
+				<ConfigObject type="client-capability" 
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="_defaultAttr" />
+					</containment>
+				</ConfigObject>
+			</ConfigObject>
+
+
+
+			<ConfigObject type="event-handler" 
+				isPortalManaged="true" >
+				<containment>
+					<attribute value="classname" />
+				</containment>
+			</ConfigObject>
+
+
+
+			<ConfigObject type="skin" 
+				isPortalManaged="true" >
+				<containment>
+					<attribute value="uniquename" />
+				</containment>
+				<ConfigObject type="localedata" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="locale" />
+					</containment>
+					<ConfigObject type="title" 
+						isPortalManaged="true" >
+						<containment>
+							<attribute value="_defaultAttr" />
+						</containment>
+					</ConfigObject>
+				</ConfigObject>
+				<ConfigObject type="parameter" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+			</ConfigObject>
+
+			<ConfigObject type="theme" 
+				isPortalManaged="true" >
+				<containment>
+					<attribute value="uniquename" />
+				</containment>
+				<ConfigObject type="localedata" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="locale" />
+					</containment>
+					<ConfigObject type="title" 
+						isPortalManaged="true" >
+						<containment>
+							<attribute value="_defaultAttr" />
+						</containment>
+					</ConfigObject>
+				</ConfigObject>
+				<ConfigObject type="allowed-skin" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="skin" />
+					</containment>
+				</ConfigObject>
+				<ConfigObject type="parameter" syncFindModeContainmentPath="true"
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+			</ConfigObject>
+
+
+
+			<ConfigObject type="web-app" 
+				isPortalManaged="true" >
+				<containment>
+					<attribute value="uid" />
+				</containment>
+				<ConfigObject type="url" 
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="_defaultAttr" />
+					</containment>
+				</ConfigObject>
+				<ConfigObject type="context-root" 
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="_defaultAttr" />
+					</containment>
+				</ConfigObject>
+				<ConfigObject type="display-name" 
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="_defaultAttr" />
+					</containment>
+				</ConfigObject>
+				<ConfigObject type="access-control" 
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="owner" />
+					</containment>
+				</ConfigObject>
+				<ConfigObject type="servlet" 
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+				<ConfigObject type="portlet-app" 
+					isPortalManaged="true" >
+					<containment>
+						<attribute value="name" />
+					</containment>
+					<ConfigObject type="access-control" syncFindModeContainmentPath="true"
+						isPortalManaged="true" >
+						<containment>
+							<attribute value="owner" />
+						</containment>
+						<ConfigObject type="role" 
+							isPortalManaged="true" >
+							<containment>
+								<attribute value="actionset" />
+							</containment>
+							<ConfigObject type="mapping" 
+								isPortalManaged="true" >
+								<containment>
+									<attribute value="subjectid" />
+								</containment>
+							</ConfigObject>
+						</ConfigObject>
+					</ConfigObject>
+					<ConfigObject type="portlet" 
+						isPortalManaged="true" >
+						<containment>
+							<attribute value="name" />
+						</containment>
+						<ConfigObject type="access-control" syncFindModeContainmentPath="true"
+							isPortalManaged="true" >
+							<containment>
+								<attribute value="owner" />
+							</containment>
+						</ConfigObject>
+						<ConfigObject type="preferences" 
+							isPortalManaged="true" >
+							<containment>
+								<attribute value="name" />
+							</containment>
+							<ConfigObject type="value" 
+								isPortalManaged="true" >
+								<containment>
+									<attribute value="_defaultAttr" />
+								</containment>
+							</ConfigObject>
+						</ConfigObject>
+					</ConfigObject>
+				</ConfigObject>
+			</ConfigObject>
+
+			
+		</ConfigObject>
+	</ConfigObject>
+</resources-metadata>
