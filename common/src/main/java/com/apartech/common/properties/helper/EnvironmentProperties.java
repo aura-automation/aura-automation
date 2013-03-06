@@ -10,7 +10,6 @@ import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.apartech.aura.server.PropertiesContext;
 import com.apartech.common.deploy.DeployInfo;
 import com.apartech.common.properties.helper.PropertyLoader;;
 
@@ -21,23 +20,6 @@ public class EnvironmentProperties {
 	
 	public Properties getProperties(DeployInfo deployInfo){
 		Properties properties = new Properties();
-		if (deployInfo.getEnvironmentId()!= -1){
-			String environmentId = new Integer(deployInfo.getEnvironmentId()).toString();
-			logger.trace ("Checking if cache has " + environmentId);
-			if (propertiesTable.get(environmentId)!=null){
-				logger.trace("Getting properties for " + environmentId + " from cache");
-				properties = propertiesTable.get(environmentId);
-			}else{
-				logger.trace("Getting properties for " + environmentId + " from database");
-				PropertiesContext propertiesContext =PropertiesContext.getInstance();
-				properties= propertiesContext.getEnvironmentVariableProperties(deployInfo.getEnvironmentId());
-				logger.trace( "Adding " + environmentId + " to cache ");
-				propertiesTable.put(environmentId,properties);
-			}
-		}else{
-			/**
-			 * This null check if the call is made from deploy tool and deploy data does not need environment specific values
-			 */
 			if (deployInfo.getEnvironmentProperties()!=null){
 				if (propertiesTable.get(deployInfo.getEnvironmentProperties())!=null){
 					logger.trace("Getting properties for " + deployInfo.getEnvironmentProperties() + " from cache");
@@ -49,7 +31,6 @@ public class EnvironmentProperties {
 	
 				}
 			}
-		} 
 		return properties;
 		
 	}
