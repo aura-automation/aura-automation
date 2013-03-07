@@ -1,0 +1,26 @@
+<antlib>
+
+    <taskdef
+        name="AuraDeployLite"
+        classname="org.aa.auradeploy.ant.AntDeploy"
+        />
+        
+    <typedef
+        name="AuraProcessEAR"
+        classname="org.aa.auradeploy.ant.AntProcessEAR"
+         />
+
+    <typedef
+        name="AuraApplication"
+        classname="org.aa.auradeploy.ant.AntApplicationOperation"
+        />        
+
+    <typedef
+        name="AuraCluster"
+        classname="org.aa.auradeploy.ant.AntCluster"
+        />        
+ 	<typedef
+        name="AuraSyncNode"
+        classname="org.aa.common.ant.AntSynNode"
+        />     
+ </antlib>
