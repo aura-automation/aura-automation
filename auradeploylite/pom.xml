@@ -3,12 +3,12 @@
   <parent>
     <groupId>org.aa.aura</groupId>
     <artifactId>aura</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
   </parent>
   <groupId>org.aa.auradeploy</groupId>
   <artifactId>auradeploylite</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <name>auradeploylite</name>
   <url>http://maven.apache.org</url>
   <build>
@@ -36,7 +36,7 @@
 	<dependency>
 		<groupId>org.aa.common</groupId>
 		<artifactId>common</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</dependency>
 
 	<dependency>
