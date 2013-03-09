@@ -1,6 +1,6 @@
 <resources-metadata>
 	<ConfigObject type="Server" shouldCreate="true"
-		relation="Server" shouldIncludeAllChildren="true">
+		relation="Server" shouldIncludeAllChildren="false"> <!-- shouldIncludeAllChildren must be set false else will show all attrs even if server is used for scope only -->
 		<containment>
 			<attribute value="name" />
 		</containment>
