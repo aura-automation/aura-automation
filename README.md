@@ -1,4 +1,4 @@
-Downlocad the binaries from http://www.centauros-solutions.co.uk/aura-quicktest.tar
+Download the binaries from http://www.centauros-solutions.co.uk/aura-quicktest.tar
 
 This code code of aura-automation for WebSphere release automation. Using Aura you can autome 
 
