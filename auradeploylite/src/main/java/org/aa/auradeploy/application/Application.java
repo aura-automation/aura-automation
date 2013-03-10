@@ -1,4 +1,4 @@
-/**	   Copyright [2009] [www.apartech.co.uk]
+/**	   Copyright 
 
 
 **/
@@ -92,9 +92,6 @@ public class Application extends Connection{
 		try{
 			SDLog.log("******************************");
 
-			SDLog.log("Aura Deploy Lite Version "+DeployValues.VERSION+", Apartech Ltd, www.apartech.co.uk." );
-	    	SDLog.log("Copyright Apartech Ltd ");
-			SDLog.log("" );
 
 			SDLog.log( Calendar.getInstance().getTime().toGMTString());
 			SDLog.log( "Connection Mode " + deployInfo.getConnectionMode());

@@ -1,7 +1,7 @@
 /*
  * Created on 23-Jun-2005
  *
- * Copyright (C) 2006  Apartech Ltd. Jatin Bhadra
+ * Copyright (C) 
 
  */
 package org.aa.auradeploy.ant;

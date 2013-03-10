@@ -1,7 +1,7 @@
 /*
  * Created on 23-Jun-2005
  *
- * Copyright (C) 2006  Apartech Ltd. Jatin Bhadra
+ * Copyright (C) 
 
  */
 package org.aa.auradeploy.ant;
@@ -144,10 +144,6 @@ public class AntProcessEAR extends Task
 		throws BuildException{
 		try{	
 				DeployInfo deployInfo = new DeployInfo();
-				SDLog.log("Aura Deploy Lite Version "+DeployValues.VERSION+", Centauros-Solutions Ltd, www.centauros-solutions.co.uk." );
-		    	SDLog.log("Copyright Apartech Ltd ");
-				SDLog.log("" );
-		
 				
 				deployInfo.setApplicationName(mApplicationName);
 				deployInfo.setDeployDataLocation(mDeployDataLocation);

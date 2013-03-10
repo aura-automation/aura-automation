@@ -1,7 +1,7 @@
 /*
  * Created on 12-Apr-2005
  *
- * Copyright (C) 2006  Apartech Ltd. Jatin Bhadra
+ * Copyright (C) 
 
  */
 package org.aa.auradeploy.cluster;
@@ -49,9 +49,6 @@ public class Cluster extends org.aa.common.deploy.Connection{
 	throws DeployException{
 		mdeployInfo = deployInfo;
 		try{
-			SDLog.log("Aura Deploy Lite Version "+DeployValues.VERSION+", Apartech Ltd, www.apartech.co.uk." );
-	    	SDLog.log("Copyright Apartech Ltd ");
-			SDLog.log("" );
 
 			createAdminClient(deployInfo);
 

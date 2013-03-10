@@ -1,7 +1,3 @@
-/**	   Copyright [2009] [www.apartech.com]
-
-
-**/
 package org.aa.aura.ddcreator;
 
 import java.io.IOException;

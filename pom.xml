@@ -6,8 +6,8 @@
   <version>1.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   <scm>
-    <connection>scm:git:file:///software/git-repo/aura.git</connection>
-    <developerConnection>scm:git:file:///software/git-repo/aura.git</developerConnection>
+    <connection>scm:git:git@github.com:aura-automation/aura-automation.git</connection>
+    <developerConnection>scm:git:git@github.com:aura-automation/aura-automation.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
   <dependencies>

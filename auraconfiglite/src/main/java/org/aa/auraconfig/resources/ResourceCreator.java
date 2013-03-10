@@ -1,5 +1,5 @@
 
-/**	   Copyright [2009] [www.apartech.co.uk]
+/**	   Copyright 
 
 
 **/
@@ -94,9 +94,6 @@ public class ResourceCreator extends Connection{
 	public Resource start(Element rootElement,String rulesXML,InputStream referencedResourceXMLInputStream,
 			InputStream resourceXMLMetaDataInputStream,DeployInfo deployInfo) 
 		throws DeployException{
-		SDLog.log("******************************");
-		//SDLog.log( deployInfo.getLicenseInfo().getConfigBrand() + " V3.1.3 ");
-		SDLog.log( "Aura Config Lite V3.1.3, www.apartech.co.uk ");
 		SDLog.log( Calendar.getInstance().getTime().toGMTString());
 		SDLog.log( "Connection Mode " + deployInfo.getConnectionMode());
 		SDLog.log( "Operation Mode : "+  deployInfo.getOperationMode());

@@ -1,4 +1,4 @@
-/**	   Copyright [2005] [www.apartech.com]
+/**	   Copyright 
 
 
 **/

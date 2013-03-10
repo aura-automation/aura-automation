@@ -24,7 +24,7 @@ import com.ibm.websphere.management.application.AppNotification;
 /**
  * @author Jatin
  *
- * Copyright (C) 2006  Apartech Ltd. Jatin Bhadra
+ * Copyright (C) 
 
  */
 

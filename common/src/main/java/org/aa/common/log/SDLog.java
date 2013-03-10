@@ -5,7 +5,7 @@ package org.aa.common.log;
 /**
  * @author Jatin
  *
- * Copyright (C) 2006  Apartech Ltd. Jatin Bhadra
+ * Copyright (C) 
 
  */
 public class SDLog {

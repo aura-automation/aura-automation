@@ -1,4 +1,4 @@
-/**	   Copyright [2009] [www.apartech.co.uk]
+/**	   Copyright 
 
 
 **/
@@ -248,8 +248,6 @@ public class AntTask extends Task{
 
 	AntTask(){
 		
-	//	SDLog.log("Aura Deploy Lite Version 1.0");
-	//	SDLog.log("Copyright Apartech Ltd ");
 		
 	}
 	

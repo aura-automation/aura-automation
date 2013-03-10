@@ -33,7 +33,7 @@ import com.ibm.websphere.management.exception.ConnectorException;
  * 
  * @author Jatin
  *
- * Copyright (C) 2006  Apartech Ltd. Jatin Bhadra
+ * Copyright (C) 
 
  */
 public class EARProcessor {
@@ -44,8 +44,6 @@ public class EARProcessor {
 	
 	public void startwork(DeployInfo deployInfo1)
 		throws AppDeploymentException, SAXException,IOException,DeployException{
-	//	SDLog.log("Aura Deploy Lite Version 3.0" );
-	//	SDLog.log("AparTech Ltd." );
 		
     	if (deployInfo1.isMultiEAR()){
     		SDLog.log("Deploy type is MultiEAR");

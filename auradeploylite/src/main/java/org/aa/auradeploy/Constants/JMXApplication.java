@@ -3,7 +3,7 @@ package org.aa.auradeploy.Constants;
 /**
  * @author Jatin
  *
- * Copyright (C) 2006  Apartech Ltd. Jatin Bhadra
+ * Copyright (C) 
 
  */
 public class JMXApplication {

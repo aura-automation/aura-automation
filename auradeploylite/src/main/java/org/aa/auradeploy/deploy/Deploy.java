@@ -135,8 +135,6 @@ public class Deploy extends Connection{
     public static void main(String[] args)
     	throws DeployException{
     	try{
-    		SDLog.log("    SlickDeploy Version " + DeployValues.VERSION );
-    		SDLog.log("    AparTech." );
 
     		SDLog.log("Starting the deploy process");
     		logger.trace( "Entered in the main method of the Deploy.");
@@ -293,11 +291,6 @@ public class Deploy extends Connection{
     public String startWork(DeployInfo deployInfo)
     	throws DeployException,ConfigServiceException,ConnectorException,AdminException,TransferFailedException{
     	String antNodesVariable = "";
-		SDLog.log("******************************");
-
-		SDLog.log("Aura Deploy Lite Version "+DeployValues.VERSION+", Centauros-Solutions Ltd, www.centauros-solutions.co.uk." );
-    	SDLog.log("Copyright Apartech Ltd ");
-		SDLog.log("" );
 
 		SDLog.log( Calendar.getInstance().getTime().toGMTString());
 		SDLog.log( "Connection Mode " + deployInfo.getConnectionMode());

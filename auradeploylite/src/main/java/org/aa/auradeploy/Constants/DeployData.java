@@ -4,7 +4,7 @@ package org.aa.auradeploy.Constants;
 /**
  * @author Jatin Bhadra
  *
- * Copyright (C) 2006  Apartech Ltd. Jatin Bhadra
+ * Copyright (C) 
 
  */
 public class DeployData {

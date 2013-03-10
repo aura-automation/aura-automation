@@ -1,7 +1,7 @@
 /*
  * Created on 10-Jun-2005
  *
- * Copyright (C) 2006  Apartech Ltd. Jatin Bhadra
+ * Copyright (C) 
 
  */
 package org.aa.common.exception;
