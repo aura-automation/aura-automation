@@ -5,7 +5,7 @@
     <artifactId>aura</artifactId>
     <version>1.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>org.aa.aura</groupId>
+  <groupId>org.aa.auraconfiglite</groupId>
   <artifactId>auraconfiglite</artifactId>
   <packaging>jar</packaging>
   <version>1.0.1-SNAPSHOT</version>
