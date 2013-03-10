@@ -3,7 +3,7 @@
 
   <groupId>org.aa.aura</groupId>
   <artifactId>aura</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <scm>
     <connection>scm:git:git@github.com:aura-automation/aura-automation.git</connection>
