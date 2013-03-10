@@ -14,14 +14,5 @@ This code code of aura-automation for WebSphere release automation. Using Aura y
 Build Instruction
 - Build is maven based
 - WebSphere jars must be added to you local repo. Currect version is dependent on below IBM jars  
-  <dependency>
-		<groupId>com.ibm.websphere.thin.client</groupId>
-		<artifactId>com.ibm.ws.admin.client</artifactId>
-		<version>6.1.0</version>
-	</dependency>
-	<dependency>
-		<groupId>com.ibm.websphere.thin.client</groupId>
-		<artifactId>com.ibm.ws.security.crypto</artifactId>
-		<version>6.1.0</version>
-	</dependency>
+  com.ibm.ws.admin.client.6.1.0.jar and com.ibm.ws.security.crypto.6.1.0.jar
 
