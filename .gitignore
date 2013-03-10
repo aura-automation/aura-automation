@@ -1,0 +1,10 @@
+.metadata
+*~
+.project
+.classpath
+aura-quicktest
+auraconfiglite/target/
+auradeploylite/target/
+common/target/
+target
+images
