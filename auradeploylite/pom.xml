@@ -5,7 +5,7 @@
     <artifactId>aura</artifactId>
     <version>1.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>org.aa.auradeploy</groupId>
+  <groupId>org.aa.auradeploylite</groupId>
   <artifactId>auradeploylite</artifactId>
   <packaging>jar</packaging>
   <name>auradeploylite</name>
