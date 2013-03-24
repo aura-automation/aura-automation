@@ -221,8 +221,9 @@ public class ResourceFinder {
 	 */
 	private Resource matchChildrenResource(Vector<Resource> children,Resource resourceToMatchString  ){
 		
+
 		String resourceType = resourceToMatchString.getName();  
-		
+		System.out.println("looking for resource of type " + resourceType);
 		String matchAttributeValue = null;
 		
 		String matchAttributeName = resourceToMatchString.getResourceMetaData().getMatchAttribute();
@@ -230,29 +231,44 @@ public class ResourceFinder {
 			matchAttributeName = resourceToMatchString.getResourceMetaData().getContainmentAttribute();
 		}
 		//System.out.println("Match Attr is " + matchAttributeName );
-		 
+		System.out.println("looking for resource with match attribute " + matchAttributeName); 
+		
 		if (resourceToMatchString.getAttributeList().get(matchAttributeName) != null){
-			matchAttributeValue =resourceToMatchString.getUnresolvedAttributeList().get(matchAttributeName).toString(); 
+			matchAttributeValue =resourceToMatchString.getUnresolvedAttributeList().get(matchAttributeName).toString();
+			System.out.println("looking for resource with match attribute value " + matchAttributeValue);
+		}else{
+			System.out.println("match attribute value is not defined hence will not use ");	
 		}
-
 		
 		Resource matchResource = null;
-		
+
+		System.out.println("Starting to loop through the tree supplied");
+
 		for (int i=0; i < children.size();i++){
 			Resource childResource = (Resource)children.get(i);
+			System.out.println("Resource no: "+ i + " in the tree is of type :" + childResource.getName());
+
 			if (childResource.getName().equalsIgnoreCase(resourceType)){
+				System.out.println("Resource no: "+ i + " type matching; resource is  " + childResource.getContainmentPath());
+
 				if (matchAttributeName == null || matchAttributeName.equalsIgnoreCase("null") ){
+					System.out.println("Match by type as matchAttributeName was not specified in metadata");
+
 					matchResource = childResource;
-				}else if (childResource.getUnresolvedAttributeList().get(matchAttributeName) !=null){
+				} else if (childResource.getUnresolvedAttributeList().get(matchAttributeName) !=null){
+					System.out.println("Match by attribute value as matchAttributeName was specified in metadata and is also in the resource");
 					if (childResource.getUnresolvedAttributeList().get(matchAttributeName).toString().equalsIgnoreCase(matchAttributeValue)){
+						System.out.println("1st condition has matched with resource " + childResource.getContainmentPath() + " lets see of additional creteria is to be matched");
 						// Check if there is additional match attribute, e.g. in case of EARApplication each resource can be have more then one attribute as
 						// match attribute
 						if (resourceToMatchString.getResourceMetaData().getAdditionalContainmentAttribute()!=null){
+							System.out.println("Additional attributes are to be matched");
 							String [] matchAttributes = resourceToMatchString.getResourceMetaData().getAdditionalContainmentAttribute();
 							boolean match = true;
 							for (int x=0 ; (x < matchAttributes.length && match); x++){
 								String addMatchVal = null;
 								String addMatchVal1 = null;
+								System.out.println("Additional attributes are to be matched : " + matchAttributes[x]);
 								if (resourceToMatchString.getUnresolvedAttributeList().get(matchAttributes[x])!=null){
 									addMatchVal = resourceToMatchString.getUnresolvedAttributeList().get(matchAttributes[x]).toString();
 								}
@@ -266,16 +282,24 @@ public class ResourceFinder {
 								}
 							}
 							if (match){
+								System.out.println("Match has been found " + childResource.getContainmentPath());
 								matchResource = childResource;
 							}
 						}else{
+							matchResource = childResource;
+						}
+						/** else{
+							System.out.println("Match by matching parent ");
 							boolean parentMatch = false;
 							// check that parent tree of the matched resources is same as parent tree of resourcetobematched
 							
 							Resource resourceToMatchParent = resourceToMatchString.getParent();
 							Resource sourceParentResource = childResource.getParent();
 							
-							while (!resourceToMatchParent.getName().equalsIgnoreCase(ResourceConstants.REQUEST)){
+							while (!(resourceToMatchParent.getName().equalsIgnoreCase(ResourceConstants.REQUEST) 
+									|| 
+									resourceToMatchParent.getName().equalsIgnoreCase(ResourceConstants.RESOURCES))){
+								
 								if (matchResource(sourceParentResource.getParent(), resourceToMatchParent )!=null){
 									parentMatch = true;
 								} else{
@@ -292,7 +316,7 @@ public class ResourceFinder {
 								matchResource = childResource;
 								break;
 							}
-						}
+						} **/
 					}
 				}
 			}else{

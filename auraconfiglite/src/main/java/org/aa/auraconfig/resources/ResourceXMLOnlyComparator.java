@@ -20,15 +20,19 @@ import org.aa.common.Constants.DeployValues;
 import org.aa.common.deploy.DeployInfo;
 import org.aa.common.exception.DeployException;
 import org.aa.common.log.SDLog;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class ResourceXMLOnlyComparator{ 
+	private static final Log logger  = LogFactory.getLog(ResourceXMLOnlyComparator.class);	
 
 	Vector<Resource> modifiedResources = new Vector<Resource>();  	
 	
 	public Resource compare(DeployInfo deployInfo1, DeployInfo deployInfo2)
 		throws DeployException,JDOMException,IOException{
 
-	
+		logger.trace("Start Comparing 2 XML files" ); 
+
 		deployInfo1.setOperationMode(DeployValues.OPERATION_MODE_SYNC );
 		
 
@@ -49,6 +53,8 @@ public class ResourceXMLOnlyComparator{
 		/**
 		 * Load the resources from the 1st XML files
 		 */
+		logger.trace("Load resource tree for " + deployInfo1.getResourceXML()); 
+
 		Element rootNode = resourceXMLParser.getResourcesXMLElements(deployInfo1.getResourceXML() ,false);
 		Resource resources = resourceXMLParser.getResourcesFromXML(rootNode,null,resourceXMLMetaDataInputStream,false,deployInfo1,null);
 		Resource referencedResources = resourceXMLParser.getReferenceResources(referencedResourceXML,resourceXMLMetaDataInputStream,false,deployInfo1);
@@ -58,6 +64,7 @@ public class ResourceXMLOnlyComparator{
 			deployInfo2.setSourceDeployInfo(deployInfo1);
 
 			deployInfo2.setOperationMode(DeployValues.OPERATION_MODE_SYNC );
+			logger.trace("Load resource tree for " + deployInfo2.getResourceXML()); 
 
 			Element rootNode2 = resourceXMLParser2.getResourcesXMLElements(deployInfo2.getResourceXML(),false);
 			Resource resources2 = resourceXMLParser2.getResourcesFromXML(rootNode2,null,resourceXMLMetaDataInputStream,false,deployInfo2,null);
@@ -257,25 +264,25 @@ public class ResourceXMLOnlyComparator{
 	public static void main(String[] args) {
 		
 		//	String file1 = "C:\\jatin\\eclipse\\Aura-Config-Test-V61\\resources\\output\\resourceServerCluster-AvatarWAS61.properties-extract.xml";
-			String file1 = "C:\\jatin\\eclipse\\Aura-Config-Test-V61\\resources\\Portal\\ExportPortal_PRIMARY_OUTPUT.xml";
+			String file1 = "/software/jatin/workspace-git/aura-quickstart/workdir/DefaultApp/config/xml/JDBCProviderResource.xml";
 		//	"C:\\jatin\\eclipse\\Aura-Config-Test-V61\\resources\\output\\resourceEARApplication-AvatarProcServer.properties-extract.xml"
 		//	"C:\\jatin\\eclipse\\Aura-Config-Test-V61\\resources\\output\\resourceEARApplication-AvatarWAS61.properties-extract.xml"
 			DeployInfo deployInfo1 = new DeployInfo();
 			deployInfo1.setResourceXML(file1);
-			deployInfo1.setEnvironmentProperties("C:\\jatin\\eclipse\\Aura-Config-Test-V61\\resources\\environmentProperties\\AvatarWAS61.properties");
+			deployInfo1.setEnvironmentProperties("/software/jatin/workspace-git/aura-quickstart/workdir/archive/DefaultApp/config/properties/apartech-vm-04WAS8.properties");
 			deployInfo1.setEnvironmentId(-1);
-			deployInfo1.setSyncResourceXML("C:\\jatin\\eclipse\\Aura-Config-Test-V61\\resources\\output\\XMLOnlyResource.xml");
-			deployInfo1.setSyncReportLocation("C:\\jatin\\eclipse\\Aura-Config-Test-V61\\resources\\report\\XMLOnlyResource.html");
+			deployInfo1.setSyncResourceXML("/software/jatin/workspace-git/aura-quickstart/reports/XMLOnlyResource.xml");
+			deployInfo1.setSyncReportLocation("/software/jatin/workspace-git/aura-quickstart/reports/XMLOnlyResource.html");
 			
 		//	String file2 = "C:\\jatin\\eclipse\\Aura-Config-Test-V61\\resources\\output\\resourceServerCluster-AvatarProcServer.properties-extract.xml";
-			String file2 = "C:\\jatin\\eclipse\\Aura-Config-Test-V61\\resources\\Portal\\ExportPortal_PRIMARY_OUTPUT1.xml";
+			String file2 = "/software/jatin/workspace-git/aura-quickstart/workdir/archive/DefaultApp/config/xml/JDBCProviderResource.xml";
 			DeployInfo deployInfo2 = new DeployInfo();
 			deployInfo2.setResourceXML(file2);
-			deployInfo2.setEnvironmentProperties("C:\\jatin\\eclipse\\Aura-Config-Test-V61\\resources\\environmentProperties\\AvatarProcServer.properties");
+			deployInfo2.setEnvironmentProperties("/software/jatin/workspace-git/aura-quickstart/workdir/archive/DefaultApp/config/properties/apartech-vm-04WAS8.properties");
 			deployInfo2.setEnvironmentId(-1);
 			
-			deployInfo2.setSyncResourceXML("C:\\jatin\\eclipse\\Aura-Config-Test-V61\\resources\\output\\XMLOnlyResource.xml");
-			deployInfo2.setSyncReportLocation("C:\\jatin\\eclipse\\Aura-Config-Test-V61\\resources\\report\\XMLOnlyResource.html");
+			deployInfo2.setSyncResourceXML("/software/jatin/workspace-git/aura-quickstart/reports/XMLOnlyResource.xml");
+			deployInfo2.setSyncReportLocation("/software/jatin/workspace-git/aura-quickstart/reports/XMLOnlyResource.html");
 
 			try {
 				ResourceXMLOnlyComparator resourceXMLOnlyComparator  = new ResourceXMLOnlyComparator ();
