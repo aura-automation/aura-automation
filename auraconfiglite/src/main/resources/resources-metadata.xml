@@ -99,15 +99,15 @@
 			</ConfigObject>
 		</ConfigObject>			
 
-		<ConfigObject type="SIBus" relation="SIBus"  isCommandManaged="false">
+		<ConfigObject type="SIBus" relation="SIBus"  isCommandManaged="true">
 			<containment>
 				<attribute value="name" />
 			</containment>
-				<command createCommand="createSIBus" 
-							modifyCommand="modifySIBus">
+			<command createCommand="createSIBus" 
+						modifyCommand="modifySIBus">
 
-					<attribute-mapping  commandAttribute="bus" type="mapping" configAttribute="name" />
-				</command>
+				<attribute-mapping  commandAttribute="bus" type="mapping" configAttribute="name" />
+			</command>
 
 			<!-- This array type that has be looked up using containment path
 				but with null containment. 

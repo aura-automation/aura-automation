@@ -223,52 +223,52 @@ public class ResourceFinder {
 		
 
 		String resourceType = resourceToMatchString.getName();  
-		System.out.println("looking for resource of type " + resourceType);
+		logger.trace("looking for resource of type " + resourceType);
 		String matchAttributeValue = null;
 		
 		String matchAttributeName = resourceToMatchString.getResourceMetaData().getMatchAttribute();
 		if (matchAttributeName==null){
 			matchAttributeName = resourceToMatchString.getResourceMetaData().getContainmentAttribute();
 		}
-		//System.out.println("Match Attr is " + matchAttributeName );
-		System.out.println("looking for resource with match attribute " + matchAttributeName); 
+		//logger.trace("Match Attr is " + matchAttributeName );
+		logger.trace("looking for resource with match attribute " + matchAttributeName); 
 		
 		if (resourceToMatchString.getAttributeList().get(matchAttributeName) != null){
 			matchAttributeValue =resourceToMatchString.getUnresolvedAttributeList().get(matchAttributeName).toString();
-			System.out.println("looking for resource with match attribute value " + matchAttributeValue);
+			logger.trace("looking for resource with match attribute value " + matchAttributeValue);
 		}else{
-			System.out.println("match attribute value is not defined hence will not use ");	
+			logger.trace("match attribute value is not defined hence will not use ");	
 		}
 		
 		Resource matchResource = null;
 
-		System.out.println("Starting to loop through the tree supplied");
+		logger.trace("Starting to loop through the tree supplied");
 
 		for (int i=0; i < children.size();i++){
 			Resource childResource = (Resource)children.get(i);
-			System.out.println("Resource no: "+ i + " in the tree is of type :" + childResource.getName());
+			logger.trace("Resource no: "+ i + " in the tree is of type :" + childResource.getName());
 
 			if (childResource.getName().equalsIgnoreCase(resourceType)){
-				System.out.println("Resource no: "+ i + " type matching; resource is  " + childResource.getContainmentPath());
+				logger.trace("Resource no: "+ i + " type matching; resource is  " + childResource.getContainmentPath());
 
 				if (matchAttributeName == null || matchAttributeName.equalsIgnoreCase("null") ){
-					System.out.println("Match by type as matchAttributeName was not specified in metadata");
+					logger.trace("Match by type as matchAttributeName was not specified in metadata");
 
 					matchResource = childResource;
 				} else if (childResource.getUnresolvedAttributeList().get(matchAttributeName) !=null){
-					System.out.println("Match by attribute value as matchAttributeName was specified in metadata and is also in the resource");
+					logger.trace("Match by attribute value as matchAttributeName was specified in metadata and is also in the resource");
 					if (childResource.getUnresolvedAttributeList().get(matchAttributeName).toString().equalsIgnoreCase(matchAttributeValue)){
-						System.out.println("1st condition has matched with resource " + childResource.getContainmentPath() + " lets see of additional creteria is to be matched");
+						logger.trace("1st condition has matched with resource " + childResource.getContainmentPath() + " lets see of additional creteria is to be matched");
 						// Check if there is additional match attribute, e.g. in case of EARApplication each resource can be have more then one attribute as
 						// match attribute
 						if (resourceToMatchString.getResourceMetaData().getAdditionalContainmentAttribute()!=null){
-							System.out.println("Additional attributes are to be matched");
+							logger.trace("Additional attributes are to be matched");
 							String [] matchAttributes = resourceToMatchString.getResourceMetaData().getAdditionalContainmentAttribute();
 							boolean match = true;
 							for (int x=0 ; (x < matchAttributes.length && match); x++){
 								String addMatchVal = null;
 								String addMatchVal1 = null;
-								System.out.println("Additional attributes are to be matched : " + matchAttributes[x]);
+								logger.trace("Additional attributes are to be matched : " + matchAttributes[x]);
 								if (resourceToMatchString.getUnresolvedAttributeList().get(matchAttributes[x])!=null){
 									addMatchVal = resourceToMatchString.getUnresolvedAttributeList().get(matchAttributes[x]).toString();
 								}
@@ -282,14 +282,14 @@ public class ResourceFinder {
 								}
 							}
 							if (match){
-								System.out.println("Match has been found " + childResource.getContainmentPath());
+								logger.trace("Match has been found " + childResource.getContainmentPath());
 								matchResource = childResource;
 							}
 						}else{
 							matchResource = childResource;
 						}
 						/** else{
-							System.out.println("Match by matching parent ");
+							logger.trace("Match by matching parent ");
 							boolean parentMatch = false;
 							// check that parent tree of the matched resources is same as parent tree of resourcetobematched
 							
@@ -308,8 +308,8 @@ public class ResourceFinder {
 								}
 								resourceToMatchParent = resourceToMatchParent.getParent();
 								sourceParentResource = sourceParentResource.getParent();
-								System.out.println( "passing parent as " + sourceParentResource.getContainmentPath());
-								System.out.println( " resourceToMatchParent passing parent as " + resourceToMatchParent.getContainmentPath());
+								logger.trace( "passing parent as " + sourceParentResource.getContainmentPath());
+								logger.trace( " resourceToMatchParent passing parent as " + resourceToMatchParent.getContainmentPath());
 								
 							}
 							if (parentMatch){

@@ -2,9 +2,10 @@
 *~
 .project
 .classpath
-aura-quicktest
+aura-quickstart
 auraconfiglite/target/
 auradeploylite/target/
 common/target/
 target
 images
+aura-automation.wiki/

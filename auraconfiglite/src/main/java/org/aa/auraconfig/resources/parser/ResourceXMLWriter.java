@@ -688,7 +688,7 @@ public class ResourceXMLWriter {
 
 				//		root.setAttribute(new org.jdom.Attribute("noNamespaceSchemaLocation", "resources.xsd"));
 						
-				createResourceXMLFile(root ,resources.getChildren(),deployInfo,reportFileOutputStream,"Modified",false);
+				createResourceXMLFile(root , resources.getChildren(), deployInfo, reportFileOutputStream, "Modified", false);
 				Document doc = new Document(root);
 				
 				/** 

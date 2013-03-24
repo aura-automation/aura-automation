@@ -5,6 +5,15 @@
   <artifactId>aura</artifactId>
   <version>1.0.3-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+     </license>
+  </licenses>
+
   <scm>
     <connection>scm:git:git@github.com:aura-automation/aura-automation.git</connection>
     <developerConnection>scm:git:git@github.com:aura-automation/aura-automation.git</developerConnection>
