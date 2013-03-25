@@ -1,20 +1,31 @@
-Download the binaries from http://www.centauros-solutions.co.uk/aura-quicktest.tar
 
-This code code of aura-automation for WebSphere release automation. Using Aura you can autome 
+aura-automation provides 2 modules auraconfiglite and auradeploylite. auraconfiglite is used for WebSphere configuration automation and auradeploylite is used for deployment automation.
+Download
 
-- Application Deloyment with lots of EAR configurations
-- Application operations like uninstall, install, stop, start, update, export
-- WebSphere configuration automation
--   Create configuration 
--   Preview configuration changes
--   Monitor configurations for drift from know set
--   Extract configuration
--   Transform configuration to be environment augnostics
-- Rule based configuration management
-- ANT based hence easy to integrated with any existing scripts
+Download the quick start zip from
+https://sourceforge.net/projects/auraautomation/files/
+auraconfiglite key features
 
-Build Instruction
-- Build is maven based
-- WebSphere jars must be added to you local repo. Currect version is dependent on below IBM jars  
-  com.ibm.ws.admin.client.6.1.0.jar and com.ibm.ws.security.crypto.6.1.0.jar
+    Autodiscovery of configuration item attributes
+    WebSphere configuration automation
+    XML based easy to read configuration files
+    Preview configuration changes
+    Monitor configurations for drift from know set
+    Extract configuration
+    Transform configuration to be environment augnostics
+    Rule based configuration management
+    ANT based; easy to integrated with any existing scripts
+    Easily extensible as metadata defined in xml files
+
+auradeploylite key features
+
+    Application Deloyment with EAR configurations
+    Application operations like uninstall, install, stop, start, update, export
+    Supports multi ear deployments
+    Node Sync monitoring after deloyment
+
+Documentation
+
+https://github.com/aura-automation/aura-automation/wiki
+
 
