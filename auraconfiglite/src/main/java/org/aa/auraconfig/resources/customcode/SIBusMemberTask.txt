@@ -1,0 +1,138 @@
+addSIBusMember
+Description: Add a member to a bus.
+
+Target object:   None
+
+Arguments:
+  *bus - Name of bus to add member to.
+  node - To specify a server bus member, supply node and server name, but not cl
+uster name or WebSphere MQ server name.
+  server - To specify a server bus member, supply node and server name, but not
+cluster name or WebSphere MQ server name.
+  cluster - To specify a cluster bus member, supply cluster name, but not node n
+ame, server name or WebSphere MQ server name.
+  wmqServer - To specify a WebSphere MQ server bus member, supply a WebSphere MQ
+ server name, but not node name, server name or cluster name.
+  enableAssistance - Select this option to enable messaging engine policy assist
+ance. A policy name must also be supplied.
+  policyName - The name of the policy that the messaging engine policy assistanc
+e should apply. Messaging engine policy assistance must be enabled.
+  host - This is the override host name of the host to which a connection will b
+e established in order to communicate with a WebSphere MQ queue manager or a Web
+Sphere MQ queue sharing group, supply with a WebSphere MQ server name, but not n
+ode name, server name or cluster name.
+  port - This is the override port number monitored by a WebSphere MQ queue mana
+ger or WebSphere MQ queue sharing group listener, which is listening for connect
+ions, supply with a WebSphere MQ server name, but not node name, server name or
+cluster name.
+  channel - This is the override name of the WebSphere MQ server connection chan
+nel that will be used to establish a connection to the WebSphere MQ queue manage
+r or WebSphere MQ queue sharing group, supply with a WebSphere MQ server name, b
+ut not node name, server name or cluster name.
+  securityAuthAlias - The authentication alias that will be supplied when connec
+ting to the WebSphere MQ server, supply with a WebSphere MQ server name, but not
+ node name, server name or cluster name.
+  transportChain - Overridden value for the WebSphere MQ server bus member "tran
+sportChain" attribute.  Refer to the createSIBWMQServer command for a descriptio
+n of this parameter.
+  trustUserIds - Overridden value for the WebSphere MQ server bus member "trustU
+serIds" attribute.  Refer to the createSIBWMQServer command for a description of
+ this parameter
+  fileStore - Indicates that a file store is to be created. No value is needed.
+  dataStore - Indicates that a data store is to be created. No value is needed.
+  logSize - The size, in megabytes, of the log file.
+  minPermanentStoreSize - The minimum size, in megabytes, of the permanent store
+ file.
+  maxPermanentStoreSize - The maximum size, in megabytes, of the permanent store
+ file.
+  unlimitedPermanentStoreSize - True if the permanent file store size has no lim
+it, false otherwise.
+  permanentStoreDirectory - The name of the store files directory for permanent
+data.
+  minTemporaryStoreSize - The minimum size, in megabytes, of the temporary store
+ file.
+  maxTemporaryStoreSize - The maximum size, in megabytes, of the temporary store
+ file.
+  unlimitedTemporaryStoreSize - True if the temporary file store size has no lim
+it, false otherwise.
+  temporaryStoreDirectory - The name of the store files directory for temporary
+data.
+  logDirectory - The name of the log files directory.
+  createDefaultDatasource - When adding a server to a bus, set this to true if a
+ default datasource is required. When adding a cluster to a bus, this parameter
+must not be supplied.
+  datasourceJndiName - The JNDI name of the datasource to be referenced from the
+ datastore created when the member is added to the bus.
+  authAlias - The name of the authentication alias used to authenticate the mess
+aging engine to the data source.
+  createTables - Select this option if the messaging engine creates the database
+ tables for the data store. Otherwise, the database administrator must create th
+e database tables.
+  schemaName - The name of the database schema used to contain the tables for th
+e data store.
+  failover - Indicates that the messaging engine created can failover to other s
+ervers. This option can be used when messaging engine policy assistance is enabl
+ed and the "CUSTOM" policy is selected.
+  failback - Indicates that the messaging engine created can fail back to a pref
+erred server. This option can be used when messaging engine policy assistance is
+ enabled and the "CUSTOM" policy is selected.
+  initialHeapSize - The initial JVM heap size in MB of the server, or of each se
+rver in the cluster, will be set to this value.
+  maxHeapSize - The maximum JVM heap size in MB of the server, or of each server
+ in the cluster, will be set to this value.
+  preferredServersOnly - Indicates that the messaging engine created can failove
+r to other servers. This option can be used when messaging engine policy assista
+nce is enabled and the "CUSTOM" policy is selected.
+  virtualQueueManagerName - The virtual queue manager name of the SIBus that the
+ WebSphere MQ queue manager sees.
+
+Steps:
+   preferredServerList - The list of preferred servers for the messaging engine
+created.  This option can be used when messaging engine policy assistance is ena
+bled and the "CUSTOM" policy is selected.
+
+
+
+
+
+wsadmin>$AdminTask help removeSIBusMember
+WASX8006I: Detailed help for command: removeSIBusMember
+
+Description: Remove a member from a bus.
+
+Target object:   None
+
+Arguments:
+  *bus - Name of bus to remove member from.
+  node - To specify a server bus member, supply node and server name, but not cl
+uster name or WebSphere MQ server name.
+  server - To specify a server bus member, supply node and server name, but not
+cluster name or WebSphere MQ server name.
+  cluster - To specify a cluster bus member, supply cluster name, but not node n
+ame, server name or WebSphere MQ server name.
+  wmqServer - To specify an WebSphere MQ server bus member, supply WebSphere MQ
+server name, but not node name, server name or cluster name.
+
+Steps:
+
+
+wsadmin>$AdminTask help showSIBusMember
+WASX8006I: Detailed help for command: showSIBusMember
+
+Description: Show a member from a bus.
+
+Target object:   None
+
+Arguments:
+  *bus - Name of bus to show member from.
+  node - To specify a server bus member, supply node and server name, but not cl
+uster name or WebSphere MQ server name.
+  server - To specify a server bus member, supply node and server name, but not
+cluster name or WebSphere MQ server name.
+  cluster - To specify a cluster bus member, supply cluster name, but not node n
+ame, server name or WebSphere MQ server name.
+  wmqServer - To specify an WebSphere MQ server bus member, supply WebSphere MQ
+server name, but not node name, server name or cluster name.
+
+Steps:
+

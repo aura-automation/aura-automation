@@ -370,8 +370,7 @@
 				<containment>
 					<attribute value="memberName" />
 				</containment>
-				<command createCommand="createClusterMember" 
-						modifyCommand="">
+				<command createCommand="createClusterMember" >
 						<attribute-mapping commandAttribute="clusterName" type="parent" configAttribute="clusterName" />
 
 					<step name="memberConfig">

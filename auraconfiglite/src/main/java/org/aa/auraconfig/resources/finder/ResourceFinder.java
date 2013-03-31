@@ -2,7 +2,7 @@
 
 
 **/
-package org.aa.auraconfig.resources;
+package org.aa.auraconfig.resources.finder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +14,9 @@ import javax.management.AttributeNotFoundException;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
+import org.aa.auraconfig.resources.Resource;
+import org.aa.auraconfig.resources.ResourceConstants;
+import org.aa.auraconfig.resources.ResourceHelper;
 import org.aa.auraconfig.resources.parser.ResourceParserHelper;
 import org.aa.auraconfig.resources.parser.ResourceXMLParser;
 import org.apache.commons.logging.Log;

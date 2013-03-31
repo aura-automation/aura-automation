@@ -2,7 +2,7 @@
 
 
 **/
-package org.aa.auraconfig.resources;
+package org.aa.auraconfig.resources.applicationmanager;
 
 import com.ibm.websphere.management.application.client.AppDeploymentTask;
 

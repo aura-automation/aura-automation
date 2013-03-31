@@ -13,7 +13,7 @@ import java.util.Vector;
 
 import org.aa.auraconfig.resources.AttributeRule;
 import org.aa.auraconfig.resources.LinkAttribute;
-import org.aa.auraconfig.resources.ResourceRulesMetaData;
+import org.aa.auraconfig.resources.rules.ResourceRulesMetaData;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom.Attribute;
@@ -402,8 +402,11 @@ public class ResourceMetaDataHelper implements ResourceMetaDataConstants{
 		Element commandElement = node.getChild("command");
 		CommandMetaData commandMetaData = new CommandMetaData();
 		if (commandElement!=null){
-			commandMetaData.setCreateCommand(commandElement.getAttribute("createCommand").getValue());
-			commandMetaData.setModifyCommand(commandElement.getAttribute("modifyCommand").getValue());
+			if (commandElement.getAttribute("createCommand")!= null)
+				commandMetaData.setCreateCommand(commandElement.getAttribute("createCommand").getValue());
+			if (commandElement.getAttribute("modifyCommand")!= null)
+				commandMetaData.setModifyCommand(commandElement.getAttribute("modifyCommand").getValue());
+			
 			Element stepElement = commandElement.getChild("step");
 			
 			if (stepElement !=null){

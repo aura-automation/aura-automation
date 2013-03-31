@@ -1,4 +1,4 @@
-package org.aa.auraconfig.resources;
+package org.aa.auraconfig.resources.configreader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,13 @@ import javax.management.AttributeNotFoundException;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
+import org.aa.auraconfig.resources.LinkAttribute;
+import org.aa.auraconfig.resources.Resource;
+import org.aa.auraconfig.resources.ResourceConstants;
+import org.aa.auraconfig.resources.ResourceDiffReportHelper;
+import org.aa.auraconfig.resources.ResourceHelper;
 import org.aa.auraconfig.resources.customcode.CustomCodeManager;
+import org.aa.auraconfig.resources.finder.ResourceFinder;
 import org.aa.auraconfig.resources.metadata.CommandLinkAttribute;
 import org.aa.auraconfig.resources.metadata.ResourceMetaData;
 import org.aa.auraconfig.resources.parser.ResourceParserHelper;

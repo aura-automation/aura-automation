@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Vector;
 
-import org.aa.auraconfig.resources.ResourceRulesMetaData;
+import org.aa.auraconfig.resources.rules.ResourceRulesMetaData;
 
 
 public class ResourceMetaData {

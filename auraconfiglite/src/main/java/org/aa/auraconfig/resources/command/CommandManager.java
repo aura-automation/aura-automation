@@ -2,7 +2,7 @@
 
 
 **/
-package org.aa.auraconfig.resources;
+package org.aa.auraconfig.resources.command;
 
 
 import java.util.ArrayList;
@@ -14,6 +14,11 @@ import javax.management.AttributeList;
 import javax.management.AttributeNotFoundException;
 import javax.management.ObjectName;
 
+import org.aa.auraconfig.resources.DiffAttribute;
+import org.aa.auraconfig.resources.Resource;
+import org.aa.auraconfig.resources.ResourceConstants;
+import org.aa.auraconfig.resources.ResourceDiffReportHelper;
+import org.aa.auraconfig.resources.ResourceHelper;
 import org.aa.auraconfig.resources.metadata.CommandAttribute;
 import org.aa.auraconfig.resources.metadata.CommandLinkAttribute;
 import org.apache.commons.logging.Log;
@@ -63,7 +68,7 @@ public class CommandManager {
 		//AdminCommand command = cmdMgr.createCommand("createCluster");
 		
 		//AdminCommand command = cmdMgr.createCommand("createSIBDestination");
-		System.out.println("Command that will run " + resource.getResourceMetaData().getCommandMetaData().getCreateCommand());
+		logger.trace("Command that will run " + resource.getResourceMetaData().getCommandMetaData().getCreateCommand());
 		AdminCommand  command = cmdMgr.createCommand(resource.getResourceMetaData().getCommandMetaData().getCreateCommand());
 		command.setConfigSession(session);
 
@@ -75,14 +80,14 @@ public class CommandManager {
 		if (resource.getResourceMetaData().getCommandMetaData().getStepCommandMetaData()!=null ){
 			
 			TaskCommand taskCommand = (TaskCommand)command;
-			System.out.println( " taskCommand.listCommandSteps " + taskCommand.listCommandSteps().length+ " " + taskCommand.listCommandSteps().toString());
+			logger.trace( " taskCommand.listCommandSteps " + taskCommand.listCommandSteps().length+ " " + taskCommand.listCommandSteps().toString());
 			for (int k = 0 ; k < taskCommand.listCommandSteps().length ; k++ ){
-				System.out.println( " taskCommand.listCommandSteps -" + k + " " + taskCommand.listCommandSteps()[k]);
+				logger.trace( " taskCommand.listCommandSteps -" + k + " " + taskCommand.listCommandSteps()[k]);
 			}
 	//		while(taskCommand.hasNextStep()){
-	//			System.out.println(" Steps are " + taskCommand.nextStep().getName());
+	//			logger.trace(" Steps are " + taskCommand.nextStep().getName());
 	//		}
-			System.out.println(" getting memberConfig from " + taskCommand.getName() );
+			logger.trace(" getting memberConfig from " + taskCommand.getName() );
 			CommandStep step = taskCommand.getCommandStep("memberConfig");
 			//CommandStep step = taskCommand.gotoStep(resource.getResourceMetaData().getCommandMetaData().getStepCommandMetaData().getStepName());
 			attributeListFromXMLForStep = resource.getAttributeList();
@@ -91,26 +96,26 @@ public class CommandManager {
 			String[] attributeListFromXMLKeysForStep =  (String[])attributeListFromXML.keySet().toArray(new String[0]);
 			
 			for (int i=0 ; i < attributeListFromXMLKeysForStep.length ; i++){
-				System.out.println("		Processing attribute from XML for Step " +  attributeListFromXMLKeysForStep[i]);
+				logger.trace("		Processing attribute from XML for Step " +  attributeListFromXMLKeysForStep[i]);
 				if (attributeMappingsMetaDataForStep.get(attributeListFromXMLKeysForStep[i]) != null){
-					System.out.println("		attributeMappingsMetaData is not null"  );
+					logger.trace("		attributeMappingsMetaData is not null"  );
 					CommandAttribute  commandAttribute  = attributeMappingsMetaDataForStep.get(attributeListFromXMLKeysForStep[i]);
 					String type = commandAttribute.getType();
 					if (type.equalsIgnoreCase(ResourceConstants.COMMAND_MAPPING)){
-						System.out.println("	Attribute mapping COMMAND_MAPPING for Step " + commandAttribute.getCommandAttribute()  + " - " + attributeListFromXMLForStep.get(attributeListFromXMLKeysForStep[i]));
+						logger.trace("	Attribute mapping COMMAND_MAPPING for Step " + commandAttribute.getCommandAttribute()  + " - " + attributeListFromXMLForStep.get(attributeListFromXMLKeysForStep[i]));
 						step.setParameter(
 								commandAttribute.getCommandAttribute() ,
 								attributeListFromXMLForStep.get(attributeListFromXMLKeysForStep[i]));
 						
 					}else if  (type.equalsIgnoreCase(ResourceConstants.COMMAND_ADDITIONAL)){
-						System.out.println("	Attribute mapping COMMAND_ADDITIONAL for Step " + commandAttribute.getCommandAttribute()  + " - " + attributeListFromXMLForStep.get(attributeListFromXMLKeysForStep[i]));
+						logger.trace("	Attribute mapping COMMAND_ADDITIONAL for Step " + commandAttribute.getCommandAttribute()  + " - " + attributeListFromXMLForStep.get(attributeListFromXMLKeysForStep[i]));
 						step.setParameter(
 								commandAttribute.getCommandAttribute() ,
 								attributeListFromXMLForStep.get(attributeListFromXMLKeysForStep[i]));
 					}
 				}else{
-					System.out.println("		attributeMappingsMetaData is null"  );
-					System.out.println("	Attribute mapping for Step " + attributeListFromXMLKeysForStep[i] + " - " + attributeListFromXMLForStep.get(attributeListFromXMLKeysForStep[i]));
+					logger.trace("		attributeMappingsMetaData is null"  );
+					logger.trace("	Attribute mapping for Step " + attributeListFromXMLKeysForStep[i] + " - " + attributeListFromXMLForStep.get(attributeListFromXMLKeysForStep[i]));
 					step.setParameter(attributeListFromXMLKeysForStep[i],attributeListFromXMLForStep.get(attributeListFromXMLKeysForStep[i]));
 				}
 			}
@@ -124,7 +129,7 @@ public class CommandManager {
 		String[] attributeListFromXMLKeys =  (String[])attributeListFromXML.keySet().toArray(new String[0]);
 		
 		for (int i=0 ; i < attributeListFromXMLKeys.length ; i++){
-			System.out.println("		Processing attribute from XML " +  attributeListFromXMLKeys[i]);
+			logger.trace("		Processing attribute from XML " +  attributeListFromXMLKeys[i]);
 			/**
 			 * Check so that attribute that we are processing in not step/task attribute, if it is do not add it to 
 			 * Command as it is already added to Step, plus it will fail if added to command   
@@ -133,23 +138,23 @@ public class CommandManager {
 				if (attributeMappingsMetaData.get(attributeListFromXMLKeys[i]) != null){
 					CommandAttribute  commandAttribute  = attributeMappingsMetaData.get(attributeListFromXMLKeys[i]);
 					String type = commandAttribute.getType();
-					System.out.println("		attributeMappingsMetaData for command is not null of type " + type   );
+					logger.trace("		attributeMappingsMetaData for command is not null of type " + type   );
 
 					if (type.equalsIgnoreCase(ResourceConstants.COMMAND_MAPPING)){
-						System.out.println("	Attribute mapping COMMAND_MAPPING " + commandAttribute.getCommandAttribute()  + " - " + attributeListFromXML.get(attributeListFromXMLKeys[i]));
+						logger.trace("	Attribute mapping COMMAND_MAPPING " + commandAttribute.getCommandAttribute()  + " - " + attributeListFromXML.get(attributeListFromXMLKeys[i]));
 						command.setParameter(
 								commandAttribute.getCommandAttribute() ,
 								attributeListFromXML.get(attributeListFromXMLKeys[i]));
 						
 					}else if  (type.equalsIgnoreCase(ResourceConstants.COMMAND_ADDITIONAL)){
-						System.out.println("	Attribute mapping COMMAND_ADDITIONAL " + commandAttribute.getCommandAttribute()  + " - " + attributeListFromXML.get(attributeListFromXMLKeys[i]));
+						logger.trace("	Attribute mapping COMMAND_ADDITIONAL " + commandAttribute.getCommandAttribute()  + " - " + attributeListFromXML.get(attributeListFromXMLKeys[i]));
 						command.setParameter(
 								commandAttribute.getCommandAttribute() ,
 								attributeListFromXML.get(attributeListFromXMLKeys[i]));
 					}	
 				}else{
-					System.out.println("		attributeMappingsMetaData is null"  );
-					System.out.println("	Attribute mapping " + attributeListFromXMLKeys[i] + " - " + attributeListFromXML.get(attributeListFromXMLKeys[i]));
+					logger.trace("		attributeMappingsMetaData is null"  );
+					logger.trace("	Attribute mapping " + attributeListFromXMLKeys[i] + " - " + attributeListFromXML.get(attributeListFromXMLKeys[i]));
 					command.setParameter(attributeListFromXMLKeys[i],attributeListFromXML.get(attributeListFromXMLKeys[i]));
 				}
 			}
@@ -165,11 +170,11 @@ public class CommandManager {
 			String type = commandAttribute.getType();
 
 			if (type.equalsIgnoreCase(ResourceConstants.COMMAND_PARENT)){
-				System.out.println("	Attribute mapping " + commandAttribute.getCommandAttribute()  + " - " + ResourceHelper.getResourceIdentifierName(resource.getParent()));
+				logger.trace("	Attribute mapping " + commandAttribute.getCommandAttribute()  + " - " + ResourceHelper.getResourceIdentifierName(resource.getParent()));
 				command.setParameter(commandAttribute.getCommandAttribute() , 
 						ResourceHelper.getResourceIdentifierName(resource.getParent()));
 			}else if  (type.equalsIgnoreCase(ResourceConstants.COMMAND_CONSTANT)){
-				System.out.println("	Attribute mapping COMMAND_CONSTANT  " + commandAttribute.getCommandAttribute()  + " - " + commandAttribute.getConstantValue());
+				logger.trace("	Attribute mapping COMMAND_CONSTANT  " + commandAttribute.getCommandAttribute()  + " - " + commandAttribute.getConstantValue());
 				command.setParameter(
 						commandAttribute.getCommandAttribute() ,
 						commandAttribute.getConstantValue());
@@ -206,18 +211,18 @@ public class CommandManager {
 			SDLog.log("Result is " + result.isSuccessful() );
 			if (!result.isSuccessful()){
 				
-				System.out.println("Looping throw results")	;
+				logger.trace("Looping throw results")	;
 				ArrayList results = ((ArrayList)command.getResult());
 				for (int i=0; i < results.size();i++ ){
 					((Exception)results.get(i)).printStackTrace();
 				}
 
 			}
-			System.out.println( (ObjectName)result.getResult());
+			logger.trace( (ObjectName)result.getResult());
 			return (ObjectName)result.getResult();
 	//		ArrayList results = ((ArrayList)result.getResult());
 	//		for (int i=0; i < results.size();i++ ){
-	//			System.out.println( " i " + (String)results.get(i));
+	//			logger.trace( " i " + (String)results.get(i));
 	//		}
 
 	//		SDLog.log(result.getMessages().toString());
@@ -229,7 +234,7 @@ public class CommandManager {
 			} else{
 				ArrayList results = ((ArrayList)result.getResult());
 				for (int i=0; i < results.size();i++ ){
-					System.out.println( " i " + (String)results.get(i));
+					logger.trace( " i " + (String)results.get(i));
 				}
 			}
 		}

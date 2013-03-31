@@ -2,7 +2,7 @@
 
 
 **/
-package org.aa.auraconfig.resources;
+package org.aa.auraconfig.resources.xmlcompartor;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
+import org.aa.auraconfig.resources.DiffAttribute;
+import org.aa.auraconfig.resources.Resource;
+import org.aa.auraconfig.resources.ResourceConstants;
+import org.aa.auraconfig.resources.ResourceDiffReportHelper;
+import org.aa.auraconfig.resources.finder.ResourceFinder;
 import org.aa.auraconfig.resources.parser.ResourceXMLParser;
 import org.aa.auraconfig.resources.parser.ResourceXMLWriter;
 import org.jdom.Element;

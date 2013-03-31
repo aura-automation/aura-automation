@@ -2,7 +2,7 @@
 
 
 **/
-package org.aa.auraconfig.resources;
+package org.aa.auraconfig.resources.applicationmanager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +14,9 @@ import java.util.Vector;
 
 import javax.management.ObjectName;
 
+import org.aa.auraconfig.resources.Resource;
+import org.aa.auraconfig.resources.ResourceDiffReportHelper;
+import org.aa.auraconfig.resources.ResourceHelper;
 import org.aa.auraconfig.resources.metadata.ResourceMetaData;
 import org.aa.auraconfig.resources.metadata.ResourceMetaDataHelper;
 import org.aa.auraconfig.resources.parser.ResourceParserHelper;

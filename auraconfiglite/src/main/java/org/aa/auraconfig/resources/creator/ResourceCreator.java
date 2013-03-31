@@ -3,7 +3,7 @@
 
 
 **/
-package org.aa.auraconfig.resources;
+package org.aa.auraconfig.resources.creator;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,12 +21,22 @@ import javax.management.AttributeNotFoundException;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
+import org.aa.auraconfig.resources.DiffAttribute;
+import org.aa.auraconfig.resources.LinkAttribute;
+import org.aa.auraconfig.resources.Resource;
+import org.aa.auraconfig.resources.ResourceConstants;
+import org.aa.auraconfig.resources.ResourceDiffReportHelper;
+import org.aa.auraconfig.resources.ResourceHelper;
+import org.aa.auraconfig.resources.applicationmanager.ApplicationManager;
+import org.aa.auraconfig.resources.command.CommandManager;
+import org.aa.auraconfig.resources.configreader.WASConfigReader;
 import org.aa.auraconfig.resources.customcode.CustomCodeManager;
 import org.aa.auraconfig.resources.metadata.CommandAttribute;
 import org.aa.auraconfig.resources.metadata.CommandLinkAttribute;
 import org.aa.auraconfig.resources.metadata.ResourceMetaData;
 import org.aa.auraconfig.resources.parser.ResourceXMLParser;
 import org.aa.auraconfig.resources.parser.ResourceXMLWriter;
+import org.aa.auraconfig.resources.rules.RuleValidator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom.Element;
@@ -443,26 +453,30 @@ public class ResourceCreator extends Connection{
 				}else{
 					logger.trace("Type " + type + " is not an Array");
 					// check if the current object exists if not create it 
-	
-					if (!resourceCreatorHelper.checkIfConfigObjectExists(children[childCnt],referenceResources,deployInfo,scope,configService,session,allResources )){
-							// when creating a new object check if command managed then we will have to call 
+					boolean doesResourceExistsInTarget = resourceCreatorHelper.checkIfConfigObjectExists(children[childCnt],referenceResources,deployInfo,scope,configService,session,allResources );
+					if (!doesResourceExistsInTarget){
+							// when creating a new object check if command managed or custom code managed then call 
 							// AdminTask style commands to create the object.
-						
+							ObjectName newObjectConfigId =null; 
+							// if version 2 and command managed
+							logger.trace("Will create new object for  " + type );
+							
 							if ((deployInfo.getVersionInfo().getMajorNumber() >=2 ) && (children[childCnt].getResourceMetaData().isCommandManaged())){
-								ObjectName newObjectConfigId = createConfigObjectUsingCommand(children[childCnt],referenceResources,scope,deployInfo );
+								newObjectConfigId = createConfigObjectUsingCommand(children[childCnt],referenceResources,scope,deployInfo );
+							// if version 2 and custom code managed
 							}else{
-								logger.trace("Will create new object for  " + type );
-								ObjectName newObjectConfigId = createConfigObject(children[childCnt],referenceResources,scope,deployInfo );
+								newObjectConfigId = createConfigObject(children[childCnt],referenceResources,scope,deployInfo );
 								// As new resource does not exists and has been created we will increase the counter of differnt resources
-								if (newObjectConfigId==null){
-									logger.warn(" New not Created " );
-									couldCreateNewObject = false;
-								}else{
-									logger.trace(" New Created " + newObjectConfigId.getCanonicalName() );
-									SDLog.log(" Object Created " );
-									children[childCnt].setConfigId(newObjectConfigId);
-								}
-							}						
+							}
+							if (newObjectConfigId==null){
+								logger.warn(" New not Created " );
+								couldCreateNewObject = false;
+							}else{
+								logger.trace(" New Created " + newObjectConfigId.getCanonicalName() );
+								SDLog.log(" Object Created " );
+								children[childCnt].setConfigId(newObjectConfigId);
+							}
+							
 					}else{
 						logger.trace("Object Exists " + children[childCnt].getContainmentPath() + " will call modify");
 						

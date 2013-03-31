@@ -1,4 +1,4 @@
-package org.aa.auraconfig.resources;
+package org.aa.auraconfig.resources.creator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +10,16 @@ import javax.management.AttributeList;
 import javax.management.AttributeNotFoundException;
 import javax.management.ObjectName;
 
+import org.aa.auraconfig.resources.DiffAttribute;
+import org.aa.auraconfig.resources.LinkAttribute;
+import org.aa.auraconfig.resources.Resource;
+import org.aa.auraconfig.resources.ResourceConstants;
+import org.aa.auraconfig.resources.ResourceDiffReportHelper;
+import org.aa.auraconfig.resources.ResourceHelper;
+import org.aa.auraconfig.resources.command.CommandManager;
+import org.aa.auraconfig.resources.configreader.WASConfigReaderHelper;
 import org.aa.auraconfig.resources.customcode.CustomCodeManager;
+import org.aa.auraconfig.resources.finder.ResourceFinder;
 import org.aa.auraconfig.resources.metadata.CommandAttribute;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,6 +32,7 @@ import org.aa.common.properties.helper.PropertyHelper;
 import com.ibm.websphere.management.AdminClient;
 import com.ibm.websphere.management.Session;
 import com.ibm.websphere.management.configservice.ConfigService;
+import com.ibm.websphere.management.configservice.ConfigServiceHelper;
 import com.ibm.websphere.management.exception.ConfigServiceException;
 import com.ibm.websphere.management.exception.ConnectorException;
 
@@ -48,10 +58,10 @@ public class ResourceCreatorHelper {
 			Vector<Resource> modifiedResources, Resource allResources)
 		throws AttributeNotFoundException, ConfigServiceException, ConnectorException,DeployException{
 		
-		if ((deployInfo.getVersionInfo().getMajorNumber() >=2 ) ){ 
-			if (resource.getResourceMetaData().getCustomCodeManaged() !=null){
+		if ((deployInfo.getVersionInfo().getMajorNumber() >=2 ) && (resource.getResourceMetaData().getCustomCodeManaged() !=null)){ 
+			
 		
-			System.out.println(" ResourceCreator: Will modify using Custom code");
+			logger.trace(" ResourceCreator: Will modify using Custom code");
 
 			CustomCodeManager customCodeManager = new CustomCodeManager();
 			ArrayList<DiffAttribute> modifiedAttrs =  customCodeManager.modify(session, configService, resource,resource.getConfigId() , deployInfo, adminClient,scope, allResources,referenceResources) ;
@@ -60,14 +70,16 @@ public class ResourceCreatorHelper {
 			}
 			logger.trace("Adding this resource to modified resource list " + resource.getContainmentPath());
 			modifiedResources.add(resource);
-			}else if (resource.getResourceMetaData().isCommandManaged()){
-				System.out.println(" ResourceCreator: Will modify using Command code");
+		}else if((deployInfo.getVersionInfo().getMajorNumber() >=2 ) && (resource.getResourceMetaData().isCommandManaged()) &&
+				resource.getResourceMetaData().getCommandMetaData().getModifyCommand() !=null ){ 
+		
+				logger.trace(" ResourceCreator: Will modify using Command code");
 
-			}
+		}
 		// Has to be the after the custom code managed as any resource that is custom code will also be command managed.	
 		//}else if (children[childCnt].getResourceMetaData().isCommandManaged()){
 		//	modifyConfigObjectUsingCommand(children[childCnt],referenceResources,scope,deployInfo );
-		}else{
+		else{
 		
 			// variables for difference report generation 	
 			ArrayList<DiffAttribute> modifiedAttributes = new ArrayList<DiffAttribute>();
@@ -122,7 +134,11 @@ public class ResourceCreatorHelper {
 			throws AttributeNotFoundException, ConfigServiceException, ConnectorException,DeployException{
 
 		HashMap<String, String> resourceAttributeMap = resource.getAttributeList();
-		AttributeList metaInfo =  configService.getAttributesMetaInfo(resource.getName());
+		// not using resource type as in case on custom code resource and wasobject are not same, e.g with sibdatasource wasobject sibusmember resource is passed
+		
+		String resourceDataType= ConfigServiceHelper.getConfigDataType(resourceWasObject);
+		
+		AttributeList metaInfo =  configService.getAttributesMetaInfo(resourceDataType);
 		ResourceDiffReportHelper resourceDiffReportHelper = new ResourceDiffReportHelper (); 
 
 		boolean shouldModifyCurrentAttribute = false;

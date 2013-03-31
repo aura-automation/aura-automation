@@ -12,11 +12,11 @@ import javax.management.ObjectName;
 
 import org.aa.auraconfig.resources.DiffAttribute;
 import org.aa.auraconfig.resources.Resource;
-import org.aa.auraconfig.resources.ResourceCreatorHelper;
 import org.aa.auraconfig.resources.ResourceDiffReportHelper;
 import org.aa.auraconfig.resources.ResourceHelper;
-import org.aa.auraconfig.resources.WASConfigReader;
-import org.aa.auraconfig.resources.WASConfigReaderHelper;
+import org.aa.auraconfig.resources.configreader.WASConfigReader;
+import org.aa.auraconfig.resources.configreader.WASConfigReaderHelper;
+import org.aa.auraconfig.resources.creator.ResourceCreatorHelper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

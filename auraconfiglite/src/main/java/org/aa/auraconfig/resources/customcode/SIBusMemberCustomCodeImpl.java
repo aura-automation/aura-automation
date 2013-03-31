@@ -12,12 +12,12 @@ import javax.management.ObjectName;
 
 import org.aa.auraconfig.resources.DiffAttribute;
 import org.aa.auraconfig.resources.Resource;
-import org.aa.auraconfig.resources.ResourceCreatorHelper;
 import org.aa.auraconfig.resources.ResourceDiffReportHelper;
-import org.aa.auraconfig.resources.ResourceFinder;
 import org.aa.auraconfig.resources.ResourceHelper;
-import org.aa.auraconfig.resources.WASConfigReader;
-import org.aa.auraconfig.resources.WASConfigReaderHelper;
+import org.aa.auraconfig.resources.configreader.WASConfigReader;
+import org.aa.auraconfig.resources.configreader.WASConfigReaderHelper;
+import org.aa.auraconfig.resources.creator.ResourceCreatorHelper;
+import org.aa.auraconfig.resources.finder.ResourceFinder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -113,7 +113,7 @@ public class SIBusMemberCustomCodeImpl {
 			Resource resource,ObjectName configObject,DeployInfo deployInfo,
 			 AdminClient adminClient,ObjectName scope, Resource allResources,Resource referenceResources) throws DeployException{
 	//	attributes =  PropertyHelper.getArrayFromCommaSeperated(resource.getResourceMetaData().getCustomCodeAttributes() );
-		System.out.println(" Get the attriutes");
+	//	System.out.println(" Get the attriutes");
 		
 		
 		ArrayList modifiedAttributes = new ArrayList();
@@ -140,25 +140,26 @@ public class SIBusMemberCustomCodeImpl {
 						AttributeList dataStore =  (AttributeList )configService.getAttribute(session, configIDs.get(i), "dataStore");
 						logger.trace( " Got SIBDatastore, child of SIBMessagingEngine ");
 
-						ObjectName attrObjectName = ConfigServiceHelper.createObjectName((AttributeList)dataStore);
-						AttributeList changedAttrList = new AttributeList ();
+						ObjectName datastoreObjectName = ConfigServiceHelper.createObjectName((AttributeList)dataStore);
+						AttributeList datastoreChangedAttrList = new AttributeList ();
 				/**
 				 * Logic here is to get the metadata for the attributes for Object like dataStore, MQEngine
 				 * 
 				 * Then loop through each and see if the value is different in the xml or new from xml. if so process it 		
 				 */
-						AttributeList attributeMetaInfo =  configService.getAttributesMetaInfo("SIBDatastore");
-						Iterator attrMetaInfoListIterator = attributeMetaInfo.iterator();
-						while (attrMetaInfoListIterator.hasNext()){
+						AttributeList datastoreMetaInfo =  configService.getAttributesMetaInfo("SIBDatastore");
+						Iterator datastoreMetaInfoListIterator = datastoreMetaInfo.iterator();
+						
+						while (datastoreMetaInfoListIterator.hasNext()){
 							
-							Attribute configObjectAttributeMetaInfo = (Attribute)attrMetaInfoListIterator.next();
-							String resourceAttributeName = configObjectAttributeMetaInfo.getName();
-							logger.trace( " Checing if attribute needs to be modified " + resourceAttributeName  );
+							Attribute datastoreAttributeMetaInfo = (Attribute)datastoreMetaInfoListIterator.next();
+							String datastoreAttributeName = datastoreAttributeMetaInfo.getName();
+							logger.trace( " Checking if attribute needs to be modified " + datastoreAttributeName  );
 
 							//modifyAttribute(dataStore,attributeName,modifiedAttributes, resource);
 							
-							modifyAttribute(attrObjectName, resourceAttributeName,modifiedAttributes,resource,
-									configService, changedAttrList,session, adminClient,scope, 
+							modifyAttribute(datastoreObjectName, datastoreAttributeName,modifiedAttributes,resource,
+									configService, datastoreChangedAttrList,session, adminClient,scope, 
 									allResources,referenceResources,deployInfo);
 							
 						}
@@ -167,7 +168,7 @@ public class SIBusMemberCustomCodeImpl {
 				//			System.out.println(" Modify attributes for " + dataStoreAttributes.get(k) );
 				//			modifyAttribute(dataStore,dataStoreAttributes.get(k),modifiedAttributes, resource);
 				//		}
-						configService.setAttributes(session, attrObjectName, changedAttrList);
+						configService.setAttributes(session, datastoreObjectName, datastoreChangedAttrList);
 
 					}
 
@@ -190,22 +191,22 @@ public class SIBusMemberCustomCodeImpl {
 	 * @param resource
 	 * @throws AttributeNotFoundException
 	 */
-	private void modifyAttribute(ObjectName resourceWasObject, String resourceAttributeName,ArrayList<DiffAttribute> modifiedAttributes,Resource resource,
-			ConfigService configService, AttributeList changedAttrList,Session session, AdminClient adminClient,ObjectName scope, 
+	private void modifyAttribute(ObjectName resourceWasObject, String resourceAttributeName,ArrayList<DiffAttribute> modifiedAttributes,
+			Resource siBusMemberResource,	ConfigService configService, AttributeList changedAttrList,Session session, AdminClient adminClient,ObjectName scope, 
 			Resource allResources,Resource referenceResources,DeployInfo deployInfo)
 		throws AttributeNotFoundException,ConnectorException,ConfigServiceException,DeployException{
 		
-		HashMap<String, String> resourceAttributeList = resource.getAttributeList(); 
+		HashMap<String, String> siBusMemberResourceAttributeList = siBusMemberResource.getAttributeList(); 
 		ResourceCreatorHelper resourceCreatorHelper = new ResourceCreatorHelper();
 		if (configService.getAttribute(session, resourceWasObject, resourceAttributeName) !=null){
 
 			String configAttributeValue = configService.getAttribute(session, resourceWasObject, resourceAttributeName).toString();
-			String resourceAttributeValue =  resourceAttributeList.get(resourceAttributeName );
+			String resourceAttributeValue =  siBusMemberResourceAttributeList.get(resourceAttributeName );
 		
 			if (((configAttributeValue==null) || (!configAttributeValue.equals(resourceAttributeValue))) && (resourceAttributeValue!=null)) {
-				System.out.println(resourceAttributeName + " different resourceAttributeValue:" + resourceAttributeValue + " configAttributeValue:"+ configAttributeValue);
+				logger.trace(resourceAttributeName + " different resourceAttributeValue:" + resourceAttributeValue + " configAttributeValue:"+ configAttributeValue);
 				
-				resourceCreatorHelper.modifyAttribute(resource, resourceWasObject, resourceAttributeName, modifiedAttributes, changedAttrList,
+				resourceCreatorHelper.modifyAttribute(siBusMemberResource, resourceWasObject, resourceAttributeName, modifiedAttributes, changedAttrList,
 						configService, session, adminClient, scope, allResources, referenceResources, deployInfo); 
 			}
 				

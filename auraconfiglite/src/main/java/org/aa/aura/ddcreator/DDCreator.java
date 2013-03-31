@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-import org.aa.auraconfig.resources.ApplicationReadManager;
 import org.aa.auraconfig.resources.Resource;
 import org.aa.auraconfig.resources.ResourceDiffReportHelper;
-import org.aa.auraconfig.resources.ResourceFinder;
+import org.aa.auraconfig.resources.applicationmanager.ApplicationReadManager;
+import org.aa.auraconfig.resources.finder.ResourceFinder;
 import org.aa.auraconfig.resources.parser.ResourceXMLParser;
 import org.aa.auraconfig.resources.parser.ResourceXMLWriter;
 import org.apache.commons.logging.Log;

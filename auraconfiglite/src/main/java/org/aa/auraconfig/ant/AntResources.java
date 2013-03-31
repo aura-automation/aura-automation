@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.aa.auraconfig.resources.Resource;
-import org.aa.auraconfig.resources.ResourceCreator;
+import org.aa.auraconfig.resources.creator.ResourceCreator;
 import org.apache.tools.ant.BuildException;
 
 import org.aa.common.Constants.LicenseConstants;

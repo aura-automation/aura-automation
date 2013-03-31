@@ -8,8 +8,8 @@ import java.io.InputStream;
 
 import org.aa.auraconfig.ant.AntValidator;
 import org.aa.auraconfig.ant.base.BaseAntXML;
-import org.aa.auraconfig.resources.ResourceCreator;
-import org.aa.auraconfig.resources.ResourceXMLOnlyComparator;
+import org.aa.auraconfig.resources.creator.ResourceCreator;
+import org.aa.auraconfig.resources.xmlcompartor.ResourceXMLOnlyComparator;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 

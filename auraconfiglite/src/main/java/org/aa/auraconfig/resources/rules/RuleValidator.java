@@ -2,7 +2,7 @@
 
 
 **/
-package org.aa.auraconfig.resources;
+package org.aa.auraconfig.resources.rules;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +10,10 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.aa.auraconfig.resources.AttributeRule;
+import org.aa.auraconfig.resources.InvalidAttribute;
+import org.aa.auraconfig.resources.Resource;
+import org.aa.auraconfig.resources.ResourceStatsHelper;
 import org.aa.auraconfig.resources.metadata.ResourceMetaDataConstants;
 import org.aa.auraconfig.resources.metadata.ResourceMetaDataHelper;
 import org.apache.commons.logging.Log;
