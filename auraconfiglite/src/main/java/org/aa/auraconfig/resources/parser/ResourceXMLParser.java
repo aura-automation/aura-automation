@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.util.HashMap;
 
 import org.aa.auraconfig.resources.Resource;
 import org.aa.auraconfig.resources.ResourceConstants;
@@ -191,6 +192,11 @@ public class ResourceXMLParser {
 			// if there are child nodes from root node then start processing
 			if (rootResourcesElement.getChildren().size()>0){
 				rootResourceJavaObject.setName(ResourceConstants.RESOURCES);
+				if (deployInfo.getVersionInfo().getMajorNumber() == 2){
+					HashMap<String, String> rootResourceAttrs  = new HashMap<String, String>();
+					rootResourceAttrs.put("version", "2.0");
+					rootResourceJavaObject.setAttributeList(rootResourceAttrs);
+				}
 				/**
 				 * If InputStream is null then the parsing is for resource xml
 				 * If InputStream is not null then the parsing is for reference resource xml

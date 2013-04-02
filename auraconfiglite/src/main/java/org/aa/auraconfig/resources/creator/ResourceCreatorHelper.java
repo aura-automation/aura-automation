@@ -21,6 +21,7 @@ import org.aa.auraconfig.resources.configreader.WASConfigReaderHelper;
 import org.aa.auraconfig.resources.customcode.CustomCodeManager;
 import org.aa.auraconfig.resources.finder.ResourceFinder;
 import org.aa.auraconfig.resources.metadata.CommandAttribute;
+import org.aa.auraconfig.resources.metadata.ResourceMetaData;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -31,6 +32,9 @@ import org.aa.common.log.SDLog;
 import org.aa.common.properties.helper.PropertyHelper;
 import com.ibm.websphere.management.AdminClient;
 import com.ibm.websphere.management.Session;
+import com.ibm.websphere.management.cmdframework.CommandException;
+import com.ibm.websphere.management.cmdframework.CommandMgrInitException;
+import com.ibm.websphere.management.cmdframework.CommandNotFoundException;
 import com.ibm.websphere.management.configservice.ConfigService;
 import com.ibm.websphere.management.configservice.ConfigServiceHelper;
 import com.ibm.websphere.management.exception.ConfigServiceException;
@@ -51,12 +55,16 @@ public class ResourceCreatorHelper {
 	 * @param resource
 	 * @param resourceMetaData
 	 * @param referencedResources
+	 * @throws DeployException 
+	 * @throws ConnectorException 
+	 * @throws ConfigServiceException 
+	 *
 	 */
 	
 	public void  modifyConfigObject(Resource resource,Resource referenceResources,DeployInfo deployInfo, 
 			ConfigService configService, AdminClient adminClient, Session session, ObjectName scope, 
 			Vector<Resource> modifiedResources, Resource allResources)
-		throws AttributeNotFoundException, ConfigServiceException, ConnectorException,DeployException{
+		throws AttributeNotFoundException, DeployException, ConfigServiceException, ConnectorException{
 		
 		if ((deployInfo.getVersionInfo().getMajorNumber() >=2 ) && (resource.getResourceMetaData().getCustomCodeManaged() !=null)){ 
 			
@@ -70,12 +78,14 @@ public class ResourceCreatorHelper {
 			}
 			logger.trace("Adding this resource to modified resource list " + resource.getContainmentPath());
 			modifiedResources.add(resource);
-		}else if((deployInfo.getVersionInfo().getMajorNumber() >=2 ) && (resource.getResourceMetaData().isCommandManaged()) &&
-				resource.getResourceMetaData().getCommandMetaData().getModifyCommand() !=null ){ 
-		
-				logger.trace(" ResourceCreator: Will modify using Command code");
-
 		}
+		else if((deployInfo.getVersionInfo().getMajorNumber() >=2 ) && (resource.getResourceMetaData().isCommandManaged()) &&
+				resource.getResourceMetaData().getCommandMetaData().getModifyCommand() !=null ){ 
+			logger.trace(" ResourceCreator: Will modify using Command code");
+			CommandManager commandManager = new CommandManager();
+			commandManager.modifyResource(resource, adminClient, session);
+
+		} 
 		// Has to be the after the custom code managed as any resource that is custom code will also be command managed.	
 		//}else if (children[childCnt].getResourceMetaData().isCommandManaged()){
 		//	modifyConfigObjectUsingCommand(children[childCnt],referenceResources,scope,deployInfo );
@@ -176,14 +186,16 @@ public class ResourceCreatorHelper {
 	
 				String type = ResourceHelper.getAttributeType(metaInfo,resourceAttributeName );
 				
-				if ( (deployInfo.getVersionInfo().getMajorNumber() >=2 ) && (matchingCommandAttribute!=null) && (matchingCommandAttribute.getCommandLinkAttribute() !=null)){
+				if ( (deployInfo.getVersionInfo().getMajorNumber() >=2 ) && (matchingCommandAttribute!=null) 
+						&& (matchingCommandAttribute.getCommandLinkAttribute() !=null)){
+					SDLog.log("Attribute cannot be modified "+ resourceAttributeName  );
 					logger.trace( "		Is CommandlinkAttribute: " + resourceAttributeName  );
-					CommandManager  commandManager = new CommandManager();
+			/**		CommandManager  commandManager = new CommandManager();
 					DiffAttribute diffAttribute  =  commandManager.modifyResourceLinkAttriute(resource, resourceAttributeName, matchingCommandAttribute.getCommandLinkAttribute(), 
 							adminClient, session, configService);
 					if (diffAttribute  !=null){
 						modifiedAttributes.add(diffAttribute);
-					}
+					} **/
 					
 				}else if (commandAttributetype.equalsIgnoreCase(ResourceConstants.COMMAND_ADDITIONAL) && (deployInfo.getVersionInfo().getMajorNumber() >=2 )){
 					logger.trace( "		Is COMMAND_ADDITIONAL hence do nothing: " + resourceAttributeName  );

@@ -104,7 +104,7 @@
 				<attribute value="name" />
 			</containment>
 			<command createCommand="createSIBus" 
-						modifyCommand="modifySIBus">
+						>
 
 				<attribute-mapping  commandAttribute="bus" type="mapping" configAttribute="name" />
 			</command>
@@ -221,7 +221,7 @@
 				parent is attribute name that links to the parent. configAttribute here is attribute name from parent
 				 -->
 				<command createCommand="createSIBDestination" 
-							modifyCommand="modifySIBDestination">
+							>
 					<attribute-mapping  commandAttribute="bus" type="parent" configAttribute="bus" />
 					<attribute-mapping  commandAttribute="name" type="mapping" configAttribute="identifier" />
 					<attribute-mapping commandAttribute="type" type="constant" configAttribute="type" constantValue="Queue"/>

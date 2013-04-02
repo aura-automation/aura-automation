@@ -63,36 +63,36 @@ public class SIForeignBusCustomCodeImpl {
 	 * @throws DeployException
 	 */
 	public HashMap<String, String> extract (Session session,ConfigService configService,
-			Resource resource,ObjectName configObject,DeployInfo deployInfo ,HashMap<String, String> incomingAttributeList) 
+			Resource resource,ObjectName sibForeignBusON,DeployInfo deployInfo ,HashMap<String, String> incomingAttributeList) 
 			throws DeployException,MalformedObjectNameException,AttributeNotFoundException{
 
 		//	attributes =  PropertyHelper.getArrayFromCommaSeperated(resource.getResourceMetaData().getCustomCodeAttributes() );
 		try {
 			//System.out.println( " Attribute Size for "  + resource.getContainmentPath() + " is " + resource.getAttributeList().size());
 			logger.trace( " Get virtualLink "  );
-			AttributeList attributeValue = (AttributeList)configService.getAttribute(session,configObject,"virtualLink");
-			if (attributeValue !=null){
-				ObjectName attributeValueObject = ConfigServiceHelper.createObjectName(attributeValue); 
-				System.out.println(" ************ " +  ConfigServiceHelper.getConfigDataType(attributeValueObject));
+			AttributeList virtualLinkObject = (AttributeList)configService.getAttribute(session,sibForeignBusON,"virtualLink");
+			if (virtualLinkObject !=null){
+				ObjectName virtualLinkON = ConfigServiceHelper.createObjectName(virtualLinkObject); 
+				System.out.println(" ************ " +  ConfigServiceHelper.getConfigDataType(virtualLinkON));
 
-				String configType = ConfigServiceHelper.getConfigDataType(attributeValueObject);
+				String configType = ConfigServiceHelper.getConfigDataType(virtualLinkON);
 				String routingType = "Indirect";
 				String type;
 				if (configType.equalsIgnoreCase("SIBVirtualMQLink")){
 					incomingAttributeList.put("routingType", "MQ");
 					incomingAttributeList.put("type", "Direct");
-					checkInCommingAttribute(attributeValueObject,incomingAttributeList, resource, 
+					checkInCommingAttribute(virtualLinkON,incomingAttributeList, resource, 
 							configService, session ,deployInfo, 0,"SIBVirtualMQLink" );
 				
 				}else if (configType.equalsIgnoreCase("SIBVirtualGatewayLink")){
 					incomingAttributeList.put("routingType", "SIBus");
 					incomingAttributeList.put("type", "Direct");
-					checkInCommingAttribute(attributeValueObject,incomingAttributeList, resource, 
+					checkInCommingAttribute(virtualLinkON,incomingAttributeList, resource, 
 							configService, session ,deployInfo, 0,"SIBVirtualGatewayLink" );
 
 				}
 			}else{
-				ObjectName nextHopForeignBusObjectName = (ObjectName)configService.getAttribute(session,configObject,"nextHop");
+				ObjectName nextHopForeignBusObjectName = (ObjectName)configService.getAttribute(session,sibForeignBusON,"nextHop");
 				incomingAttributeList.put("nextHop", configService.getAttribute(session,nextHopForeignBusObjectName ,"name").toString());
 				
 				incomingAttributeList.put("type", "Indirect");
@@ -122,18 +122,15 @@ public class SIForeignBusCustomCodeImpl {
 			Resource resource,ObjectName configObject,DeployInfo deployInfo,
 			 AdminClient adminClient,ObjectName scope, Resource allResources,Resource referenceResources) throws DeployException{
 	//	attributes =  PropertyHelper.getArrayFromCommaSeperated(resource.getResourceMetaData().getCustomCodeAttributes() );
-		System.out.println(" Get the attriutes");
-		
-		
 		ArrayList modifiedAttributes = new ArrayList();
 		ResourceDiffReportHelper resourceDiffReportHelper = new ResourceDiffReportHelper();
 		try {
 			
 			// Start - Modify Attributes of SIBMQLinkSenderChannel
-			AttributeList virtualLinkAttributeList =  (AttributeList )configService.getAttribute(session, configObject, "virtualLink");
-			ObjectName attrObjectName = ConfigServiceHelper.createObjectName((AttributeList)virtualLinkAttributeList );
+			AttributeList virtualLinkObject =  (AttributeList )configService.getAttribute(session, configObject, "virtualLink");
+			ObjectName virtualLinkON = ConfigServiceHelper.createObjectName((AttributeList)virtualLinkObject);
 		
-			modifyObjectName("SIBVirtualMQLink", attrObjectName, modifiedAttributes, resource, configService, session, adminClient, 
+			modifyObjectName("SIBVirtualMQLink", virtualLinkON, modifiedAttributes, resource, configService, session, adminClient, 
 					scope, allResources, referenceResources, deployInfo);
 
 			
@@ -184,10 +181,14 @@ public class SIForeignBusCustomCodeImpl {
 			Attribute configObjectAttributeMetaInfo = (Attribute)attrMetaInfoListIterator.next();
 			String resourceAttributeName = configObjectAttributeMetaInfo.getName();
 			logger.trace( " Checking if attribute needs to be modified " + resourceAttributeName  );
-			if (!(resourceAttributeName.equalsIgnoreCase("name") && resource.getResourceMetaData().getType().equalsIgnoreCase("SIBVirtualMQLink"))){
-				modifyAttribute(resourceWasObject, resourceAttributeName,modifiedAttributes,resource,
-						configService, changedAttrList,session, adminClient,scope, 
-						allResources,referenceResources,deployInfo);
+			//if (resource.getResourceMetaData().getType().equalsIgnoreCase("SIBVirtualMQLink")){
+			if((resourceAttributeName.equalsIgnoreCase("name") && (objectType.equalsIgnoreCase("SIBVirtualMQLink")))){
+				logger.trace( " Ignore the name attribute for SIBVirtualMQLink");
+			}else{
+					modifyAttribute(resourceWasObject, resourceAttributeName,modifiedAttributes,resource,
+							configService, changedAttrList,session, adminClient,scope, 
+							allResources,referenceResources,deployInfo);
+				
 			}
 			
 		}
@@ -216,7 +217,7 @@ public class SIForeignBusCustomCodeImpl {
 			String resourceAttributeValue =  resourceAttributeList.get(resourceAttributeName );
 		
 			if (((configAttributeValue==null) || (!configAttributeValue.equals(resourceAttributeValue))) && (resourceAttributeValue!=null)) {
-				System.out.println(resourceAttributeName + " different resourceAttributeValue:" + resourceAttributeValue + " configAttributeValue:"+ configAttributeValue);
+				logger.trace(resourceAttributeName + " different resourceAttributeValue:" + resourceAttributeValue + " configAttributeValue:"+ configAttributeValue);
 				
 				resourceCreatorHelper.modifyAttribute(resource, resourceWasObject, resourceAttributeName, modifiedAttributes, changedAttrList,
 						configService, session, adminClient, scope, allResources, referenceResources, deployInfo); 
