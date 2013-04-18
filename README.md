@@ -1,9 +1,11 @@
-
 aura-automation provides 2 modules auraconfiglite and auradeploylite. auraconfiglite is used for WebSphere configuration automation and auradeploylite is used for deployment automation.
 Download
 
 Download the quick start zip from
 https://sourceforge.net/projects/auraautomation/files/
+or 
+http://download.centauros-solutions.co.uk/aura-quickstart-1.0.3-RC1-1.zip
+
 auraconfiglite key features
 
     Autodiscovery of configuration item attributes
