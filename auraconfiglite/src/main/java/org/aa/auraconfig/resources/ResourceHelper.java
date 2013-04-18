@@ -567,6 +567,12 @@ public class ResourceHelper {
 		return false;
 	}
 	
+	/**
+	 * Used from UI
+	 * @param resource
+	 * @param deployInfo
+	 * @return
+	 */
 	public static boolean isResourceDummyInSource(Resource resource, DeployInfo deployInfo){
 		String[] currentSelectedResource =  deployInfo.getCurrentSelectedResources();
 		if (currentSelectedResource!=null){

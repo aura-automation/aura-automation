@@ -260,19 +260,27 @@ public class WASConfigReader {
 					/**
 					 * This is used for the prematch that is required for types like Queue Connection factories, Queue etc
 					 */	
+					logger.trace("Check if resource must be pre matched");
 					boolean syncPreMatch  = resourceFinder.doesConfigObjectPreMatch(session, configService, resource, configIDs[configObjectCnt], referencedResources);
-					
-					if (syncPreMatch && 
-							(getMatchingResourceForConfigObject(configService, session, resource, configIDs[configObjectCnt], configObjectCnt,referencedResources,attributeNameForDuplicateObjectTypeChild,deployInfo ) == null)){
+					logger.trace("Get matching Peer resource ");
+					/**
+					 * Only if there is an entry for this resource type in input xml we need to show the config object in output. 
+					 * For e.g. when user is EAR config and want in sharelib mapping which is specified in input then only show that 
+					 */
+					Resource matchingPeerResource = getMatchingResourceForConfigObject(configService, session, resource, configIDs[configObjectCnt], configObjectCnt,referencedResources,attributeNameForDuplicateObjectTypeChild,deployInfo );
+					logger.trace("Matching Peer resource complete");
+
+					if (syncPreMatch && (matchingPeerResource == null)){
 					//if ((getMatchingResourceForConfigObject(configService, session, resource, configIDs[configObjectCnt], configObjectCnt) == null)){
 						/**
 						 * If type like servercluster is a dummy then get all server cluster, used in UI to populate the tree.
 						 * else if servercluster is used as a scope for e.g. to look for JDBCProvider then exclude server cluster
 						 */
 						resource.setDummy( ResourceHelper.isResourceDummy(resource, resource.getResourceMetaData()));
-						
-						if ((!typeOnExcludeList(resource.getName())) || ResourceHelper.isResourceDummy(resource, resource.getResourceMetaData()) || ResourceHelper.isResourceDummyInSource(resource,deployInfo)){
-						
+						boolean isSelectedForExtractInUI = ResourceHelper.isResourceDummyInSource(resource,deployInfo);
+						//
+						if ((!typeOnExcludeList(resource.getName())) || resource.isDummy() || isSelectedForExtractInUI ){
+							logger.trace("Start build the resource object as extract for this resource is required");
 							Resource newResource = wasConfigReaderHelper.createNewResource(session, configService, resource, configIDs[configObjectCnt],referencedResources,deployInfo,"",count);
 							resource.getParent().addDifferentChildCount();
 							resource.getParent().addInComingChild(newResource);
@@ -435,23 +443,24 @@ public class WASConfigReader {
 		if (!ResourceHelper.isResourceDummy(resource, resource.getResourceMetaData())){
 			//logger.trace ("Getting attribute " + resource.getResourceMetaData().getContainmentPath().toString() + " from config object " + configObject. );
 			String matchAttribute = resource.getResourceMetaData().getContainmentPath().toString();
-			
-			if (resource.getResourceMetaData().getMatchAttribute()!=null){
-				matchAttribute = resource.getResourceMetaData().getMatchAttribute();
-			}
-			
+			logger.trace("Match Attribute is " + matchAttribute);
 			String attributeValueOfConfigObject = "null";
-			
-			if (configService.getAttribute(session,configObject,matchAttribute)!=null){
-				attributeValueOfConfigObject = configService.getAttribute(session,configObject,matchAttribute).toString();
-			}
-			
 			LinkAttribute  linkAttribute = ResourceHelper.getLinkAttribute(resource, matchAttribute); 
-	
-			if (linkAttribute != null){
-				attributeValueOfConfigObject = wasConfigReaderHelper.getLinkAttributeValue (session, configService, linkAttribute, attributeValueOfConfigObject).toString() ;
+
+			if (resource.getResourceMetaData().getMatchAttribute()!=null) {
+				matchAttribute = resource.getResourceMetaData().getMatchAttribute();
+				logger.trace("Getting " + matchAttribute + " from  config for resource " + resource.getContainmentPath());	
+				if (configService.getAttribute(session,configObject,matchAttribute)!=null){
+					logger.trace("Got" + matchAttribute + " from  config for resource " + resource.getContainmentPath());
+					attributeValueOfConfigObject = configService.getAttribute(session,configObject,matchAttribute).toString();
+				}
+				
+				if (linkAttribute != null){
+					attributeValueOfConfigObject = wasConfigReaderHelper.getLinkAttributeValue (session, configService, linkAttribute, attributeValueOfConfigObject).toString() ;
+				}
+				
 			}
-	
+			
 			// SDLog.log("		Checking if resource " + attributeValueOfConfigObject + " exists "); 
 	
 			for (int i = 0; i < resourceChildren.size(); i++) {

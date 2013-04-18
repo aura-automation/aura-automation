@@ -1,6 +1,6 @@
 <resources-metadata>
 
-	<ConfigObject type="Security" shouldCreate="false" isAttributeCount0="true" shouldIncludeAllChildren="true">
+	<ConfigObject type="Security" shouldCreate="false" isAttributeCount0="true" shouldIncludeAllChildren="false">
 		<containment>
 			<attribute value="null" />
 		</containment>

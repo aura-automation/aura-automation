@@ -147,6 +147,8 @@ public class WASConfigReaderHelper {
 			defaultResourceMetaData.setContainmentAttribute("null");
 			defaultResourceMetaData.setContainmentPath("null");
 			//defaultResourceMetaData.setFindAndResolve(true);
+			logger.trace( " attributeName " + attributeName +" type is  " + attributeType);
+
 			logger.trace(" resource type " + newResource.getResourceMetaData().getType() + " should include all children from resource metadata "  + newResource.getResourceMetaData().isShouldIncludeAllChildren());
 			logger.trace( " attributeName " + attributeName +" isCollection  " + isCollection  );
 			logger.trace( " attributeName " + attributeName +" isReference  " + isReference  );
@@ -209,6 +211,13 @@ public class WASConfigReaderHelper {
 	
 			}else if (attributeType.equalsIgnoreCase("int")){
 	
+				if (!((defaultAttributeValue!=null) && ( new Integer(defaultAttributeValue.toString()).intValue() == (new Integer (attributeValue.toString())).intValue()))){
+					logger.trace("Adding init attribute value " + attributeValue + " to attribute " + attributeName + " type int");
+					attributeValue  = new Integer (attributeValue.toString());
+					attributeList.put(attributeName, attributeValue);
+				}
+			}else if (attributeType.equalsIgnoreCase("Integer")){
+				
 				if (!((defaultAttributeValue!=null) && ( new Integer(defaultAttributeValue.toString()).intValue() == (new Integer (attributeValue.toString())).intValue()))){
 					logger.trace("Adding init attribute value " + attributeValue + " to attribute " + attributeName + " type int");
 					attributeValue  = new Integer (attributeValue.toString());

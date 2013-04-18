@@ -22,6 +22,7 @@ import org.aa.auraconfig.resources.ResourceHelper;
 import org.aa.auraconfig.resources.ResourceStatsHelper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jdom.Attribute;
 import org.jdom.Comment;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -47,7 +48,13 @@ public class ResourceXMLWriter {
 		FileWriter reportFileOutputStream = null;
 		String syncResourceXML = deployInfo.getSyncResourceXML();
 		Element root = new Element(resources.getName());
-
+		
+		
+		if (deployInfo.getVersionInfo().getMajorNumber()==2){
+			root.setAttribute(new Attribute("version", "2.0"));
+			//System.out.println(" ++++++++++++ resource xml is version 2 " );
+		}
+		
 		// set this so that in report we dont show any incoming resources
 		if (deployInfo.getOperationMode().equalsIgnoreCase(DeployValues.OPERATION_MODE_SYNC )) 
 			syncOperation = true;
@@ -903,9 +910,9 @@ public class ResourceXMLWriter {
 				 *  
 				 */
 				if ((childResource.getInComingChildren()!=null) && (childResource.getInComingChildren().size()>0) && (syncOperation) ){
-					newElement.addContent(new Comment("Start - Incoming changes from WAS Repository"));
+					//newElement.addContent(new Comment("Start - Incoming changes from WAS Repository"));
 					createResourceXMLFile(newElement,childResource.getInComingChildren(),deployInfo,reportFileOutputStream,"Incoming",arrayStringOnly);
-					newElement.addContent(new Comment("End - Incoming changes from WAS Repository"));
+					//newElement.addContent(new Comment("End - Incoming changes from WAS Repository"));
 				}
 				if (!arrayStringOnly){
 					if (anyChildPresent){
