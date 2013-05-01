@@ -33,6 +33,9 @@ public class ResourceConstants {
 	public static final String COMMAND_MAPPING = "mapping";
 	public static final String COMMAND_CONSTANT = "constant";
 	
+	public static final String RESOURCE_CONFIG_ID = "__internal_config_id";
+	
+	
 	
 
 }

@@ -160,7 +160,7 @@ public class WASConfigReaderHelper {
 			
 			if ((linkAttribute != null) && attributeValue!=null){
 				// When we have a case where value of link attribute is an array
-				if ((isCollection) && (((ArrayList)attributeValue).size() > 0)){
+				//if ((isCollection) && (((ArrayList)attributeValue).size() > 0)){
 					
 					logger.trace("In type " + newResource.getName() + " " + attributeName + " is a Link attribute with value " + attributeValue);
 					attributeValue = getLinkAttributeValue(session,configService,linkAttribute,attributeValue.toString());
@@ -168,7 +168,7 @@ public class WASConfigReaderHelper {
 					if (!((defaultAttributeValue!=null) && defaultAttributeValue.toString().equalsIgnoreCase(attributeValue.toString()))){
 						attributeList.put(attributeName, attributeValue);
 					}
-				}
+				//}
 			/**
 			 * This is a check for the types like chain and customeservice attributes for JVM where 
 			 * the attribute is a reference and collection.
@@ -448,7 +448,7 @@ public class WASConfigReaderHelper {
 				
 			}
 			logger.trace(">>> Creating new resource " + newResource.getName()  + " for parent " + peerResource.getParent().getContainmentPath());
-	
+			
 			/**
 			 * Get attributes names and values from config object for the new resource
 			 */	
@@ -509,6 +509,8 @@ public class WASConfigReaderHelper {
 			if (newResource.getResourceMetaData().isAttributeNameInResourceXML()){
 				newResource.getAttributeList().put(ResourceConstants.ATTRUBUTENAME, resourceAttributeName);
 			}
+			//newResource.getAttributeList().put(ResourceConstants.RESOURCE_CONFIG_ID, ConfigServiceHelper.getConfigDataId(configObject));
+			//System.out.println(newResource.getResourceMetaData() + " " + ConfigServiceHelper.getConfigDataId(configObject));
 	
 			logger.trace("<<< Created new resource " + newResource.getAttributeList().get(newResource.getResourceMetaData().getContainmentAttribute()));
 			return newResource;	
@@ -560,6 +562,8 @@ public class WASConfigReaderHelper {
 			 * will also be not complete.
 			 * 
 			 */
+			 
+			
 			if (!newResource.getResourceMetaData().getContainmentAttribute().equalsIgnoreCase("null")){
 				if (newResource.getContainmentPath().endsWith("=")){
 					newResource.setContainmentPath(newResource.getContainmentPath()+ ConfigServiceHelper.getAttributeValue(configAttributeList,newResource.getResourceMetaData().getContainmentAttribute()));
@@ -570,8 +574,7 @@ public class WASConfigReaderHelper {
 				resourceParserHelper.setContainmentPath(newResource);
 	
 			}
-	
-			
+
 			HashMap inComingAttributeList = new HashMap();
 	
 			while (attributeMetaInfoIterator.hasNext()){
@@ -632,9 +635,11 @@ public class WASConfigReaderHelper {
 			
 	
 			if (newResource.getResourceMetaData().isAttributeNameInResourceXML()){
-				
 				newResource.getAttributeList().put(ResourceConstants.ATTRUBUTENAME, resourceAttributeName);
 			}
+
+			
+			//newResource.getAttributeList().put(ResourceConstants.RESOURCE_CONFIG_ID, ConfigServiceHelper.getConfigDataId(configAttributeList));
 	
 		//	newResourceArrayList.add(newResource);
 			if (newResource.getResourceMetaData()!=null){
@@ -679,9 +684,17 @@ public class WASConfigReaderHelper {
 			logger.trace("Got object from config for target object type size " + configIDs.length);
 			for (int i = 0; i< configIDs.length; i++){
 				if (targetAttribute == null){
-					if (configIDs[i].getCanonicalName().equalsIgnoreCase((new ObjectName(attributeValue)).getCanonicalName())){
-						
-						linkAttributeValue = configService.getAttribute(session, configIDs[i], targetMatchAttribute).toString();
+					String attrValueCanonicalName = (new ObjectName(attributeValue)).getCanonicalName().replace("[", "").replace("]", "");
+					//System.out.println( (new ObjectName(attributeValue)).getKeyPropertyList());
+					logger.trace("Since the target targetAttribute is null matching from WAS " + configIDs[i].getCanonicalName() + " to " + attrValueCanonicalName) ;
+
+					if (configIDs[i].getCanonicalName().equalsIgnoreCase(attrValueCanonicalName)){
+						if (targetMatchAttribute.equalsIgnoreCase(ResourceConstants.RESOURCE_CONFIG_ID)){
+							linkAttributeValue = ConfigServiceHelper.getConfigDataId( configIDs[i]).toString();
+						}
+						else{
+							linkAttributeValue = configService.getAttribute(session, configIDs[i], targetMatchAttribute).toString();
+						}
 						logger.trace("Link Attribute value is " + linkAttributeValue);
 	
 						if (linkAttribute.getLinkAttribute()!=null){

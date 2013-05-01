@@ -395,7 +395,7 @@
 
 		<ConfigObject type="SSLConfig" relation="repertoire"
 			attributeName="repertoire" 
-			 isArray="true" isProperty="true" findAndReolve="true">
+			 isArray="true" isProperty="true" findAndResolve="true">
 			<containment>
 				<attribute value="alias" />
 			</containment>
@@ -436,6 +436,7 @@
 				<link-attribute linkAttibuteName="trustManager"
 						targetObject="TrustManager"
 						targetObjectMatchAttributeName="name" />
+					<!--	targetObjectMatchAttributeName="__internal_config_id" -->
 				
 			</ConfigObject>
 
@@ -451,13 +452,41 @@
 		<ConfigObject type="KeyManager" wasVersion="61">
 			<containment>
 				<attribute value="name" />
+				<additional>
+					<attribute value="managementScope" />
+				</additional>
 			</containment>
 			<link-attribute linkAttibuteName="managementScope"
 					targetObject="ManagementScope"
 					targetObjectMatchAttributeName="scopeName" />
 		</ConfigObject>				
 
-		<ConfigObject type="KeyStore" attributeName="keyStores" relation="keyStores" wasVersion="61">
+		<ConfigObject type="KeyStore" attributeName="keyStores" relation="keyStores" wasVersion="61" >
+			<containment>
+				<attribute value="name" />
+				<additional>
+					<attribute value="managementScope" />
+				</additional>
+			</containment>
+			<link-attribute linkAttibuteName="managementScope"
+					targetObject="ManagementScope"
+					targetObjectMatchAttributeName="scopeName" />
+		</ConfigObject>				
+
+		<ConfigObject type="TrustManager" attributeName="trustManagers" relation="trustManagers"  wasVersion="61">
+			<containment>
+				<attribute value="name" />
+				<additional>
+					<attribute value="managementScope" />
+				</additional>
+
+			</containment>
+			<link-attribute linkAttibuteName="managementScope"
+					targetObject="ManagementScope"
+					targetObjectMatchAttributeName="scopeName" />
+		</ConfigObject>				
+
+		<ConfigObject type="KeySet" attributeName="keySets" relation="keySets"   wasVersion="61">
 			<containment>
 				<attribute value="name" />
 			</containment>
@@ -466,25 +495,7 @@
 					targetObjectMatchAttributeName="scopeName" />
 		</ConfigObject>				
 
-		<ConfigObject type="TrustManager" wasVersion="61">
-			<containment>
-				<attribute value="name" />
-			</containment>
-			<link-attribute linkAttibuteName="managementScope"
-					targetObject="ManagementScope"
-					targetObjectMatchAttributeName="scopeName" />
-		</ConfigObject>				
-
-		<ConfigObject type="KeySet" wasVersion="61">
-			<containment>
-				<attribute value="name" />
-			</containment>
-			<link-attribute linkAttibuteName="managementScope"
-					targetObject="ManagementScope"
-					targetObjectMatchAttributeName="scopeName" />
-		</ConfigObject>				
-
-		<ConfigObject type="KeySetGroup" wasVersion="61">
+		<ConfigObject type="KeySetGroup" attributeName="keySetGroups" relation="keySetGroups"   wasVersion="61">
 			<containment>
 				<attribute value="name" />
 			</containment>

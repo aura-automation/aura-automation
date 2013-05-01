@@ -53,7 +53,7 @@ public class ResourceFinder {
 	public ObjectName[] findAllResourcesInConfig(Session session,ConfigService configService,Resource resource,
 			ObjectName scope, boolean inSyncMethod )
 		throws ConnectorException, ConfigServiceException,AttributeNotFoundException {
-			
+		logger.trace("find all resources " + resource.getContainmentPath() );	
 		ResourceHelper resourceHelper = new ResourceHelper();
 		
 	
@@ -75,6 +75,7 @@ public class ResourceFinder {
 			//configIDs = resourceHelper.getObjectNames(session,configService, resource.getContainmentPath()); 
 		
 		}else if ((!inSyncMethod)&& (!resource.getResourceMetaData().isFindAndResolve())){
+			logger.trace(">>> Get all ConfigObjects using resourceHelper.getObjectNames " + resource.getName() + " to find " + resource.getAttributeList().get(resource.getResourceMetaData().getContainmentAttribute()) );
 			configIDs = resourceHelper.getObjectNames(session,configService, resource.getContainmentPath()); 
 		}else if (scope == null){
 			logger.trace(">>> Get all ConfigObjects for the type " + resource.getName() + " to find " + resource.getAttributeList().get(resource.getResourceMetaData().getContainmentAttribute()) ); 
@@ -88,6 +89,8 @@ public class ResourceFinder {
 			logger.trace(">>> Get ConfigObjects for the type " + resource.getName() + " in scope " + configService.getAttribute(session, scope,"name") + " to find " + resource.getAttributeList().get(resource.getResourceMetaData().getContainmentAttribute()) ); 
 			configIDs = configService.resolve(session, scope, resource.getName());
 		}
+		
+		//matchAdditionalContainmentAttributeIfRequired
 		return configIDs;
 	}
 	
@@ -262,7 +265,7 @@ public class ResourceFinder {
 					logger.trace("Match by attribute value as matchAttributeName was specified in metadata and is also in the resource");
 					if (childResource.getUnresolvedAttributeList().get(matchAttributeName).toString().equalsIgnoreCase(matchAttributeValue)){
 						logger.trace("1st condition has matched with resource " + childResource.getContainmentPath() + " lets see of additional creteria is to be matched");
-						// Check if there is additional match attribute, e.g. in case of EARApplication each resource can be have more then one attribute as
+						// Check if there is additional match attribute, e.g. in case of EARApplication,keystore,keymanager each resource can be have more then one attribute as
 						// match attribute
 						if (resourceToMatchString.getResourceMetaData().getAdditionalContainmentAttribute()!=null){
 							logger.trace("Additional attributes are to be matched");

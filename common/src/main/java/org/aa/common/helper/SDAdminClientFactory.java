@@ -85,24 +85,23 @@ public class SDAdminClientFactory {
 			//	System.setProperty("com.ibm.CORBA.ConfigURL","file:C:\\IBM\\WebSphere61\\profiles\\Dmgr01\\properties\\sas.client.props");
 			//	System.setProperty("com.ibm.SSL.ConfigURL" ,"file:C:\\IBM\\WebSphere61\\profiles\\Dmgr01\\properties\\ssl.client.props");
 				
-				System.out.println( "com.ibm.CORBA.ConfigURL " + System.getProperty("com.ibm.CORBA.ConfigURL"));
+			//	System.out.println( "com.ibm.CORBA.ConfigURL " + System.getProperty("com.ibm.CORBA.ConfigURL"));
 				
 				if ((deployInfo.getJAACSecurityConfig()!=null) && (deployInfo.getJAACSecurityConfig().length()>0)){
-					System.setProperty("java.security.auth.login.config", deployInfo.getJAACSecurityConfig());
-					logger.trace ("java.security.auth.login.config" +  deployInfo.getJAACSecurityConfig());
+					System.setProperty("java.security.auth.login.config","file://"+  deployInfo.getJAACSecurityConfig());
+					logger.trace ("java.security.auth.login.config" + "file://"+  deployInfo.getJAACSecurityConfig());
 				}
 				if ((deployInfo.getSASSecurityConfig()!=null) && (deployInfo.getSASSecurityConfig().length()>0)){
-					System.setProperty("com.ibm.CORBA.ConfigURL", deployInfo.getSASSecurityConfig());
-					logger.trace("com.ibm.CORBA.ConfigURL" + deployInfo.getSASSecurityConfig());
+					System.setProperty("com.ibm.CORBA.ConfigURL",  "file://"+  deployInfo.getSASSecurityConfig());
+					logger.trace("com.ibm.CORBA.ConfigURL" + "file://"+  deployInfo.getSASSecurityConfig());
 				}
 				if ((deployInfo.getSSLSecurityConfig()!=null) && (deployInfo.getSSLSecurityConfig().length()>0)){
-					System.setProperty("com.ibm.SSL.ConfigURL" ,deployInfo.getSSLSecurityConfig());
-					logger.trace("com.ibm.SSL.ConfigURL" + deployInfo.getSSLSecurityConfig());
+					System.setProperty("com.ibm.SSL.ConfigURL" ,"file://"+  deployInfo.getSSLSecurityConfig());
+					logger.trace("com.ibm.SSL.ConfigURL" + "file://"+  deployInfo.getSSLSecurityConfig());
 				}
-				
 				if ((deployInfo.getSOAPSecurityConfig()!=null) && (deployInfo.getSOAPSecurityConfig().length()>0)){
-					System.setProperty("com.ibm.SOAP.ConfigURL" ,deployInfo.getSOAPSecurityConfig());
-					logger.trace("com.ibm.SOAP.ConfigURL"  + deployInfo.getSOAPSecurityConfig());
+					System.setProperty("com.ibm.SOAP.ConfigURL" , "file://"+ deployInfo.getSOAPSecurityConfig());
+					logger.trace("com.ibm.SOAP.ConfigURL"  + "file://"+  deployInfo.getSOAPSecurityConfig());
 				}
 				
 				if (deployInfo.getConnectionType().equalsIgnoreCase("RMI")){

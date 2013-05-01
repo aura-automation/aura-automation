@@ -311,8 +311,10 @@ public class ResourceCreatorHelper {
 			ConfigService configService, Session session)
 		throws AttributeNotFoundException,ConfigServiceException,ConnectorException,DeployException{
 		
+		// get value of the attribute as set, this will give value of link attr as set in source resource xml
 		String matchContaintmentValue = (String)resource.getAttributeList().get(key);
 		String targetAttribute = linkAttribute.getTargetAttribute();
+		// get resource where value got above matches with value set in resource of target type
 		Resource matchResource = getMatchingResource(allResources, linkAttribute,matchContaintmentValue,referenceResources,scope);
 		
 		if ((matchResource == null) && (!deployInfo.getOperationMode().equalsIgnoreCase(DeployValues.OPERATION_MODE_SYNC))){
@@ -323,7 +325,8 @@ public class ResourceCreatorHelper {
 		if (matchResource == null){
 			return "-" ;
 		}else{
-			checkIfConfigObjectExists( matchResource,referenceResources,deployInfo,scope,configService,session,allResources);
+			//set config Id for the resource
+			checkIfConfigObjectExists(matchResource,referenceResources,deployInfo,scope,configService,session,allResources,false);
 			
 			Object linkAttributeValue;
 			logger.trace(" Check if targetAttribute: " + linkAttribute.getTargetAttribute() + " for targetObject:" + linkAttribute.getTargetObject() + " is null, if null then return ObjectName");
@@ -366,8 +369,15 @@ public class ResourceCreatorHelper {
 	
 				if (child.getName().equalsIgnoreCase(targetObject)){
 					//AttributeList attributeList = getConfigAttributeList(child, referencedResources, child.getResourceMetaData(), scope);
-					//Object matchingResourceAttributeValue = ConfigServiceHelper.getAttributeValue(attributeList, targetObjectMatchAttributeName);	
-					Object matchingResourceAttributeValue = child.getAttributeList().get(targetObjectMatchAttributeName);
+					//Object matchingResourceAttributeValue = ConfigServiceHelper.getAttributeValue(attributeList, targetObjectMatchAttributeName);
+					Object matchingResourceAttributeValue =null;
+					if (targetObjectMatchAttributeName.equalsIgnoreCase(ResourceConstants.RESOURCE_CONFIG_ID)){
+						matchingResourceAttributeValue = child.getConfigId();
+						System.out.println(" Since the match attribute is RESOURCE_CONFIG_ID, have got config id from resource which is: " + matchingResourceAttributeValue);
+					}else{
+						matchingResourceAttributeValue = child.getAttributeList().get(targetObjectMatchAttributeName);
+					}
+					
 					logger.trace("			matching targetAttribute Name:" +  targetObjectMatchAttributeName + " for resource of type " + child.getName() + " source/xml value is '" + matchingResourceAttributeValue + "' to target/WAS repo config is '" + matchContaintmentValue + "'");
 	
 					if (matchingResourceAttributeValue.toString().equalsIgnoreCase(matchContaintmentValue)){
@@ -407,9 +417,10 @@ public class ResourceCreatorHelper {
 	 * @throws ConnectorException
 	 */
 	public boolean checkIfConfigObjectExists(Resource resource,Resource referenceResource,DeployInfo deployInfo,
-			ObjectName scope,ConfigService configService ,Session session, Resource allResources)
+			ObjectName scope,ConfigService configService ,Session session, Resource allResources,boolean shouldLog)
 		throws ConfigServiceException,ConnectorException,AttributeNotFoundException,DeployException{
 		
+		logger.trace("Start find resource " + resource.getContainmentPath() );
 		AttributeList metaInfo =  configService.getAttributesMetaInfo(resource.getName());
 		HashMap map = ResourceHelper.getResourceAttributeMetaData(metaInfo);
 		resource.setResourceAttrMetaInfo(map);
@@ -428,7 +439,6 @@ public class ResourceCreatorHelper {
 	
 		if (configIDs.length >0){
 			// if find and resolve is true then 
-			
 			if (resource.getResourceMetaData().isFindAndResolve()){
 				count = 0;
 				// loop through all the config objects
@@ -454,32 +464,105 @@ public class ResourceCreatorHelper {
 						count ++;
 						configObjectForFindAndResolveExists = true;
 						resource.setConfigId(configIDs[configObjectCnt]);
+						if (shouldLog)
+							SDLog.log("		Object Exists, count: " + count);
+						logger.trace("		1 Object Exists, count: " + count + " " + configIDs[configObjectCnt]);
 					}
 					
 				} 	
 	
 				if(configObjectForFindAndResolveExists){
-					SDLog.log("		Object Exists, count: " + count);
+					if (shouldLog)
+						SDLog.log("		Object Exists, count: " + count );
+					logger.trace("		1 Object Exists, count: " + count );
 					
 					return true;	
 				}else{
-					SDLog.log("		Object does not exists");
+					if (shouldLog)
+						SDLog.log("		Object does not exists");
 					return false;
 				}
 	
 			}else{
+				if (configIDs.length >1){
+					ObjectName[] newConfigIDs = matchAdditionalContainmentAttr(configIDs,resource,referenceResource,deployInfo,scope,configService,session,allResources);
+					if ( (newConfigIDs!=null) && newConfigIDs.length >0){
+						if (shouldLog)
+							SDLog.log("		Object Exists, count: " + newConfigIDs.length );
+						logger.trace("		2 Object Exists, count: " + newConfigIDs.length + " " + newConfigIDs[0]);
+						resource.setConfigId(newConfigIDs[0]);
+						return true;
+					}else{
+						if (shouldLog)
+							SDLog.log("		Object does not exists.");
+						return false;
+					}
+				}else{
+					if (shouldLog)
+						SDLog.log("		Object Exists, count: " + configIDs.length );
+					logger.trace("		3 Object Exists, count: " + configIDs.length  + " " + configIDs[0]);
+					resource.setConfigId(configIDs[0]);
+					return true;
+				}
 				
-				// check if the children on this objects exists.
-				SDLog.log("		Object Exists, count: " + configIDs.length );
-				resource.setConfigId(configIDs[0]);
-				return true;
 				//	checkAllChildObjectsIfExists(resource,resourceMetaDataMap);	
 			}
 			
 		}else{
-			SDLog.log("		Object does not exists.");
+			if (shouldLog)
+				SDLog.log("		Object does not exists.");
 			return false;
 			//createConfigObject(resource,resourceMetaDataMap);
+		}
+	}
+	
+	private ObjectName[] matchAdditionalContainmentAttr(ObjectName[] configIDs, Resource resource,Resource referenceResource,DeployInfo deployInfo,
+			ObjectName scope,ConfigService configService ,Session session, Resource allResources)
+		throws ConfigServiceException,ConnectorException,AttributeNotFoundException,DeployException{
+		// check if the children on this objects exists.
+		logger.trace("Will Check if additional containment attr must be matched");
+		ArrayList<ObjectName> filteredConfigIDs = new ArrayList<ObjectName>();
+		String[] addMatchAttributeNames = resource.getResourceMetaData().getAdditionalContainmentAttribute();
+		if (addMatchAttributeNames!=null){ 
+			logger.trace("Additional containment attr must be matched, number is " + addMatchAttributeNames.length);
+			// loop through all the config objects found for a type
+			for (int configObjectCnt = 0;configObjectCnt< configIDs.length;configObjectCnt++){
+				boolean configObjectForAddMatchExists = true;
+				// check that all the attributes values match, exit on 1st match fail 
+				for (int addContainmentAttrCnt = 0;addContainmentAttrCnt < addMatchAttributeNames.length ;addContainmentAttrCnt++){
+					String attributeValueOfConfigObject = "null";
+					logger.trace("Matching containment attr :" +addMatchAttributeNames[addContainmentAttrCnt]);
+					
+					logger.trace("Check if link attr :" +addMatchAttributeNames[addContainmentAttrCnt]);
+					LinkAttribute linkAttribute =  ResourceHelper.getLinkAttribute(resource, addMatchAttributeNames[addContainmentAttrCnt]);
+					String attributeValueOfResourceObject ;
+					if (linkAttribute == null){
+						logger.trace("link attr false");
+						attributeValueOfResourceObject =  resource.getAttributeList().get(addMatchAttributeNames[addContainmentAttrCnt]).toString();
+					}else{
+						logger.trace("link attr true");
+						attributeValueOfResourceObject = getLinkAttributeValue
+						(resource, linkAttribute, addMatchAttributeNames[addContainmentAttrCnt], referenceResource, scope,deployInfo , allResources, configService, session).toString() ; 
+					}
+
+					if (configService.getAttribute(session, configIDs[configObjectCnt], addMatchAttributeNames[addContainmentAttrCnt]) !=null){
+						attributeValueOfConfigObject = configService.getAttribute(session, configIDs[configObjectCnt], addMatchAttributeNames[addContainmentAttrCnt]).toString();
+					}
+					logger.trace(" Matching value of config type:(" + configObjectCnt +")"+ resource.getName() + " attribute: " + addMatchAttributeNames[addContainmentAttrCnt] + " config attr value " + attributeValueOfConfigObject + " attributeValueOfResourceObject: " + attributeValueOfResourceObject); 
+
+					if(!attributeValueOfConfigObject.equalsIgnoreCase(attributeValueOfResourceObject)){
+						configObjectForAddMatchExists = false;
+					}
+				}
+				if (configObjectForAddMatchExists){
+					logger.trace(" Match found adding:(" + configIDs[configObjectCnt] +")"); 
+					filteredConfigIDs.add(configIDs[configObjectCnt]);
+				}
+			}
+			return filteredConfigIDs.toArray(new ObjectName[filteredConfigIDs.size()]);
+		}else{
+			logger.trace("No Additional containment attr must be matched");
+			return configIDs;
 		}
 	}
 

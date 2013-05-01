@@ -453,7 +453,7 @@ public class ResourceCreator extends Connection{
 				}else{
 					logger.trace("Type " + type + " is not an Array");
 					// check if the current object exists if not create it 
-					boolean doesResourceExistsInTarget = resourceCreatorHelper.checkIfConfigObjectExists(children[childCnt],referenceResources,deployInfo,scope,configService,session,allResources );
+					boolean doesResourceExistsInTarget = resourceCreatorHelper.checkIfConfigObjectExists(children[childCnt],referenceResources,deployInfo,scope,configService,session,allResources,true );
 					if (!doesResourceExistsInTarget){
 							// when creating a new object check if command managed or custom code managed then call 
 							// AdminTask style commands to create the object.
@@ -908,7 +908,7 @@ public class ResourceCreator extends Connection{
 //		ArrayList arrayOfAttrList = (ArrayList)configService.getAttribute(session, resource.getParent().getConfigId(), resourceMetaData.getAttributeName());
 //		logger.trace(" got the attributeList Array for: " + resource.getName() + " size is: " + arrayOfAttrList.size());
 		
-		if (!resourceCreatorHelper.checkIfConfigObjectExists(resource,referencedResources,deployInfo,scope,configService,session,allResources)){
+		if (!resourceCreatorHelper.checkIfConfigObjectExists(resource,referencedResources,deployInfo,scope,configService,session,allResources,true)){
 //			String configObjectAttrName = ConfigServiceHelper.getAttributeValue(attrList, "name").toString();
 			
 			AttributeList newAttrList = getConfigAttributeList(resource,referencedResources,resourceMetaData,scope,deployInfo);

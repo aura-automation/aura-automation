@@ -184,29 +184,35 @@ public class Deploy extends Connection{
     	}
     }
 
-    private void uploadApplication(DeployInfo deployInfo)
+    private String uploadApplication(DeployInfo deployInfo, String fileToUpload)
     	throws AdminException,TransferFailedException{
     	
     	System.out.println("Will Upload EAR");
-    	String uploadedFile = "C:\\jatin\\eclipse\\AuraDeployLiteTest\\workfiles\\ear\\easydeploy\\easyDeployApp.ear";
+    	//String uploadedFile = "C:\\jatin\\eclipse\\AuraDeployLiteTest\\workfiles\\ear\\easydeploy\\easyDeployApp.ear";
+    	// String fileToUploda =deployInfo.getMultiEARLocation() + File.separator + files[i].getName())
     	FileTransferClient fileTransferClient  = FileTransferFactory.getFileTransferClient(adminClient);
     	String staging = fileTransferClient.getServerStagingLocation();
     	
     	FileTransferConfig fileTransferConfig = fileTransferClient.getFileTransferConfig();
+    	fileTransferConfig.setTransferRequestTimeout(20);
+    	fileTransferConfig.setSecurityEnabled(true);
     	System.out.println("staging " + fileTransferConfig.getStagingLocation() );
     	System.out.println("TransferRequestTimeout " + fileTransferConfig.getTransferRequestTimeout() );
     	System.out.println("TransferRetryCount " + fileTransferConfig.getTransferRetryCount() );
+    	fileTransferClient.setFileTransferConfig(fileTransferConfig);
     	
     	//fileTransferConfig.setStagingLocation( fileTransferConfig.getStagingLocation() + "\\upload");
     	//fileTransferClient.setFileTransferConfig(fileTransferConfig);
 
     	//fileTransferOptions.setOverwrite(true);
     	
-    	File file = new File(uploadedFile);
+    	File file = new File(fileToUpload);
     	String filename = file.getName();
-    	fileTransferClient.uploadFile(file, filename + sessionID );
+    	String uploadedFilelodation ="upload" + deployInfo.getFileSeperator() + filename + sessionID ;
+    	fileTransferClient.uploadFile(file, uploadedFilelodation );
     	deployInfo.setRemoteEARDirectory(fileTransferConfig.getStagingLocation() );
     	System.out.println("EAR uploaded");
+    	return fileTransferConfig.getStagingLocation() + deployInfo.getFileSeperator() + uploadedFilelodation ;
     	
     //	File earFile = new File("C:\\jatin\\eclipse\\AuraDeployLiteTest\\workfiles\\ear\\easydeploy\\easyDeployApp.ear");
     //	fileTransferClient.uploadFile(earFile, "upload\\Temp") ;
@@ -298,6 +304,15 @@ public class Deploy extends Connection{
 
 		int historyId = -1;
 
+		if (deployInfo.getTargetOS()!=null){
+			if (deployInfo.getTargetOS().equalsIgnoreCase("Windows")){
+				deployInfo.setFileSeperator("\\");
+			}else{
+				deployInfo.setFileSeperator("/");
+			}
+		}else{
+			deployInfo.setFileSeperator(File.separator );
+		}
 		
     	try{
 	    	DeployState.uninstallStatus = JMXApplication.NOTIFICATION_NOT_STARTED;
@@ -372,28 +387,19 @@ public class Deploy extends Connection{
 							String applicationName = earFileName.substring(0,earFileName.indexOf(".ear"));
 							deployInfo.setApplicationName(applicationName);
 							
-							
 							if (deployInfo.getRemoteEARDirectory() !=null){
-								if (deployInfo.getTargetOS()!=null){
-									if (deployInfo.getTargetOS().equalsIgnoreCase("Windows")){
-										deployInfo.setEARFileLocation(deployInfo.getRemoteEARDirectory() + "\\" + files[i].getName());
-									}else{
-										deployInfo.setEARFileLocation(deployInfo.getRemoteEARDirectory() + "//" + files[i].getName());
-									}
-								}else{
-									deployInfo.setEARFileLocation(deployInfo.getRemoteEARDirectory() + File.separator + files[i].getName());
-								}
-								
-								
+								deployInfo.setEARFileLocation(deployInfo.getRemoteEARDirectory() + deployInfo.getFileSeperator() + files[i].getName());
 							}else{
+								String uploadedFilelodation = uploadApplication(deployInfo,deployInfo.getMultiEARLocation() + File.separator + files[i].getName());
 			/**					FileTransferClient ftClient =  FileTransferFactory.getFileTransferClient(adminClient);
 								logger.trace( " Staging Location " + ftClient.getFileTransferConfig().getStagingLocation());
 								logger.trace( " Staging Location " + ftClient.getFileTransferConfig().getStagingLocation());
 								FileTransferConfig config = ftClient.getFileTransferConfig();
 								logger.trace( " " + config.getStagingLocation()); 
 								ftClient.uploadFile(new File(deployInfo.getMultiEARLocation() + File.separator + files[i].getName()), "upload" + File.separatorChar  + sessionID + File.separatorChar +  files[i].getName());
-								deployInfo.setEARFileLocation(config.getStagingLocation() + File.separator  + "upload" + File.separatorChar + sessionID + File.separatorChar +  files[i].getName());
-				**/			
+				**/				
+								deployInfo.setEARFileLocation(uploadedFilelodation);
+							
 							}
 							
 							deployInfo.setDeployDataLocation(deployInfo.getMultiEARDeployData()+ File.separator + applicationName + "-deploydata.xml" );

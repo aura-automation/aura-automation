@@ -114,7 +114,16 @@ public class DeployInfo {
 
 	private String targetOS; 
 	
+	private String fileSeperator;
 	
+	public String getFileSeperator() {
+		return fileSeperator;
+	}
+
+	public void setFileSeperator(String fileSeperator) {
+		this.fileSeperator = fileSeperator;
+	}
+
 	/**
 	 * 
 	 * @return
