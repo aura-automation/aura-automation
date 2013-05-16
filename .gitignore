@@ -11,5 +11,7 @@ images
 aura-automation.wiki/
 client_ffdc
 apache
-apache-ant-1.7.1 
-groovy-1.7.4 
+aurawasinstall/installer/opt/apache-ant-1.7.1
+groovy-1.7.4
+aurawasinstall/installer/install.properties
+aurawasinstall/installer/lib
