@@ -1,0 +1,42 @@
+------------- How to record ----------------------------
+---for install---
+C:\IBM\InstallationManager\eclipse\IBMIM.exe -record C:\IBM\record\response\response.txt -skipInstall C:\IBM\record\agentdata
+---for uninstall---
+C:\IBM\InstallationManager\eclipse\IBMIM.exe -record C:\IBM\record\response\uninstall.txt -skipInstall C:\IBM\record\agentdata
+------------- Silent install using installation Mananger ----------------------------
+C:\IBM\InstallationManager\eclipse\tools\imcl.exe input c:\IBM\record\response\install.txt -acceptLicense
+
+C:\IBM\InstallationManager\eclipse\tools\imcl.exe input c:\IBM\record\response\uninstall.txt -acceptLicense
+
+------------- Silent uninstall using installation Mananger ----------------------------
+C:\IBM\InstallationManager\eclipse\tools\imcl.exe input c:\IBM\record\response\uninstall.txt -acceptLicense
+
+------------- Manage Profile -----------------------
+--- Create DMGR Profile ----
+C:\IBM\WebSphere8\AppServer\bin\manageprofiles.bat -create -cellName WAS801 -profileName WAS801Dmg01 -profilePath C:\IBM\WebSphere8\AppServer\profiles\WAS801Dmg01 -templatePath C:\IBM\WebSphere8\AppServer\profileTemplates\management -serverType DEPLOYMENT_MANAGER -startingPort 15000
+-personalCertDN "cn=Training, ou=FLL, o=Engineers, c=US" \ -personalCertValidityPeriod 3 \ -signingCertDN "cn=self, ou=FLL, o=Engineers, c=US" \ -signingCertValidityPeriod 15 \ -startingPort 15000
+INSTCONFSUCCESS: Success: Profile WAS801Dmg01 now exists. Please consult C:\IBM\WebSphere8\AppServer
+\profiles\WAS801Dmg01\logs\AboutThisProfile.txt for more information about this profile.
+----------Start DMGR01-----------
+C:\IBM\WebSphere8\AppServer\profiles\WAS801Dmg01\bin\startManager.bat
+
+----- Create 1st Node -----
+C:\IBM\WebSphere8\AppServer\bin\manageprofiles.bat -create -profileName WAS801Node01 -profilePath C:\IBM\WebSphere8\AppServer\profiles\WAS801Node01 -templatePath C:\IBM\WebSphere8\AppServer\profileTemplates\managed -startingPort 15100 -dmgrHost apartech-PC -dmgrPort 15003
+-personalCertDN "cn=Training, ou=FLL, o=Engineers, c=US" \ -personalCertValidityPeriod 3 \ -signingCertDN "cn=self, ou=FLL, o=Engineers, c=US" \ -signingCertValidityPeriod 15 \ -startingPort 15000
+INSTCONFSUCCESS: Success: Profile WAS801Node01 now exists. Please consult C:\IBM\WebSphere8\AppServe
+r\profiles\WAS801Node01\logs\AboutThisProfile.txt for more information about this profile.
+
+----- Start 1st Node -----
+C:\IBM\WebSphere8\AppServer\profiles\WAS801Node01\bin\startNode.bat
+
+C:\Aura-WasInstall\packages\CZM90ML-WinInstallationManager\installc.exe input  c:\IBM\record\response\install.txt -log logs\WAS8-Install.log -acceptLicense
+
+C:\Aura-WasInstall\packages\CZM90ML-WinInstallationManager\installc.exe input  c:\IBM\record\response\response.txt -log logs\WAS8-Install.log -acceptLicense
+
+
+
+C:\IBM\InstallationManager\eclipse\tools\imcl.exe input c:\IBM\record\response\response.txt -acceptLicense
+
+C:\IBM\InstallationManager\eclipse\tools\imcl.exe input c:\IBM\record\response\response.txt -acceptLicense
+
+IBMIM.exe -record C:\IBM\record\response\response.txt -skipInstall C:\IBM\record\agentdata

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--The "acceptLicense" attribute has been deprecated. Use "-acceptLicense" command line option to accept license agreements.-->
+<agent-input acceptLicense='true'>
+<server>
+<repository location='http://apartech-pc'/>
+</server>
+<profile id='IBM WebSphere Application Server Network Deployment V8.0-1' installLocation='/usr/app/ibm/WebSphere8-1'>
+<data key='eclipseLocation' value='/usr/app/ibm/WebSphere8-1'/>
+<data key='user.import.profile' value='false'/>
+<data key='cic.selector.nl' value='en'/>
+</profile>
+<install modify='false'>
+<offering id='com.ibm.websphere.ND.v80' version='8.0.0.20110503_0200' profile='IBM WebSphere Application Server Network Deployment V8.0-1' features='core.feature,ejbdeploy,thinclient,embeddablecontainer,com.ibm.sdk.6_32bit' installFixes='none'/>
+</install>
+<preference name='com.ibm.cic.common.core.preferences.eclipseCache' value='/usr/app/ibmrepo/IMShared-1'/>
+<preference name='com.ibm.cic.common.core.preferences.connectTimeout' value='30'/>
+<preference name='com.ibm.cic.common.core.preferences.readTimeout' value='45'/>
+<preference name='com.ibm.cic.common.core.preferences.downloadAutoRetryCount' value='0'/>
+<preference name='offering.service.repositories.areUsed' value='true'/>
+<preference name='com.ibm.cic.common.core.preferences.ssl.nonsecureMode' value='false'/>
+<preference name='com.ibm.cic.common.core.preferences.http.disablePreemptiveAuthentication' value='false'/>
+<preference name='http.ntlm.auth.kind' value='NTLM'/>
+<preference name='http.ntlm.auth.enableIntegrated.win32' value='true'/>
+<preference name='com.ibm.cic.common.core.preferences.preserveDownloadedArtifacts' value='true'/>
+<preference name='com.ibm.cic.common.core.preferences.keepFetchedFiles' value='false'/>
+<preference name='PassportAdvantageIsEnabled' value='false'/>
+<preference name='com.ibm.cic.common.core.preferences.searchForUpdates' value='false'/>
+<preference name='com.ibm.cic.agent.ui.displayInternalVersion' value='false'/>
+<preference name='com.ibm.cic.common.sharedUI.showErrorLog' value='true'/>
+<preference name='com.ibm.cic.common.sharedUI.showWarningLog' value='true'/>
+<preference name='com.ibm.cic.common.sharedUI.showNoteLog' value='true'/>
+</agent-input>
