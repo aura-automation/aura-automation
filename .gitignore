@@ -9,3 +9,7 @@ common/target/
 target
 images
 aura-automation.wiki/
+client_ffdc
+apache
+apache-ant-1.7.1 
+groovy-1.7.4 
