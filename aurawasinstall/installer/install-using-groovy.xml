@@ -1,0 +1,119 @@
+<project name="wasinstaller" default="main">
+	
+	<property name="current.dir" location="${basedir}" />
+	<property file="${current.dir}/install.properties" />
+	<property name="response.file" value="${current.dir}/response-files/WAS8.0-ND-Win/" />
+
+
+	<path id="classpath">
+		<fileset dir="opt">
+		    <include name="groovy-*/embeddable/*.jar" />
+		</fileset>
+		<fileset dir="lib">
+		    <include name="**/*.jar"/>
+		    <include name="**/*.zip"/>
+		    <exclude name="groovy*.jar"/>
+		</fileset>
+      		<dirset dir="." includes="install"/>		
+	</path>
+
+        <pathconvert property="classpathstring" refid="classpath" />
+
+	<taskdef name="groovy"
+	         classname="org.codehaus.groovy.ant.Groovy"
+	         classpathref="classpath"/>
+
+	<target name="configureResponseFiles">
+		<mkdir dir="${response.file}\response"/>
+	
+		<copy todir="${response.file}\response" overwrite="true">
+			<fileset dir="${response.file}\response-templates">	
+			</fileset>
+		</copy>
+		<replace dir="${response.file}\response" replacefilterfile="${current.dir}/install.properties">
+			<include name="install.txt"/>
+			<include name="uninstall.txt"/>
+		</replace> 
+	</target>
+
+	<target name="install" depends="configureResponseFiles">
+		<groovy>
+			def WASInstaller installer = new WASInstaller(properties.classpathstring)
+			installer.setAntBuilder(ant)
+			installer.installAll('response-files/WAS8.0-ND-Win/response/install.txt')
+		</groovy>
+	</target>
+
+	<target name="createDmgrProfile">
+		<groovy>
+			def WASInstaller installer = new WASInstaller(properties.classpathstring)
+			installer.setAntBuilder(ant)
+			installer.createDmgrProfile()
+		</groovy>
+	</target>
+
+	<target name="createNodeProfile">
+		<groovy>
+			def WASInstaller installer = new WASInstaller(properties.classpathstring)
+			installer.setAntBuilder(ant)
+			installer.createNodeProfile()
+		</groovy>
+	</target>
+
+	<target name="uninstall" depends="configureResponseFiles">
+		<groovy>
+			def WASInstaller installer = new WASInstaller(properties.classpathstring)
+			installer.setAntBuilder(ant)
+			installer.uninstall('response-files/WAS8.0-ND-Win/response/uninstall.txt')
+		</groovy>
+	</target>
+
+	<target name="uninstallWAS" depends="configureResponseFiles">
+		<groovy>
+			def WASInstaller installer = new WASInstaller(properties.classpathstring)
+			installer.setAntBuilder(ant)
+			installer.wasUnInstall('response-files/WAS8.0-ND-Win/response/uninstall.txt')
+		</groovy>
+	</target>
+
+	<target name="listProfiles">
+		<groovy>
+			def WASInstaller installer = new WASInstaller(properties.classpathstring)
+			installer.setAntBuilder(ant)
+			installer.listProfiles()
+		</groovy>
+	</target>
+
+	<target name="stopNode">
+		<groovy>
+			def WASInstaller installer = new WASInstaller(properties.classpathstring)
+			installer.setAntBuilder(ant)
+			installer.stopNode()
+		</groovy>
+	</target>
+
+	<target name="stopManager">
+		<groovy>
+			def WASInstaller installer = new WASInstaller(properties.classpathstring)
+			installer.setAntBuilder(ant)
+			installer.stopManager()
+		</groovy>
+	</target>
+
+	<target name="startNode">
+		<groovy>
+			def WASInstaller installer = new WASInstaller(properties.classpathstring)
+			installer.setAntBuilder(ant)
+			installer.startNode()
+		</groovy>
+	</target>
+
+	<target name="startManager">
+		<groovy>
+			def WASInstaller installer = new WASInstaller(properties.classpathstring)
+			installer.setAntBuilder(ant)
+			installer.startManager()
+		</groovy>
+	</target>
+
+</project>

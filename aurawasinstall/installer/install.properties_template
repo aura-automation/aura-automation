@@ -1,0 +1,13 @@
+repoDirectoryName=
+IMDirectoryName=/usr/app/ibm/InstallationManager/eclipse/tools
+sharedPackageLocation=/usr/app/ibmrepo/IMShared-1
+packageName=IBM WebSphere Application Server Network Deployment V8.0-1
+wasInstalllocation=/usr/app/ibm/WebSphere8-1
+
+dmgrName=
+nodeName=
+dmgrHost=
+
+cellName=WAS802
+startingDmgrPortNumber=15000
+startingNodePortNumber=15100
