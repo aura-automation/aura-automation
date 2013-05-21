@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.aa.aura</groupId>
     <artifactId>aura</artifactId>
-    <version>1.0.3_RC2-SNAPSHOT</version>
+    <version>1.0.3</version>
   </parent>
   <groupId>org.aa.auradeploylite</groupId>
   <artifactId>auradeploylite</artifactId>
@@ -14,7 +14,7 @@
 	<dependency>
 		<groupId>org.aa.common</groupId>
 		<artifactId>common</artifactId>
-		<version>1.0.3_RC2-SNAPSHOT</version>
+		<version>1.0.3</version>
 	</dependency>
 
   </dependencies>
