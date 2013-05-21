@@ -630,10 +630,12 @@ public class ResourceCreatorHelper {
 	public void modifyArrayPropertyAttribute(ArrayList arrayOfAttrList,Resource resource,Resource referenceResources,
 			DeployInfo deployInfo,ConfigService configService ,Session session, Resource allResources,ObjectName scope)
 		throws ConfigServiceException,ConnectorException,AttributeNotFoundException,DeployException,MalformedObjectNameException{
+		
+		ResourceMetaData resourceMetaData = resource.getResourceMetaData();
+
 
 		logger.trace("Modify array type " + resource.getName() + " " + resource.getContainmentPath());
 		
-		ResourceMetaData resourceMetaData = resource.getResourceMetaData();
 		Iterator arrayOfAttrIterator = arrayOfAttrList.iterator();
 		ArrayList modifiedAttributes = new ArrayList();
 		ResourceDiffReportHelper resourceDiffReportHelper = new ResourceDiffReportHelper ();  
@@ -760,7 +762,6 @@ public class ResourceCreatorHelper {
 						}
 						if (!isSame ){
 							atleastOneChanged = true;
-							logger.trace("attrList  " + attrList);
 							logger.trace("Adding modified attributes resource: " + " key:  "+ key + " resourceValue " +   resourceValue  + " configValue " + configValue );
 							ConfigServiceHelper.setAttributeValue(attrList, key,resourceValue);
 							
@@ -770,7 +771,6 @@ public class ResourceCreatorHelper {
 						}
 					}
 					if (atleastOneChanged){
-						logger.trace("attrList  " + attrList);
 						configService.setAttributes(session, resource.getConfigId(),attrList);
 					}
 				}

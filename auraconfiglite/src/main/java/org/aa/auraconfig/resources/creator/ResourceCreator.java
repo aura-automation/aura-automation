@@ -435,19 +435,19 @@ public class ResourceCreator extends Connection{
 					}
 				}else if (resourceMetaData.getIsProperty() && !resourceMetaData.isArray()){
 					logger.trace("Type " + type + " is a Property and not an Array");
-					processProperty(children[childCnt],resourceMetaData,referenceResources,deployInfo);
+					processProperty(children[childCnt],referenceResources,deployInfo);
 					
 				}else if (resourceMetaData.getIsProperty() && resourceMetaData.isArray()){
 					logger.trace("Type " + type + " is Array and Property");
 					
-					checkArrayPropertyAttribute(children[childCnt],resourceMetaData,referenceResources,deployInfo);
+					checkArrayPropertyAttribute(children[childCnt],referenceResources,deployInfo);
 					//configService.getAttribute(session, children[childCnt].getParent().getConfigId(), type);
 					
 					
 				}else if (resourceMetaData.isArray() && (!resourceMetaData.isCommandManaged()) ){
 					logger.trace("Type " + type + " is Array");
 					
-					checkArrayCollectionAttribute(children[childCnt],resourceMetaData,referenceResources,deployInfo);
+					checkArrayCollectionAttribute(children[childCnt],referenceResources,deployInfo);
 					//configService.getAttribute(session, children[childCnt].getParent().getConfigId(), type);
 					
 				}else{
@@ -546,8 +546,9 @@ public class ResourceCreator extends Connection{
 	 * @throws MalformedObjectNameException 
 	 *  
 	 */
-	private void processProperty(Resource resource, ResourceMetaData resourceMetaData, Resource referencedResources,DeployInfo deployInfo)
+	private void processProperty(Resource resource,  Resource referencedResources,DeployInfo deployInfo)
 		throws AttributeNotFoundException, ConnectorException,ConfigServiceException,DeployException, MalformedObjectNameException{
+		ResourceMetaData resourceMetaData = resource.getResourceMetaData();
 		String type = resource.getName();
 //		SDLog.log("		Checking if Attribute: " + type + " exists for the Object: " + resource.getParent().getName());
 		Object  attrObject = configService.getAttribute(session, resource.getParent().getConfigId(), resourceMetaData.getAttributeName());
@@ -608,10 +609,10 @@ public class ResourceCreator extends Connection{
 	 * @throws ConnectorException
 	 * @throws MalformedObjectNameException 
 	 */
-	private void checkArrayPropertyAttribute(Resource resource,ResourceMetaData resourceMetaData, Resource referencedResources,DeployInfo deployInfo)
+	private void checkArrayPropertyAttribute(Resource resource, Resource referencedResources,DeployInfo deployInfo)
 		throws AttributeNotFoundException, ConfigServiceException,ConnectorException,AttributeNotFoundException,DeployException, MalformedObjectNameException{
-
-
+		ResourceMetaData resourceMetaData = resource.getResourceMetaData();
+		
 //		SDLog.log( " MetaInfo " + configService.getAttributesMetaInfo(resource.getParent().getName()));
 		logger.trace("Getting attribute: " + resourceMetaData.getAttributeName() + " for parent + " + resource.getParent().getConfigId());
 		ArrayList arrayOfAttrList = (ArrayList)configService.getAttribute(session, resource.getParent().getConfigId(), resourceMetaData.getAttributeName());
@@ -684,7 +685,6 @@ public class ResourceCreator extends Connection{
 
 
 				logger.trace(" Create new Attribute parent:" + resource.getParent().getConfigId() + " relation " + resourceMetaData.getAttributeName() + " type:" + resourceMetaData.getType() + " attributelist:" + newAttrList);
-				System.out.println(" Create new Attribute parent:" + resource.getParent().getConfigId() + " relation " + resourceMetaData.getAttributeName() + " type:" + resourceMetaData.getType() + " attributelist:" + newAttrList);
 				if (resource.getResourceMetaData().isShouldCreate()){
 					ObjectName objectName = 
 						configService.createConfigData(session, resource.getParent().getConfigId(),resourceMetaData.getAttributeName(), 
@@ -749,15 +749,18 @@ public class ResourceCreator extends Connection{
 	 * @throws ConfigServiceException
 	 * @throws ConnectorException
 	 */
-	private void checkArrayCollectionAttribute(Resource resource,ResourceMetaData resourceMetaData, Resource referencedResources,DeployInfo deployInfo)
+	private void checkArrayCollectionAttribute(Resource resource, Resource referencedResources,DeployInfo deployInfo)
 		throws ConfigServiceException,ConnectorException,AttributeNotFoundException,DeployException,MalformedObjectNameException{
 		
+		ResourceMetaData resourceMetaData = resource.getResourceMetaData();
 //		SDLog.log( " MetaInfo " + configService.getAttributesMetaInfo(resource.getParent().getName()));
 		logger.trace("Getting attribute: " + resourceMetaData.getAttributeName() + " for parent + " + resource.getParent().getName());
 //		ArrayList arrayOfAttrList = (ArrayList)configService.getAttribute(session, resource.getParent().getConfigId(), resourceMetaData.getAttributeName());
 //		logger.trace(" got the attributeList Array for: " + resource.getName() + " size is: " + arrayOfAttrList.size());
 		
-		if (!resourceCreatorHelper.checkIfConfigObjectExists(resource,referencedResources,deployInfo,scope,configService,session,allResources,true)){
+		boolean resourceInArrayExists =  resourceCreatorHelper.checkIfConfigObjectExists(resource,referencedResources,deployInfo,scope,configService,session,allResources,true);
+		
+		if (!resourceInArrayExists ){
 //			String configObjectAttrName = ConfigServiceHelper.getAttributeValue(attrList, "name").toString();
 			
 			AttributeList newAttrList = getConfigAttributeList(resource,referencedResources,resourceMetaData,scope,deployInfo);
@@ -782,10 +785,10 @@ public class ResourceCreator extends Connection{
 
 		}else{
 
-			logger.trace("		++++++++++++++++ Should modify " + resource.getName() ) ;
-			logger.trace("		++++++++++++++++ Getting " + resourceMetaData.getAttributeName()  + " from " + resource.getParent().getName()) ;
-			ArrayList arrayList = (ArrayList)configService.getAttribute(session, resource.getParent().getConfigId(), resourceMetaData.getAttributeName());
-			resourceCreatorHelper.modifyArrayPropertyAttribute(arrayList,resource,referencedResources,deployInfo,configService,session,allResources,scope );
+			logger.trace("		Will Modify " + resource.getContainmentPath() + " for parent " + resource.getParent().getContainmentPath()) ;
+			
+			ArrayList arrayOfAttrList = (ArrayList)configService.getAttribute(session, resource.getParent().getConfigId(), resourceMetaData.getAttributeName());
+			resourceCreatorHelper.modifyArrayPropertyAttribute(arrayOfAttrList,resource,referencedResources,deployInfo,configService,session,allResources,scope );
 		}
 		
 		
