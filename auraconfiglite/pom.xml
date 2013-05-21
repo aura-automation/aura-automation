@@ -3,19 +3,19 @@
   <parent>
     <groupId>org.aa.aura</groupId>
     <artifactId>aura</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4-SNAPSHOT</version>
   </parent>
   <groupId>org.aa.auraconfiglite</groupId>
   <artifactId>auraconfiglite</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.3</version>
+  <version>1.0.4-SNAPSHOT</version>
   <name>auraconfiglite</name>
   <url>http://maven.apache.org</url>
   <dependencies>
 	<dependency>
 		<groupId>org.aa.common</groupId>
 		<artifactId>common</artifactId>
-		<version>1.0.3</version>
+		<version>1.0.4-SNAPSHOT</version>
 	</dependency>
 	<dependency>
 		<groupId>org.jdom</groupId>
