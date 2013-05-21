@@ -108,10 +108,11 @@ public class SIBusMemberCustomCodeImpl {
 	 * @param configObject
 	 * @param deployInfo
 	 * @throws DeployException
+	 * @throws MalformedObjectNameException 
 	 */
 	public ArrayList<DiffAttribute> modify(Session session,ConfigService configService,
 			Resource resource,ObjectName configObject,DeployInfo deployInfo,
-			 AdminClient adminClient,ObjectName scope, Resource allResources,Resource referenceResources) throws DeployException{
+			 AdminClient adminClient,ObjectName scope, Resource allResources,Resource referenceResources) throws DeployException, MalformedObjectNameException{
 	//	attributes =  PropertyHelper.getArrayFromCommaSeperated(resource.getResourceMetaData().getCustomCodeAttributes() );
 	//	System.out.println(" Get the attriutes");
 		
@@ -190,11 +191,12 @@ public class SIBusMemberCustomCodeImpl {
 	 * @param modifiedAttributes
 	 * @param resource
 	 * @throws AttributeNotFoundException
+	 * @throws MalformedObjectNameException 
 	 */
 	private void modifyAttribute(ObjectName resourceWasObject, String resourceAttributeName,ArrayList<DiffAttribute> modifiedAttributes,
 			Resource siBusMemberResource,	ConfigService configService, AttributeList changedAttrList,Session session, AdminClient adminClient,ObjectName scope, 
 			Resource allResources,Resource referenceResources,DeployInfo deployInfo)
-		throws AttributeNotFoundException,ConnectorException,ConfigServiceException,DeployException{
+		throws AttributeNotFoundException,ConnectorException,ConfigServiceException,DeployException, MalformedObjectNameException{
 		
 		HashMap<String, String> siBusMemberResourceAttributeList = siBusMemberResource.getAttributeList(); 
 		ResourceCreatorHelper resourceCreatorHelper = new ResourceCreatorHelper();

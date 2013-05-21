@@ -383,6 +383,7 @@ public class ResourceMetaDataHelper implements ResourceMetaDataConstants{
 		if (attributeLinkChild.getAttribute(TARGET_ATTRIBUTE) != null){
 			linkAttribute.setTargetAttribute(attributeLinkChild.getAttribute(TARGET_ATTRIBUTE).getValue().toString());
 		}
+		
 		linkAttribute.setTargetObject(attributeLinkChild.getAttribute(TARGET_OBJECT).getValue().toString());
 		linkAttribute.setTargetObjectMatchAttributeName(attributeLinkChild.getAttribute(TARGET_OBJECT_MATCH_ATTRIBUTE_NAME).getValue().toString());
 		if (parenLinkAttribute==null){

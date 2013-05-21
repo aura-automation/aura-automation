@@ -1,0 +1,85 @@
+<resources-metadata>
+
+	<ConfigObject type="IdentityAssertionLayer" attributeNameInResourceXML="true" isProperty="true" isArray="true"
+			attributeName="layers" 
+			shouldCreate="false" >
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="IdentityAssertionQOP" isProperty="true"
+					attributeName="supportedQOP" 
+					shouldCreate="false" >
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+			<ConfigObject type="ServerIdentity" 
+					attributeName="trustedServers" 
+					shouldCreate="false" >
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+
+	</ConfigObject>
+	<ConfigObject type="MessageLayer" attributeNameInResourceXML="true" isProperty="true" isArray="true"
+			attributeName="layers" 
+			shouldCreate="false">
+			<containment>
+				<attribute value="supportedAuthMechList" />
+			</containment>
+			<ConfigObject type="MessageQOP" isProperty="true"
+					attributeName="requiredQOP" 
+					shouldCreate="false" attributeNameInResourceXML="true">
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+			<ConfigObject type="MessageQOP" isProperty="true"
+					attributeName="supportedQOP" 
+					shouldCreate="false" attributeNameInResourceXML="true">
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+
+	</ConfigObject>
+	<ConfigObject type="TransportLayer" attributeNameInResourceXML="true" isProperty="true" isArray="true"
+			attributeName="layers" 
+			shouldCreate="false" >
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="TransportQOP" isProperty="true"
+					attributeName="requiredQOP" 
+					shouldCreate="false" attributeNameInResourceXML="true">
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+			<ConfigObject type="TransportQOP" isProperty="true"
+					attributeName="supportedQOP" 
+					shouldCreate="false" attributeNameInResourceXML="true">
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+			<ConfigObject type="IIOPTransport" isProperty="true"
+					attributeName="serverAuthentication" 
+					shouldCreate="false" attributeNameInResourceXML="true">
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+			<ConfigObject type="IIOPTransport" isProperty="true"
+					attributeName="mutualAuthentication" 
+					shouldCreate="false" attributeNameInResourceXML="true">
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+
+	</ConfigObject>
+
+</resources-metadata>
+

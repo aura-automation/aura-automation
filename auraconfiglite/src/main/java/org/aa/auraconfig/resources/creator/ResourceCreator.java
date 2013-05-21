@@ -478,7 +478,7 @@ public class ResourceCreator extends Connection{
 							}
 							
 					}else{
-						logger.trace("Object Exists " + children[childCnt].getContainmentPath() + " will call modify");
+						logger.debug("Object Exists " + children[childCnt].getContainmentPath() + " will call modify");
 						
 						resourceCreatorHelper.modifyConfigObject(children[childCnt],referenceResources,deployInfo,configService,adminClient,session,scope,modifiedResources,allResources);
 						
@@ -543,10 +543,11 @@ public class ResourceCreator extends Connection{
 	 * @param referencedResources
 	 * @throws ConnectorException
 	 * @throws ConfigServiceException
+	 * @throws MalformedObjectNameException 
 	 *  
 	 */
 	private void processProperty(Resource resource, ResourceMetaData resourceMetaData, Resource referencedResources,DeployInfo deployInfo)
-		throws AttributeNotFoundException, ConnectorException,ConfigServiceException,DeployException{
+		throws AttributeNotFoundException, ConnectorException,ConfigServiceException,DeployException, MalformedObjectNameException{
 		String type = resource.getName();
 //		SDLog.log("		Checking if Attribute: " + type + " exists for the Object: " + resource.getParent().getName());
 		Object  attrObject = configService.getAttribute(session, resource.getParent().getConfigId(), resourceMetaData.getAttributeName());
@@ -605,9 +606,10 @@ public class ResourceCreator extends Connection{
 	 * @param resourceMetaData
 	 * @throws ConfigServiceException
 	 * @throws ConnectorException
+	 * @throws MalformedObjectNameException 
 	 */
 	private void checkArrayPropertyAttribute(Resource resource,ResourceMetaData resourceMetaData, Resource referencedResources,DeployInfo deployInfo)
-		throws AttributeNotFoundException, ConfigServiceException,ConnectorException,AttributeNotFoundException,DeployException{
+		throws AttributeNotFoundException, ConfigServiceException,ConnectorException,AttributeNotFoundException,DeployException, MalformedObjectNameException{
 
 
 //		SDLog.log( " MetaInfo " + configService.getAttributesMetaInfo(resource.getParent().getName()));
@@ -615,10 +617,10 @@ public class ResourceCreator extends Connection{
 		ArrayList arrayOfAttrList = (ArrayList)configService.getAttribute(session, resource.getParent().getConfigId(), resourceMetaData.getAttributeName());
 		logger.trace("Got attribute: " + resourceMetaData.getAttributeName() + " for parent + " + resource.getParent().getName());
 		LinkAttribute linkAttribute = ResourceHelper.getLinkAttribute(resource,resourceMetaData.getContainmentPath());
-		String attributeValueOfResourceObject; 
+		String attributeValueOfResourceObject = null; 
 		
 		if (linkAttribute !=null){
-			attributeValueOfResourceObject = resourceCreatorHelper.getLinkAttributeValue(resource, linkAttribute, resourceMetaData.getContainmentPath(), referencedResources, scope,deployInfo, allResources,configService,session).toString();
+			attributeValueOfResourceObject = resourceCreatorHelper.getLinkAttributeForMatchAttributeValue(resource, linkAttribute, resourceMetaData.getContainmentPath(), referencedResources, scope,deployInfo, allResources,configService,session).toString();
 		}else{
 			/**
 			 * This is objects like Classloaders which cannot be matched, we will process 1st available object
@@ -626,7 +628,9 @@ public class ResourceCreator extends Connection{
 			if (resource.getName().equalsIgnoreCase("Classloader")){
 				attributeValueOfResourceObject = "null";
 			}else{
-				attributeValueOfResourceObject =  resource.getAttributeList().get(resourceMetaData.getContainmentPath()).toString();
+				if (!resourceMetaData.getContainmentPath().equalsIgnoreCase("null")){
+					attributeValueOfResourceObject =  resource.getAttributeList().get(resourceMetaData.getContainmentPath()).toString();
+				}
 			}
 		}
 		
@@ -650,16 +654,27 @@ public class ResourceCreator extends Connection{
 
 				}else{
 					attrList = (AttributeList)arrayOfAttrIterator.next();
-					logger.trace("Getting attribute:" + resourceMetaData.getContainmentPath()+" for resource " + resource.getName());
-					String configObjectAttrValue= ConfigServiceHelper.getAttributeValue(attrList, resourceMetaData.getContainmentPath()).toString();
-					logger.trace("Matching value of attribute:" + resourceMetaData.getContainmentPath() + " attributeValueOfResourceObject  :" + attributeValueOfResourceObject + " and configObjectAttrValue " + configObjectAttrValue);
-					if (attributeValueOfResourceObject.equalsIgnoreCase(configObjectAttrValue)){
-						matchFound = true;
-						//modifyAttribueList();
-						resource.setConfigId(ConfigServiceHelper.createObjectName(attrList));
-						logger.trace("Match found:" + resourceMetaData.getContainmentPath().toString() + " to value:" + attributeValueOfResourceObject);
-
-					}
+					logger.trace("Getting attribute:" + resourceMetaData.getContainmentPath()+ " for resource " + ConfigServiceHelper.createObjectName(attrList) + "resourceMetaData.getType()" + resourceMetaData.getType());
+					
+					if ((((ObjectName)ConfigServiceHelper.createObjectName(attrList)).getKeyPropertyList().get("_Websphere_Config_Data_Type").equalsIgnoreCase(resourceMetaData.getType()))){
+						
+						if (resourceMetaData.getContainmentPath().equalsIgnoreCase("Null")){
+							matchFound = true;
+							logger.trace("resourceMetaData.getContainmentPath():" + resourceMetaData.getContainmentPath() + " match found :" + ConfigServiceHelper.createObjectName(attrList));
+							resource.setConfigId(ConfigServiceHelper.createObjectName(attrList));
+							
+						}else{
+							String configObjectAttrValue= ConfigServiceHelper.getAttributeValue(attrList, resourceMetaData.getContainmentPath()).toString();
+							logger.trace("Matching value of attribute:" + resourceMetaData.getContainmentPath() + " attributeValueOfResourceObject  :" + attributeValueOfResourceObject + " and configObjectAttrValue " + configObjectAttrValue);
+							if (attributeValueOfResourceObject.equalsIgnoreCase(configObjectAttrValue)){
+								matchFound = true;
+								//modifyAttribueList();
+								resource.setConfigId(ConfigServiceHelper.createObjectName(attrList));
+								logger.trace("Match found:" + resourceMetaData.getContainmentPath().toString() + " to value:" + attributeValueOfResourceObject);
+		
+							}
+						}
+					}	
 				}
 			//	configService.setAttributes(session, resource.getConfigId(),attrList);
 			}
@@ -717,172 +732,6 @@ public class ResourceCreator extends Connection{
 		
 	}
 
-	/**
-	 * For the array, get the each attributelist
-	 * for this attribute list match that attribute name to resource attribute list
-	 * @param arrayOfAttrList
-	 * @param resource
-	 * @param resourceMetaData
-	 * @throws ConfigServiceException
-	 * @throws ConnectorException
-	 * @throws AttributeNotFoundException
-	 */
-	private void modifyArrayPropertyAttribute(ArrayList arrayOfAttrList,Resource resource,Resource referenceResources,DeployInfo deployInfo)
-		throws ConfigServiceException,ConnectorException,AttributeNotFoundException,DeployException,MalformedObjectNameException{
-
-		logger.trace("Modify array type " + resource.getName() + " " + resource.getContainmentPath());
-
-		ResourceMetaData resourceMetaData = resource.getResourceMetaData();
-		Iterator arrayOfAttrIterator = arrayOfAttrList.iterator();
-		ArrayList modifiedAttributes = new ArrayList();
-		ResourceDiffReportHelper resourceDiffReportHelper = new ResourceDiffReportHelper ();  
-
-		String matchAttributeName; 
-		if (resourceMetaData.getMatchAttribute()!=null){ 
-			matchAttributeName = resourceMetaData.getMatchAttribute();
-		}else{
-			matchAttributeName = resourceMetaData.getContainmentPath();
-		}
-
-		while (arrayOfAttrIterator.hasNext()){
-			
-			AttributeList attrList = (AttributeList)arrayOfAttrIterator.next();
-
-			LinkAttribute linkAttribute =  ResourceHelper.getLinkAttribute(resource, matchAttributeName );
-
-			String configAttributeValue= ConfigServiceHelper.getAttributeValue(attrList, matchAttributeName ).toString();
-			String resourceAttributeValue =  resource.getAttributeList().get(matchAttributeName ).toString();
-			
-			//The match attribute can also be a link type and hence we are checking for that.
-			if(linkAttribute != null){
-				logger.trace("*************************** is it link attribute");
-				resourceAttributeValue = resourceCreatorHelper.getLinkAttributeValue(resource,linkAttribute,matchAttributeName .toString(),referenceResources,scope,deployInfo,allResources,configService,session).toString();
-				logger.trace("*************************** resourceAttributeValue " + resourceAttributeValue);
-				logger.trace("*************************** configAttributeValue " + configAttributeValue);
-			}
-	
-			logger.trace("Matching value of attribute:" + matchAttributeName  + " attributeValueOfResourceObject  :" + resourceAttributeValue + " and configObjectAttrValue " + configAttributeValue);
-			
-			if (resourceAttributeValue.equalsIgnoreCase(configAttributeValue)){
-				logger.trace("Match found for " + resource.getName() + " " + resourceAttributeValue);
-				
-				HashMap resourceAttrMap =  resource.getAttributeList();
-				Iterator keysIterator = resourceAttrMap.keySet().iterator();
-				AttributeList metaInfo =  configService.getAttributesMetaInfo(resource.getName());
-				boolean atleastOneChanged = false;
-				
-				while (keysIterator.hasNext() ){
-					String key = (String) keysIterator.next();
-					logger.trace(" Processing " + key );
-					// we have checked the containment key so not need to match it again
-					if (!key.equalsIgnoreCase(matchAttributeName.toString() )){
-					
-						boolean isSame = false;
-						Object resourceValue ; 
-						Object configValue ;
-						LinkAttribute attrLinkAttribute =  ResourceHelper.getLinkAttribute(resource, key);
-	
-						if((attrLinkAttribute!=null) &&  (ResourceHelper.isAttributeReference(metaInfo, key))){
-							// SDLog.log(" ************ It is a Link and Reference********** " + key); 
-							logger.trace(" ************ It is a Link and Reference ********** " + key); 
-
-							configValue = (ObjectName)ConfigServiceHelper.getAttributeValue(attrList, key);
-							resourceValue = new ObjectName(resourceCreatorHelper.getLinkAttributeValue(resource,attrLinkAttribute,key,referenceResources,scope,deployInfo,allResources,configService,session).toString());
-
-							//SDLog.log(" ************ It is a Link: resourceValue  ********** " + resourceValue ); 
-							//SDLog.log(" ************ It is a Link: configValue ********** " + configValue); 
-
-							logger.trace(" ************ It is a Link: resourceValue  ********** " + resourceValue ); 
-							logger.trace(" ************ It is a Link: configValue ********** " + configValue); 
-							
-							if (configValue.equals(resourceValue)){
-								SDLog.log("It is Link is same true"   );
-								isSame = true;
-							} else{
-								SDLog.log("It is Link is same false"   );
-							}
-						}else if((attrLinkAttribute!=null) &&  (!ResourceHelper.isAttributeReference(metaInfo, key))){
-							//SDLog.log(" ************ It is a Link ********** " + key); 
-							logger.trace(" ************ It is a Link ********** " + key); 
-
-							configValue = ConfigServiceHelper.getAttributeValue(attrList, key);
-							resourceValue = resourceCreatorHelper.getLinkAttributeValue(resource,attrLinkAttribute,key,referenceResources,scope,deployInfo,allResources,configService,session).toString();
-
-							//SDLog.log(" ************ It is a Link: resourceValue  ********** " + resourceValue ); 
-							//SDLog.log(" ************ It is a Link: configValue ********** " + configValue); 
-
-							logger.trace(" ************ It is a Link: resourceValue  ********** " + resourceValue ); 
-							logger.trace(" ************ It is a Link: configValue ********** " + configValue); 
-							
-							if (configValue.toString().equalsIgnoreCase(resourceValue.toString())){
-								logger.trace("It is Link is same true"   );
-								isSame = true;
-							} else{
-								logger.trace("It is Link is same false"   );
-							}
-							
-						}else if (ResourceHelper.isBoolean(metaInfo, key)){
-							resourceValue = new Boolean(resourceAttrMap.get(key).toString());
-							configValue = (Boolean)ConfigServiceHelper.getAttributeValue(attrList, key);
-							if (((Boolean)resourceValue).booleanValue() == ((Boolean)configValue).booleanValue()){
-								isSame = true;
-							} 
-						}else if (ResourceHelper.isString(metaInfo, key)){
-							resourceValue = (String)resourceAttrMap.get(key);
-							configValue = (String)ConfigServiceHelper.getAttributeValue(attrList, key);
-							if (((String)resourceValue).equalsIgnoreCase((String)configValue)){
-								isSame = true;
-							} 
-							
-						}else if (ResourceHelper.isInt(metaInfo, key)){
-							resourceValue = new Integer(resourceAttrMap.get(key).toString());
-							configValue = (Integer)ConfigServiceHelper.getAttributeValue(attrList, key);
-							if (((Integer)resourceValue).intValue() == ((Integer)configValue).intValue()) {
-								isSame = true;
-							} 
-							
-						}else if (ResourceHelper.isLong(metaInfo, key)){
-							resourceValue = new Long(resourceAttrMap.get(key).toString());
-							configValue = (Long)ConfigServiceHelper.getAttributeValue(attrList, key);
-							if (((Long)resourceValue).longValue() == ((Long)configValue).longValue()) {
-								isSame = true;
-							} 
-						
-	
-						}else {
-	
-							resourceValue = (String)resourceAttrMap.get(key);
-							configValue = (String)ConfigServiceHelper.getAttributeValue(attrList, key);
-							if (((String)resourceValue).equalsIgnoreCase((String)configValue)){
-								isSame = true;
-							} 
-						}
-						if (!isSame ){
-							atleastOneChanged = true;
-							logger.trace("attrList  " + attrList);
-							logger.trace("Adding modified attributes resource: " + " key:  "+ key + " resourceValue " +   resourceValue  + " configValue " + configValue );
-							ConfigServiceHelper.setAttributeValue(attrList, key,resourceValue);
-							
-
-							//SDLog.log("Adding modified attributes resource: " + " key:  "+ key + " resourceValue " +   resourceValue  + " configValue " + configValue );
-							modifiedAttributes.add(resourceDiffReportHelper.getDiffAttribute(key,resourceValue , configValue));
-						}
-					}
-					if (atleastOneChanged){
-						logger.trace("attrList  " + attrList);
-						configService.setAttributes(session, resource.getConfigId(),attrList);
-					}
-				}
-			}else{
-				logger.trace("		Match NOT found for " + resource.getName() + " " + resourceAttributeValue);
-
-			}
-		}
-		
-		resource.setModifiedAttributes(modifiedAttributes);
-		modifiedResources.add(resource);
-	
-	}
 
 	
 	/**
@@ -936,7 +785,7 @@ public class ResourceCreator extends Connection{
 			logger.trace("		++++++++++++++++ Should modify " + resource.getName() ) ;
 			logger.trace("		++++++++++++++++ Getting " + resourceMetaData.getAttributeName()  + " from " + resource.getParent().getName()) ;
 			ArrayList arrayList = (ArrayList)configService.getAttribute(session, resource.getParent().getConfigId(), resourceMetaData.getAttributeName());
-			modifyArrayPropertyAttribute(arrayList,resource,referencedResources,deployInfo );
+			resourceCreatorHelper.modifyArrayPropertyAttribute(arrayList,resource,referencedResources,deployInfo,configService,session,allResources,scope );
 		}
 		
 		
@@ -1179,7 +1028,7 @@ public class ResourceCreator extends Connection{
 				
 				
 				if (linkAttribute != null){
-					value = resourceCreatorHelper.getLinkAttributeValue(resource,linkAttribute,key,referencedResources,scope,deployInfo,allResources,configService,session);
+					value = resourceCreatorHelper.getLinkAttributeForMatchAttributeValue(resource,linkAttribute,key,referencedResources,scope,deployInfo,allResources,configService,session);
 				}else if (isReference){
 					logger.trace( "		As is reference : " + key + " getting matching reference " );
 					String variableName = PropertyHelper.getVariableName(value.toString());

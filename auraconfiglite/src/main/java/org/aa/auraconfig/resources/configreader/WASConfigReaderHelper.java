@@ -1,6 +1,7 @@
 package org.aa.auraconfig.resources.configreader;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
@@ -18,6 +19,7 @@ import org.aa.auraconfig.resources.ResourceDiffReportHelper;
 import org.aa.auraconfig.resources.ResourceHelper;
 import org.aa.auraconfig.resources.customcode.CustomCodeManager;
 import org.aa.auraconfig.resources.finder.ResourceFinder;
+import org.aa.auraconfig.resources.linkresources.LinkResourceHelper;
 import org.aa.auraconfig.resources.metadata.CommandLinkAttribute;
 import org.aa.auraconfig.resources.metadata.ResourceMetaData;
 import org.aa.auraconfig.resources.parser.ResourceParserHelper;
@@ -163,7 +165,8 @@ public class WASConfigReaderHelper {
 				//if ((isCollection) && (((ArrayList)attributeValue).size() > 0)){
 					
 					logger.trace("In type " + newResource.getName() + " " + attributeName + " is a Link attribute with value " + attributeValue);
-					attributeValue = getLinkAttributeValue(session,configService,linkAttribute,attributeValue.toString());
+					LinkResourceHelper linkResourceHelper  = new LinkResourceHelper (session,configService);
+					attributeValue = linkResourceHelper.getMatchAttributeValueForLinkAttribute(linkAttribute,attributeValue.toString());
 					
 					if (!((defaultAttributeValue!=null) && defaultAttributeValue.toString().equalsIgnoreCase(attributeValue.toString()))){
 						attributeList.put(attributeName, attributeValue);
@@ -652,75 +655,6 @@ public class WASConfigReaderHelper {
 	}
 
 
-	/**
-	 * When data is read from the config repository and AURA comes across a link attribute value
-	 * then this method is used to find the resources name to link back to AURA value.
-	 * 
-	 * @param session
-	 * @param configService
-	 * @param linkAttribute
-	 * @param attributeValue
-	 * @return
-	 * @throws AttributeNotFoundException
-	 * @throws ConfigServiceException
-	 * @throws ConnectorException
-	 * @throws DeployException
-	 * @throws MalformedObjectNameException
-	 */
-	public Object getLinkAttributeValue(Session session, ConfigService configService, LinkAttribute linkAttribute, 
-			String attributeValue )
-		throws AttributeNotFoundException,ConfigServiceException,ConnectorException,DeployException,MalformedObjectNameException{
-		
-		logger.trace("Will try to match the attribute value " + attributeValue + " to target Link object");
-		String linkAttributeValue = "Missing"; 
-		String targetAttribute = linkAttribute.getTargetAttribute();
-		String targetObject = linkAttribute.getTargetObject();
-		String targetMatchAttribute = linkAttribute.getTargetObjectMatchAttributeName();
-		
-		ResourceHelper resourceHelper = new ResourceHelper();
-		logger.trace("Getting object from config for target object type " + targetObject);
-		ObjectName[] configIDs= resourceHelper.getObjectNames(session, configService, targetObject);
-		if (configIDs!=null){
-			logger.trace("Got object from config for target object type size " + configIDs.length);
-			for (int i = 0; i< configIDs.length; i++){
-				if (targetAttribute == null){
-					String attrValueCanonicalName = (new ObjectName(attributeValue)).getCanonicalName().replace("[", "").replace("]", "");
-					//System.out.println( (new ObjectName(attributeValue)).getKeyPropertyList());
-					logger.trace("Since the target targetAttribute is null matching from WAS " + configIDs[i].getCanonicalName() + " to " + attrValueCanonicalName) ;
-
-					if (configIDs[i].getCanonicalName().equalsIgnoreCase(attrValueCanonicalName)){
-						if (targetMatchAttribute.equalsIgnoreCase(ResourceConstants.RESOURCE_CONFIG_ID)){
-							linkAttributeValue = ConfigServiceHelper.getConfigDataId( configIDs[i]).toString();
-						}
-						else{
-							linkAttributeValue = configService.getAttribute(session, configIDs[i], targetMatchAttribute).toString();
-						}
-						logger.trace("Link Attribute value is " + linkAttributeValue);
-	
-						if (linkAttribute.getLinkAttribute()!=null){
-							return getLinkAttributeValue(session, configService, linkAttribute.getLinkAttribute(), linkAttributeValue);
-						}
-						return linkAttributeValue ;
-					} 
-				}else{
-					String configTargetAttributeValue =  configService.getAttribute(session, configIDs[i], targetAttribute).toString();
-					logger.trace("Matching configTargetAttributeValue:attributeValue " + configTargetAttributeValue + ":" + attributeValue);
-					if (configTargetAttributeValue.equalsIgnoreCase(attributeValue)){
-						linkAttributeValue = configService.getAttribute(session, configIDs[i], targetMatchAttribute).toString();
-						logger.trace("Link Attribute value is " + linkAttributeValue);
-						return linkAttributeValue ;
-					} 
-				}
-			}
-		}else{
-			logger.trace("Did not get any object from config for target object type " + targetObject);
-		}
-		
-		logger.trace("Link Attribute value is " + linkAttributeValue);
-		return linkAttributeValue  ;
-		
-	}
-
 
 	/**
 	 * Method to get the matching peer resource for the given config Type.
@@ -787,7 +721,8 @@ public class WASConfigReaderHelper {
 				
 				LinkAttribute  linkAttribute = ResourceHelper.getLinkAttribute(resource, matchAttribute); 
 				if (linkAttribute != null){
-					attributeValueOfConfigObject = getLinkAttributeValue (session, configService, linkAttribute, attributeValueOfConfigObject).toString() ;
+					LinkResourceHelper linkResourceHelper  = new LinkResourceHelper (session,configService);
+					attributeValueOfConfigObject = linkResourceHelper.getMatchAttributeValueForLinkAttribute (linkAttribute, attributeValueOfConfigObject).toString() ;
 				}
 	
 	

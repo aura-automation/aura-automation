@@ -9,6 +9,58 @@
 				targetObject="SSLConfig"
 				targetObjectMatchAttributeName="alias" 
 				 />
+		<!-- As the match will be by the type of targetObject found i.e. KRB or LTPA etc, no need to have targetObjectMatchAttributeName, -->
+		<link-attribute linkAttibuteName="activeAuthMechanism"
+				targetObject="AuthMechanism"
+				targetObjectMatchAttributeName="authConfig" 
+				 />
+
+	<link-attribute linkAttibuteName="activeUserRegistry"
+				targetObject="UserRegistry"
+				targetObjectMatchAttributeName="__internal_config_id" 
+				 /> 
+
+		<ConfigObject type="KRB5" relation="authMechanisms"
+			attributeName="authMechanisms" 
+			shouldCreate="false" >
+			<containment>
+				<attribute value="null" />
+			</containment>
+		</ConfigObject>
+
+		<ConfigObject type="SPNEGO" relation="authMechanisms"
+			attributeName="authMechanisms" 
+			shouldCreate="false" >
+			<containment>
+				<attribute value="null" />
+			</containment>
+		</ConfigObject>
+
+		
+
+		<ConfigObject type="RSAToken" relation="authMechanisms"
+			attributeName="authMechanisms" 
+			shouldCreate="false" >
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<link-attribute linkAttibuteName="adminCertificateTrustStore"
+					targetObject="KeyStore"					targetObjectMatchAttributeName="name" />
+			<link-attribute linkAttibuteName="adminCertificate"
+					targetObject="Certificate"					targetObjectMatchAttributeName="alias" />
+
+		</ConfigObject>
+
+		<ConfigObject type="Certificate" relation="certificates"
+			attributeName="certificates" 
+			shouldCreate="false" findAndResolve="true">
+			<containment>
+				<attribute value="alias" />
+			</containment>
+			<link-attribute linkAttibuteName="keyStore"
+					targetObject="KeyStore"					targetObjectMatchAttributeName="name" />
+
+		</ConfigObject>
 
 		<ConfigObject type="LTPA" relation="authMechanisms"
 			attributeName="authMechanisms" 
@@ -64,6 +116,14 @@
 						<attribute value="null" />
 					</containment>
 			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject type="WIMUserRegistry" relation="userRegistries"
+			attributeName="userRegistries" 
+			shouldCreate="false" >
+			<containment>
+				<attribute value="null" />
+			</containment>
 		</ConfigObject>
 
 		<ConfigObject type="LocalOSUserRegistry" 
@@ -191,135 +251,26 @@
 				<containment>
 					<attribute value="null" />
 				</containment>
-				<ConfigObject type="CommonSecureInterop" 
+				<ConfigObject type="CommonSecureInterop" isProperty="true" 
 						attributeName="claims" 
-						shouldCreate="false" >
+						shouldCreate="false" attributeNameInResourceXML="true">
 						<containment>
 							<attribute value="null" />
 						</containment>
-						<ConfigObject type="IdentityAssertionLayer" 
-								attributeName="layers" 
-								shouldCreate="false" >
-								<containment>
-									<attribute value="null" />
-								</containment>
-								<ConfigObject type="IdentityAssertionQOP" 
-										attributeName="supportedQOP" 
-										shouldCreate="false" >
-										<containment>
-											<attribute value="null" />
-										</containment>
-								</ConfigObject>
-								<ConfigObject type="ServerIdentity" 
-										attributeName="trustedServers" 
-										shouldCreate="false" >
-										<containment>
-											<attribute value="null" />
-										</containment>
-								</ConfigObject>
 
-						</ConfigObject>
-						<ConfigObject type="MessageLayer" 
-								attributeName="layers" 
-								shouldCreate="false" >
-								<containment>
-									<attribute value="null" />
-								</containment>
-								<ConfigObject type="MessageQOP" 
-										attributeName="requiredQOP" 
-										shouldCreate="false" >
-										<containment>
-											<attribute value="null" />
-										</containment>
-								</ConfigObject>
-						</ConfigObject>
-						<ConfigObject type="TransportLayer" 
-								attributeName="layers" 
-								shouldCreate="false" >
-								<containment>
-									<attribute value="null" />
-								</containment>
-								<ConfigObject type="TransportQOP" 
-										attributeName="requiredQOP" 
-										shouldCreate="false" >
-										<containment>
-											<attribute value="null" />
-										</containment>
-								</ConfigObject>
-								<ConfigObject type="IIOPTransport" 
-										attributeName="serverAuthentication" 
-										shouldCreate="false" >
-										<containment>
-											<attribute value="null" />
-										</containment>
-								</ConfigObject>
+						<import file="layers.xml" /> 
 
-						</ConfigObject>
 				</ConfigObject>
-				<ConfigObject type="CommonSecureInterop" 
+				<ConfigObject type="CommonSecureInterop" isProperty="true" 
 						attributeName="performs" 
-						shouldCreate="false" >
+						shouldCreate="false" 
+						attributeNameInResourceXML="true">
 						<containment>
 							<attribute value="null" />
 						</containment>
-						<ConfigObject type="IdentityAssertionLayer" 
-								attributeName="layers" 
-								shouldCreate="false" >
-								<containment>
-									<attribute value="null" />
-								</containment>
-								<ConfigObject type="IdentityAssertionQOP" 
-										attributeName="supportedQOP" 
-										shouldCreate="false" >
-										<containment>
-											<attribute value="null" />
-										</containment>
-								</ConfigObject>
-								<ConfigObject type="ServerIdentity" 
-										attributeName="trustedServers" 
-										shouldCreate="false" >
-										<containment>
-											<attribute value="null" />
-										</containment>
-								</ConfigObject>
 
-						</ConfigObject>
-						<ConfigObject type="MessageLayer" 
-								attributeName="layers" 
-								shouldCreate="false" >
-								<containment>
-									<attribute value="null" />
-								</containment>
-								<ConfigObject type="MessageQOP" 
-										attributeName="requiredQOP" 
-										shouldCreate="false" >
-										<containment>
-											<attribute value="null" />
-										</containment>
-								</ConfigObject>
-						</ConfigObject>
-						<ConfigObject type="TransportLayer" 
-								attributeName="layers" 
-								shouldCreate="false" >
-								<containment>
-									<attribute value="null" />
-								</containment>
-								<ConfigObject type="TransportQOP" 
-										attributeName="requiredQOP" 
-										shouldCreate="false" >
-										<containment>
-											<attribute value="null" />
-										</containment>
-								</ConfigObject>
-								<ConfigObject type="IIOPTransport" 
-										attributeName="serverAuthentication" 
-										shouldCreate="false" >
-										<containment>
-											<attribute value="null" />
-										</containment>
-								</ConfigObject>
+						<import file="layers.xml" /> 
 
-						</ConfigObject>
 				</ConfigObject>
 
 		</ConfigObject>
@@ -394,8 +345,7 @@
 
 
 		<ConfigObject type="SSLConfig" relation="repertoire"
-			attributeName="repertoire" 
-			 isArray="true" isProperty="true" findAndResolve="true">
+			attributeName="repertoire" findAndResolve="true">
 			<containment>
 				<attribute value="alias" />
 			</containment>
@@ -405,51 +355,68 @@
 					targetObjectMatchAttributeName="scopeName" />
 			
 			
-			<ConfigObject type="SecureSocketLayer" 
-				attributeName="setting" relation="setting" 
-				shouldCreate="false" syncFindModeContainmentPath="true">
+			<ConfigObject type="SecureSocketLayer" relation="setting" attributeName="setting" isProperty="true" syncFindModeContainmentPath="true">
 				<containment>
 					<attribute value="null" />
 				</containment>
-				<ConfigObject type="CryptoHardwareToken" 
+				<ConfigObject isProperty="true"  type="CryptoHardwareToken" 
 					attributeName="setting">
 					<containment>
 						<attribute value="null" />
 					</containment>
 				</ConfigObject>
-				<ConfigObject type="Property" isArray="true"
-					attributeName="properties" 
-					shouldCreate="false">
+				<ConfigObject type="Property" isProperty="true" isArray="true" attributeName="properties">
 					<containment>
 						<attribute value="name" />
 					</containment>
 				</ConfigObject>
+
 				<link-attribute linkAttibuteName="keyStore"
 						targetObject="KeyStore"
-						targetObjectMatchAttributeName="name" />
+						targetObjectMatchAttributeName="name|managementScope" >
+						<link-attribute linkAttibuteName="managementScope"
+								targetObject="ManagementScope"
+								targetObjectMatchAttributeName="scopeName" />
+				</link-attribute>		
 				<link-attribute linkAttibuteName="trustStore"
 						targetObject="KeyStore"
-						targetObjectMatchAttributeName="name" />
+						targetObjectMatchAttributeName="name|managementScope" >
+						<link-attribute linkAttibuteName="managementScope"
+								targetObject="ManagementScope"
+								targetObjectMatchAttributeName="scopeName" />
+				</link-attribute>		
+
 				<link-attribute linkAttibuteName="keyManager"
 						targetObject="KeyManager"
-						targetObjectMatchAttributeName="name" />
+						targetObjectMatchAttributeName="name|managementScope" >
+						<link-attribute linkAttibuteName="managementScope"
+								targetObject="ManagementScope"
+								targetObjectMatchAttributeName="scopeName" />
+				</link-attribute>		
+
 				<link-attribute linkAttibuteName="trustManager"
 						targetObject="TrustManager"
-						targetObjectMatchAttributeName="name" />
+						targetObjectMatchAttributeName="name|managementScope" >
+						<link-attribute linkAttibuteName="managementScope"
+								targetObject="ManagementScope"
+								targetObjectMatchAttributeName="scopeName" />
+				</link-attribute>		
+
 					<!--	targetObjectMatchAttributeName="__internal_config_id" -->
-				
+		
+								
 			</ConfigObject>
 
 		</ConfigObject>
 
-		<ConfigObject type="ManagementScope" relation="managementScopes" 
+		<ConfigObject type="ManagementScope" relation="managementScopes" attributeName="managementScopes"
 			findAndResolve="true" wasVersion="61">
 			<containment>
 				<attribute value="scopeName" />
 			</containment>
 		</ConfigObject>				
 
-		<ConfigObject type="KeyManager" wasVersion="61">
+		<ConfigObject type="KeyManager" attributeName="keyManagers" relation="keyManagers" wasVersion="61" >
 			<containment>
 				<attribute value="name" />
 				<additional>
@@ -484,6 +451,15 @@
 			<link-attribute linkAttibuteName="managementScope"
 					targetObject="ManagementScope"
 					targetObjectMatchAttributeName="scopeName" />
+
+			<ConfigObject type="DescriptiveProperty" relation="additionalTrustManagerAttrs"
+				attributeName="additionalTrustManagerAttrs" 
+				findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+
 		</ConfigObject>				
 
 		<ConfigObject type="KeySet" attributeName="keySets" relation="keySets"   wasVersion="61">
@@ -493,6 +469,15 @@
 			<link-attribute linkAttibuteName="managementScope"
 					targetObject="ManagementScope"
 					targetObjectMatchAttributeName="scopeName" />
+
+			<link-attribute linkAttibuteName="keyStore"
+					targetObject="KeyStore"
+					targetObjectMatchAttributeName="name" />
+			<ConfigObject type="KeyReference" attributeName="keySets" relation="keySets"  findAndResolve="true" wasVersion="61">
+				<containment>
+					<attribute value="keyAlias" />
+				</containment>
+			</ConfigObject>				
 		</ConfigObject>				
 
 		<ConfigObject type="KeySetGroup" attributeName="keySetGroups" relation="keySetGroups"   wasVersion="61">
@@ -510,7 +495,7 @@
 					targetObjectMatchAttributeName="scopeName" />
 		</ConfigObject>				
 
-		<ConfigObject type="WSSchedule" wasVersion="61">
+		<ConfigObject type="WSSchedule" attributeName="wsSchedules" relation="wsSchedules" wasVersion="61">
 			<containment>
 				<attribute value="name" />
 			</containment>
@@ -526,6 +511,12 @@
 			<containment>
 				<attribute value="name" />
 			</containment>
+			<link-attribute linkAttibuteName="wsNotification"
+					targetObject="WSNotification"
+					targetObjectMatchAttributeName="name" />
+			<link-attribute linkAttibuteName="wsSchedule"
+					targetObject="WSSchedule"
+					targetObjectMatchAttributeName="name" />
 		</ConfigObject>				
 
 		<ConfigObject type="SSLConfigGroup" wasVersion="61">
@@ -541,13 +532,38 @@
 					targetObjectMatchAttributeName="scopeName" />
 		</ConfigObject>				
 
-		<ConfigObject relation="authDataEntries"
-			attributeName="authDataEntries" type="JAASAuthData"
+		<ConfigObject type="JAASAuthData" relation="authDataEntries"
+			attributeName="authDataEntries" 
 			isArray="true" findAndResolve="true">
 			<containment>
 				<attribute value="alias" />
 			</containment>
+
 		</ConfigObject>
+		<ConfigObject type="DescriptiveProperty" relation="webAuthAttrs"
+			attributeName="webAuthAttrs" 
+			findAndResolve="true" >
+			<containment>
+				<attribute value="name" />
+			</containment>
+		</ConfigObject>
+
+
+		<ConfigObject type="Property" relation="properties"
+			attributeName="properties" 
+			isArray="true" >
+			<containment>
+				<attribute value="name" />
+			</containment>
+		</ConfigObject>
+
+		<ConfigObject type="JASPIConfiguration" relation="jaspiConfiguration"
+			attributeName="jaspiConfiguration">
+			<containment>
+				<attribute value="null" />
+			</containment>
+		</ConfigObject>
+
 	</ConfigObject>
 
 

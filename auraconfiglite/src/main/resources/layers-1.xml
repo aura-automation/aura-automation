@@ -1,0 +1,67 @@
+<resources-metadata>
+	<ConfigObject type="IdentityAssertionLayer" 
+			attributeName="layers" 
+			shouldCreate="false" >
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="IdentityAssertionQOP" 
+					attributeName="supportedQOP" 
+					shouldCreate="false" >
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+			<ConfigObject type="ServerIdentity" 
+					attributeName="trustedServers" 
+					shouldCreate="false" >
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+
+	</ConfigObject>
+	<ConfigObject type="MessageLayer" 
+			attributeName="layers" 
+			shouldCreate="false" syncFindModeContainmentPath="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="MessageQOP" isProperty="true"
+					attributeName="supportedQOP" attributeNameInResourceXML="true"
+					shouldCreate="false" >
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+			<ConfigObject type="MessageQOP" isProperty="true"
+					attributeName="requiredQOP" attributeNameInResourceXML="true"
+					shouldCreate="false" >
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+	</ConfigObject>
+	<ConfigObject type="TransportLayer" 
+			attributeName="layers" 
+			shouldCreate="false" >
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="TransportQOP" 
+					attributeName="requiredQOP" 
+					shouldCreate="false" >
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+			<ConfigObject type="IIOPTransport" 
+					attributeName="serverAuthentication" 
+					shouldCreate="false" >
+					<containment>
+						<attribute value="null" />
+					</containment>
+			</ConfigObject>
+
+	</ConfigObject>
+</resources-metadata>

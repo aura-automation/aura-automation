@@ -62,7 +62,7 @@ public class CustomCodeManager {
 	
 	public ArrayList<DiffAttribute> modify(Session session,ConfigService configService,
 			Resource resource,ObjectName configObject, DeployInfo deployInfo,AdminClient adminClient,ObjectName scope, 
-			Resource allResources,Resource referenceResources) throws DeployException{
+			Resource allResources,Resource referenceResources) throws DeployException, MalformedObjectNameException{
 	
 			ResourceMetaData resourceMetaData =  resource.getResourceMetaData();
 			logger.trace("CustomCodeManager:-  resourceMetaData.getCustomCodeManaged() " + resourceMetaData.getCustomCodeManaged());

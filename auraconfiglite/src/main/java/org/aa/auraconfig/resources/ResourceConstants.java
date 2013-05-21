@@ -34,6 +34,7 @@ public class ResourceConstants {
 	public static final String COMMAND_CONSTANT = "constant";
 	
 	public static final String RESOURCE_CONFIG_ID = "__internal_config_id";
+	public static final String RESOURCE_TYPE = "__internal_resource_type";
 	
 	
 	

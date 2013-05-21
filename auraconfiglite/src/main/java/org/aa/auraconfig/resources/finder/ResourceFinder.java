@@ -53,7 +53,7 @@ public class ResourceFinder {
 	public ObjectName[] findAllResourcesInConfig(Session session,ConfigService configService,Resource resource,
 			ObjectName scope, boolean inSyncMethod )
 		throws ConnectorException, ConfigServiceException,AttributeNotFoundException {
-		logger.trace("find all resources " + resource.getContainmentPath() );	
+		logger.debug(">>> find all resources " + resource.getContainmentPath() );	
 		ResourceHelper resourceHelper = new ResourceHelper();
 		
 	
@@ -69,28 +69,28 @@ public class ResourceFinder {
 		 * But in the find mode we use the logic of 
 		 */
 		if (resource.getResourceMetaData().isSyncFindModeContainmentPath()){
-			logger.trace(">>> Get all ConfigObjects for the containment path " + resource.getContainmentPath() +  " ] " ); 
-			
+			logger.trace(" Get all ConfigObjects for the containment path " + resource.getContainmentPath() +  " ] " ); 
 			configIDs = configService.resolve(session, resource.getContainmentPath());
 			//configIDs = resourceHelper.getObjectNames(session,configService, resource.getContainmentPath()); 
 		
 		}else if ((!inSyncMethod)&& (!resource.getResourceMetaData().isFindAndResolve())){
-			logger.trace(">>> Get all ConfigObjects using resourceHelper.getObjectNames " + resource.getName() + " to find " + resource.getAttributeList().get(resource.getResourceMetaData().getContainmentAttribute()) );
+			logger.trace(" Get all ConfigObjects using resourceHelper.getObjectNames " + resource.getName() + " to find " + resource.getAttributeList().get(resource.getResourceMetaData().getContainmentAttribute()) );
 			configIDs = resourceHelper.getObjectNames(session,configService, resource.getContainmentPath()); 
 		}else if (scope == null){
-			logger.trace(">>> Get all ConfigObjects for the type " + resource.getName() + " to find " + resource.getAttributeList().get(resource.getResourceMetaData().getContainmentAttribute()) ); 
+			logger.trace(" Get all ConfigObjects for the type " + resource.getName() + " to find " + resource.getAttributeList().get(resource.getResourceMetaData().getContainmentAttribute()) ); 
 			configIDs = configService.resolve(session, resource.getName());
 		}else if (attributeNameForDuplicateObjectTypeChild  != null){
-			logger.trace(">>> Get all ConfigObjects by getting  value of the attribute " + resource.getAttributeList().get(ResourceConstants.ATTRUBUTENAME) + " for resource " + resource.getName() + " to find " + resource.getAttributeList().get(resource.getResourceMetaData().getContainmentAttribute()) );
+			logger.trace(" Get all ConfigObjects by getting  value of the attribute " + resource.getAttributeList().get(ResourceConstants.ATTRUBUTENAME) + " for resource " + resource.getName() + " to find " + resource.getAttributeList().get(resource.getResourceMetaData().getContainmentAttribute()) );
 			ObjectName[] newConfigObject = {ConfigServiceHelper.createObjectName((AttributeList)configService.getAttribute(session, resource.getParent().getConfigId() , attributeNameForDuplicateObjectTypeChild ))};
 			configIDs = newConfigObject;
 		}
 		else{
-			logger.trace(">>> Get ConfigObjects for the type " + resource.getName() + " in scope " + configService.getAttribute(session, scope,"name") + " to find " + resource.getAttributeList().get(resource.getResourceMetaData().getContainmentAttribute()) ); 
+			logger.trace(" Get ConfigObjects for the type " + resource.getName() + " in scope " + configService.getAttribute(session, scope,"name") + " to find " + resource.getAttributeList().get(resource.getResourceMetaData().getContainmentAttribute()) ); 
 			configIDs = configService.resolve(session, scope, resource.getName());
 		}
 		
 		//matchAdditionalContainmentAttributeIfRequired
+		logger.debug("<<<  number of objects found" + configIDs.length);	
 		return configIDs;
 	}
 	

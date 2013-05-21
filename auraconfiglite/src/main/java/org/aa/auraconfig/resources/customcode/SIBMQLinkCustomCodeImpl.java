@@ -178,10 +178,11 @@ public class SIBMQLinkCustomCodeImpl {
 	 * @param configObject
 	 * @param deployInfo
 	 * @throws DeployException
+	 * @throws MalformedObjectNameException 
 	 */
 	public ArrayList<DiffAttribute> modify(Session session,ConfigService configService,
 			Resource resource,ObjectName configObject,DeployInfo deployInfo,
-			 AdminClient adminClient,ObjectName scope, Resource allResources,Resource referenceResources) throws DeployException{
+			 AdminClient adminClient,ObjectName scope, Resource allResources,Resource referenceResources) throws DeployException, MalformedObjectNameException{
 		logger.trace(">>");
 		logger.trace("	Will modify " + resource.getContainmentPath());
 
@@ -370,12 +371,13 @@ public class SIBMQLinkCustomCodeImpl {
 	 * @throws ConnectorException
 	 * @throws ConfigServiceException
 	 * @throws DeployException
+	 * @throws MalformedObjectNameException 
 	 */
 	private void modifyObjectName(String objectType, ObjectName resourceWasObject, 
 			ArrayList<DiffAttribute> modifiedAttributes,Resource resource,
 			ConfigService configService, Session session, AdminClient adminClient,ObjectName scope, 
 			Resource allResources,Resource referenceResources,DeployInfo deployInfo )
-			throws AttributeNotFoundException,ConnectorException,ConfigServiceException,DeployException{
+			throws AttributeNotFoundException,ConnectorException,ConfigServiceException,DeployException, MalformedObjectNameException{
 		
 		AttributeList changedAttrList = new AttributeList ();
 		AttributeList attributeMetaInfo =  configService.getAttributesMetaInfo(objectType);
@@ -403,11 +405,12 @@ public class SIBMQLinkCustomCodeImpl {
 	 * @param modifiedAttributes
 	 * @param resource
 	 * @throws AttributeNotFoundException
+	 * @throws MalformedObjectNameException 
 	 */
 	private void modifyAttribute(ObjectName resourceWasObject, String resourceAttributeName,ArrayList<DiffAttribute> modifiedAttributes,Resource resource,
 			ConfigService configService, AttributeList changedAttrList,Session session, AdminClient adminClient,ObjectName scope, 
 			Resource allResources,Resource referenceResources,DeployInfo deployInfo)
-		throws AttributeNotFoundException,ConnectorException,ConfigServiceException,DeployException{
+		throws AttributeNotFoundException,ConnectorException,ConfigServiceException,DeployException, MalformedObjectNameException{
 		
 		HashMap<String, String> resourceAttributeList = resource.getAttributeList(); 
 		ResourceCreatorHelper resourceCreatorHelper = new ResourceCreatorHelper();
