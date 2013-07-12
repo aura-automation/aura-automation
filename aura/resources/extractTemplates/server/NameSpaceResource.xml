@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<Cell name="${{CellName}}">
+		<Node >
+			<EjbNameSpaceBinding/> 
+			<StringNameSpaceBinding/> 
+			<CORBAObjectNameSpaceBinding/> 
+			<IndirectLookupNameSpaceBinding/> 
+			<Server >
+				<EjbNameSpaceBinding/> 
+				<StringNameSpaceBinding/> 
+				<CORBAObjectNameSpaceBinding/> 
+				<IndirectLookupNameSpaceBinding/> 
+			</Server>
+		</Node>
+	</Cell>
+</resources>

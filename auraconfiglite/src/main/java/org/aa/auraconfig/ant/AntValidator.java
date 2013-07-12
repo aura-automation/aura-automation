@@ -31,6 +31,7 @@ public class AntValidator {
 			isValid = false;
 			Error.log("Please add " + DeployValues.NODE + "  attribute to the ant task");
 		} 
+
 **/
 		if (!AntTaskValidatorHelper.isValid(deployInfo.getEnvironmentProperties())){
 			isValid = false;

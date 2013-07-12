@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Cell  name="${{CellName}}">
+    <ObjectPoolProvider classpath="" description="Default Object Pool Provider" nativepath="" name="ObjectPoolProvider">
+      <ObjectPoolManagerInfo name="ObjectPool" jndiName="pl/mObjectPool">
+        <ObjectPool poolClassName="com.mycom.poolclass" poolImplClassName="com.mycom.class" />
+      </ObjectPoolManagerInfo>
+      <ObjectPoolManagerInfo name="ObjectPool1" jndiName="pl/mObjectPool1">
+        <ObjectPool poolClassName="com.mycom.poolclass1" poolImplClassName="com.mycom.class1" />
+      </ObjectPoolManagerInfo>
+
+    </ObjectPoolProvider>
+
+  </Cell>
+</resources>
+

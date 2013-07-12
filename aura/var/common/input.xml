@@ -1,0 +1,38 @@
+<project name="input">
+
+	<path id="classpath">
+		<fileset dir="${AURA_HOME}/opt">
+		    <include name="groovy-*/embeddable/*.jar" />
+		</fileset>
+		<fileset dir="${AURA_HOME}/lib">
+		    <include name="*.jar" />
+		</fileset>
+
+      		<dirset dir="${AURA_HOME}/var" includes="scripts"/>		
+	</path>
+
+    <pathconvert property="classpathstring" refid="classpath" />
+
+	<taskdef name="groovy"
+	         classname="org.codehaus.groovy.ant.Groovy"
+	         classpathref="classpath"/>
+
+	
+	<target name="input">
+		<groovy>
+			def InputDataProcessor inputDataProcessor = new InputDataProcessor()
+			inputDataProcessor.setAntBuilder(ant)
+			inputDataProcessor.process()
+		</groovy>
+		<property file="${env.file}"/>	
+	</target>
+
+	<target name="install-plugin">
+		<groovy>
+			def PluginInstaller pluginInstaller = new PluginInstaller()
+			pluginInstaller.setAntBuilder(ant)
+			pluginInstaller.process()
+		</groovy>
+	</target>
+
+</project>

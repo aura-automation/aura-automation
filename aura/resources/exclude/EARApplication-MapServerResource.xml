@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<Cell cellType="DISTRIBUTED" name="${{CellName}}">
+  		<EARApplication>
+ 			<MapModulesToServers>
+		       
+		      </MapModulesToServers>
+      	
+	    </EARApplication>   
+
+    </Cell>
+</resources>

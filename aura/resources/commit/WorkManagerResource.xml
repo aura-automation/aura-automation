@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Cell name="${{CellName}}">
+    <WorkManagerProvider classpath="" nativepath="" description="Default WorkManager Provider" name="WorkManagerProvider">
+      <WorkManagerInfo numAlarmThreads="5" category="Default" description="WebSphere Default WorkManager" name="DefaultWorkManager" isGrowable="false" minThreads="1" maxThreads="10" jndiName="wm/default" serviceNames="AppProfileService;com.ibm.ws.i18n;security;UserWorkArea;zos.wlm" provider="WorkManagerProvider" />
+      <WorkManagerInfo numAlarmThreads="10" description="WorkManger for Scheduler in AppScheduler" name="AppSchedulerWorkManager" minThreads="5" maxThreads="10" jndiName="wm/AppScheduler" serviceNames="AppProfileService;com.ibm.ws.i18n;security;UserWorkArea" provider="WorkManagerProvider" />
+      <WorkManagerInfo numAlarmThreads="0" description="Defult-workmanager-for-wps-eventsequencing" name="es-workmanager" minThreads="2" workReqQSize="10" maxThreads="10" jndiName="wm/ESWorkManager" serviceNames="" provider="WorkManagerProvider" />
+      <WorkManagerInfo numAlarmThreads="0" description="Defult-workmanager-for-wps-eventsequencing" name="Myworkmanager" minThreads="2" workReqQSize="10" maxThreads="10" jndiName="wm/MyWorkManager" serviceNames="" provider="WorkManagerProvider" />
+
+    </WorkManagerProvider>
+  </Cell>
+</resources>
+

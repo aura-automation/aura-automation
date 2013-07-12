@@ -1,0 +1,28 @@
+<resources>
+	<Cell name="${{CellName}}">
+		<ServerCluster name="${{ClusterName}}">
+			<J2CResourceAdapter name="SIB JMS Resource Adapter">
+				<J2CAdminObject 
+					adminObject="${{__AdminObject_JMS_Queue}}">
+					<J2EEResourceProperty/>
+				</J2CAdminObject>
+			</J2CResourceAdapter>
+
+			<JMSProvider name="WebSphere JMS Provider">
+				<J2CAdminObject 
+					adminObject="${{__AdminObject_JMS_Queue}}">
+					<J2EEResourceProperty/>
+				</J2CAdminObject>
+
+				<J2CActivationSpec
+					activationSpec="${{__ActivationSpec_JMS_ActivationSpec}}">
+				</J2CActivationSpec>
+
+				<J2CConnectionFactory 
+					connectionDefinition="${{__ConnectionDefinition_JMS_ConnectionFactory}}">
+				</J2CConnectionFactory>
+			</JMSProvider>
+
+		</ServerCluster>
+	</Cell>
+</resources>

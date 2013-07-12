@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Cell name="${{CellName}}">
+    <Security enabled="true" useLocalSecurityServer="true" allowBasicAuth="true" dynamicallyUpdateSSLConfig="true" activeProtocol="BOTH" cacheTimeout="600">
+      <LocalOSUserRegistry primaryAdminId="wasadmin" useRegistryRealm="true" serverPassword="" serverId="" realm="apartech-vm-04" />
+      <CustomUserRegistry customRegistryClassName="com.ibm.websphere.security.FileRegistrySample" primaryAdminId="" />
+      <LDAPUserRegistry reuseConnection="true" ignoreCase="true" bindDN="cn=Manager,dc=centauros-solutions.co.uk,dc=com" bindPassword="password" primaryAdminId="wasadmin" searchTimeout="120" type="CUSTOM" baseDN="cn=admins,dc=centauros-solutions.co.uk,dc=com" useRegistryRealm="true" serverPassword="" serverId="" realm="localhost:389">
+        <LDAPSearchFilter groupIdMap="*:cn" userFilter="(&amp;(uid=%v)(objectclass=inetOrgPerson))" userIdMap="*:uid" groupFilter="(&amp;(cn=%v)(|(objectclass=posixGroup)(objectclass=dcObject)))" groupMemberIdMap="ibm-allGroups:member;ibm-allGroups:uniqueMember;groupOfNames:member;groupOfUniqueNames:uniqueMember" krbUserFilter="(&amp;(krbPrincipalName=%v)(objectclass=ePerson))" certificateFilter="" />
+        <EndPoint port="389" host="localhost" />
+      </LDAPUserRegistry>
+    </Security>
+  </Cell>
+</resources>
+

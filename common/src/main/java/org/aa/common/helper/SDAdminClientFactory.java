@@ -74,19 +74,6 @@ public class SDAdminClientFactory {
 				SDLog.log("Creating connection to target server using :" + deployInfo.getConnectionType());
 				SDLog.log("    ");
 
-				/** connectProps.setProperty("com.ibm.SSL.ConfigURL" ,"C:/IBM/WebSphere61/profiles/Dmgr01/properties/ssl.client.props");
-				connectProps.setProperty("java.security.auth.login.config", "C:/IBM/WebSphere61/profiles/Dmgr01/properties/wsjaas_client.conf");
-				connectProps.setProperty("com.ibm.SOAP.ConfigURL","C:/IBM/WebSphere61/profiles/Dmgr01/properties/soap.client.props");
-				System.setProperty("com.ibm.SOAP.ConfigURL","file:C:/IBM/WebSphere61/profiles/Dmgr01/properties/soap.client.props");
-				connectProps.setProperty("com.ibm.CORBA.ConfigURL","C:/IBM/WebSphere61/profiles/Dmgr01/properties/sas.client.props"); **/
-				//System.setProperty("com.ibm.CORBA.ConfigURL","file:C:\\jatin\\eclipse\\SlickDeploy-Test\\WASLIB\\properties\\sas.client.props");
-
-			//	System.setProperty("java.security.auth.login.config", "file:C:\\IBM\\WebSphere61\\profiles\\Dmgr01\\properties\\wsjaas_client.conf");
-			//	System.setProperty("com.ibm.CORBA.ConfigURL","file:C:\\IBM\\WebSphere61\\profiles\\Dmgr01\\properties\\sas.client.props");
-			//	System.setProperty("com.ibm.SSL.ConfigURL" ,"file:C:\\IBM\\WebSphere61\\profiles\\Dmgr01\\properties\\ssl.client.props");
-				
-			//	System.out.println( "com.ibm.CORBA.ConfigURL " + System.getProperty("com.ibm.CORBA.ConfigURL"));
-				
 				if ((deployInfo.getJAACSecurityConfig()!=null) && (deployInfo.getJAACSecurityConfig().length()>0)){
 					System.setProperty("java.security.auth.login.config","file://"+  deployInfo.getJAACSecurityConfig());
 					logger.trace ("java.security.auth.login.config" + "file://"+  deployInfo.getJAACSecurityConfig());

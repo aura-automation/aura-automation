@@ -1,0 +1,7 @@
+<project name="websphere-plugin">
+
+	<property name="SOAPSecurityConfig" value="${AURA_REPO}/plugins/was-remote/properties/soap.client.props"/>
+	<property name="SASSecurityConfig" value="${AURA_REPO}/plugins/was-remote/properties/sas.client.props"/>
+	<property name="SSLSecurityConfig" value="${AURA_REPO}/plugins/was-remote/properties/ssl.client.props"/>
+
+</project>

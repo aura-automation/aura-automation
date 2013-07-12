@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Cell cellType="DISTRIBUTED" name="${{CellName}}">
+    <ResourceEnvironmentProvider classpath="" nativepath="" name="Environment1">
+      <J2EEResourcePropertySet>
+        <J2EEResourceProperty name="MyCustomProp1" type="java.lang.String" value="myValues" />
+      </J2EEResourcePropertySet>
+      <Referenceable factoryClassname="com.company.MyFacClass1" classname="com.company.MyClass1" />
+      <ResourceEnvEntry name="MyResEnv1" referenceable="com.company.MyFacClass1" jndiName="res/MyResEnv">
+        <J2EEResourcePropertySet>
+          <J2EEResourceProperty name="MyProperty" type="java.lang.String" value="MyValues" />
+        </J2EEResourcePropertySet>
+      </ResourceEnvEntry>
+    </ResourceEnvironmentProvider>
+  </Cell>
+</resources>
+

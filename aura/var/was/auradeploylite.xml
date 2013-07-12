@@ -1,0 +1,150 @@
+<project name="Deploy" >
+	<property name="applicationName" value="DefaultApp" />
+	<property name="environment" value="DEV" />
+	<property name="tag" value="Tag_1_0_0" />
+	
+
+	<property name="remoteworkdir" value="/tmp/deploy" />
+
+	<property name="remote.workdir.ear" value="${remoteworkdir}/${workdir}/${applicationName}/ear" />
+	<property name="remote.workdir.deploydata" value="${remoteworkdir}/${workdir}/${applicationName}/deploydata" />
+
+	<property name="workdir.ear" value="${basedir}/${workdir}/${applicationName}/binaries/ear" />
+	<property name="workdir.deploydata" value="${basedir}/${workdir}/${applicationName}/binaries/deploydata" />
+
+	<property name="workdir.environments" value="${basedir}/${workdir}/${applicationName}/environments/${environment}" />
+	
+	<property name="multiEARLocation" value="${workdir.ear}" />
+	<property name="multiEARDeployData" value="${workdir.deploydata}" />
+
+	<property name="remoteMultiEARLocation" value="${remoteworkdir}"/>
+	
+	<property name="applicatioName" value="defaultApp" />
+
+
+	
+
+	
+	<target name="startApplication" depends="init" description="Start Application">
+
+		<AuraApplication 
+			cell="${CellName}" cluster="${Cluster}" server="${Server}" 
+			earFileLocation="${basedir}\SlickDeploy\ear\soa\${EARLocation}" userName="${user}" password="${password}" 
+			port="${dmgrPortNumber}" node="${node}" host="${dmgrHostName}" isMultiEAR="true" MultiEARLocation="${multiEARLocation}" 
+			connectionType="${connectionType}" operation="start" 
+			soapSecurityConfig="${SOAPSecurityConfig}"
+			sslSecurityConfig="${SSLSecurityConfig}"
+			sasSecurityConfig="${SASSecurityConfig}"
+			jaacSecurityConfig="${JAACSecurityConfig}"
+		/>
+
+	</target>
+
+	<target name="stopApplication" depends="init" description="Stop Application">
+		<AuraApplication cell="${CellName}" cluster="${Cluster}" server="${Server}" 
+			earFileLocation="${basedir}\SlickDeploy\ear\soa\${EARLocation}" userName="${user}" password="${password}" 
+			port="${dmgrPortNumber}" node="${node}" host="${dmgrHostName}" isMultiEAR="true" MultiEARLocation="${multiEARLocation}" 
+			connectionType="${connectionType}" operation="stop" 
+			soapSecurityConfig="${SOAPSecurityConfig}"
+			sslSecurityConfig="${SSLSecurityConfig}"
+			sasSecurityConfig="${SASSecurityConfig}"
+			jaacSecurityConfig="${JAACSecurityConfig}"
+
+			/>
+	</target>
+
+	<target name="exportApplication" depends="init" description="Stop Application">
+
+		<mkdir dir="${multiEARLocation}/backup"/>
+
+		<AuraApplication cell="${CellName}" cluster="${Cluster}" server="${Server}" 
+			earFileLocation="${basedir}\SlickDeploy\ear\soa\${EARLocation}" userName="${user}" password="${password}" 
+			port="${dmgrPortNumber}" node="${node}" host="${dmgrHostName}" isMultiEAR="true" MultiEARLocation="${multiEARLocation}" 
+			connectionType="${connectionType}" operation="export" earExportLocation="${multiEARLocation}/backup" 
+			soapSecurityConfig="${SOAPSecurityConfig}"
+			sslSecurityConfig="${SSLSecurityConfig}"
+			sasSecurityConfig="${SASSecurityConfig}"
+			jaacSecurityConfig="${JAACSecurityConfig}"
+
+			/>
+	</target>
+
+	<target name="process" >
+		<AuraProcessEAR  multiEARLocation="${multiEARLocation}" multiEARDeployData="${multiEARDeployData}" 
+			isMultiEAR="true" VirtualHost="default_host" />
+
+	</target>
+	
+
+	<target name="copyFileForUnix">
+		<echo message= "Delete files from ${remoteMultiEARLocation} on ${dmgrHostName} as ${user.name}"/>
+
+		<exec executable="ssh" >
+			<arg value="${user.name}@${dmgrHostName}"/> 
+			<arg value="rm -rf ${remoteMultiEARLocation}"/>
+		</exec>
+
+		<echo message= "Creating dir ${remoteMultiEARLocation} on target server ${dmgrHostName} as ${user.name}"/>
+		
+		<exec executable="ssh" >
+			<arg value="${user.name}@${dmgrHostName}"/> 
+			<arg value="mkdir ${remoteMultiEARLocation}"/>
+		</exec>
+
+		<echo message= "Copying files to target server ${dmgrHostName}" />
+
+		<exec executable="scp" >
+			<arg value="-r"/>
+			<arg value="${workdir}"/>
+			<arg value="${user.name}@${dmgrHostName}:${remoteMultiEARLocation}"/>
+		</exec>
+
+		<exec executable="ssh" >
+			<arg value="${user.name}@${dmgrHostName}"/> 
+			<arg value="chmod -R 777 ${remoteworkdir}"/>
+		</exec>
+
+	</target>
+
+	
+	<target name="auraDeploy" >
+	
+		<AuraDeployLite applicationName="easyDeploy" cluster="${targetCluster}" server="${server}" 
+			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
+
+			userName="${wasUserName}" password="${wasPassword}" 
+			failIfResourceAbsent="false" isMultiEAR="true" 
+			multiEARLocation="${multiEARLocation}" 
+			multiEARDeployData="${multiEARDeployData}" 
+			webserver="${webserver}"  
+			SleepTimeForSyncRequest="5000" parentLastClassLoaderMode="false" 
+			generateEJBDeployCode="false"  
+			soapSecurityConfig="${SOAPSecurityConfig}"
+			sslSecurityConfig="${SSLSecurityConfig}"
+			sasSecurityConfig="${SASSecurityConfig}"
+			jaacSecurityConfig="${JAACSecurityConfig}"
+			startingweight="1"
+			defaultValues="true"
+			releaseMI = "${releaseMI}"
+
+
+			
+			targetOS="Linux"
+
+			reStartClusterAfterDeploy="false"	
+			/>
+
+		<echo message="Deploy sucessfull on ${_Nodes}"  />
+
+	</target>
+
+		<!--	remoteEARDirectory="${remote.workdir.ear}" -->
+	
+	
+	
+	<target name="deployOnly" depends="process,auraDeploy">
+	</target>
+
+	<target name="deploy" depends="init,clean,process,copyFileForUnix,auraDeploy"/>
+
+</project>

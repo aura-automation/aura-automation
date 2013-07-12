@@ -60,12 +60,12 @@
 	<dependency>
 		<groupId>com.ibm.websphere.thin.client</groupId>
 		<artifactId>com.ibm.ws.admin.client</artifactId>
-		<version>6.1.0</version>
+		<version>8.0.0</version>
 	</dependency>
 	<dependency>
 		<groupId>com.ibm.websphere.thin.client</groupId>
 		<artifactId>com.ibm.ws.security.crypto</artifactId>
-		<version>6.1.0</version>
+		<version>8.0.0</version>
 	</dependency>
   </dependencies>
   <build>

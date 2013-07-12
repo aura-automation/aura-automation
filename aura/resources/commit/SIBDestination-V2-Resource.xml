@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources version="2.0">
+  <Cell name="${{CellName}}" >
+    <SIBus name="MyBus">
+      <SIBQueue identifier="TEST.QUEUE" cluster="${{ClusterName}}" description="modified" exceptionDestination="$DEFAULT_EXCEPTION_DESTINATION">
+
+      </SIBQueue>
+      <SIBQueue identifier="TEST.QUEUE1" cluster="${{ClusterName}}" description="" exceptionDestination="$DEFAULT_EXCEPTION_DESTINATION">
+
+      </SIBQueue>
+      <SIBQueue identifier="TEST.QUEUE2" cluster="${{ClusterName}}" description="" exceptionDestination="$DEFAULT_EXCEPTION_DESTINATION">
+
+      </SIBQueue>
+    </SIBus>
+  </Cell>
+</resources>
+

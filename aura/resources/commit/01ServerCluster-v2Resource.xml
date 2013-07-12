@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources version="2.0">
+  <Cell  name="${{CellName}}" >
+    <ServerCluster nodeGroupName="DefaultNodeGroup" name="${{ClusterName}}">
+      <ClusterMember memberName="${{ServerName}}" nodeName="${{NodeName}}" weight="4"/>
+    </ServerCluster>
+    <ServerCluster nodeGroupName="DefaultNodeGroup" name="TradeCluster">
+      <ClusterMember memberName="TradeServer1" nodeName="${{NodeName}}" weight="2"/>
+    </ServerCluster>
+  </Cell>
+</resources>
+

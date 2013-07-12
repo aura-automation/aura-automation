@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Cell name="${{CellName}}">
+    <IndirectLookupNameSpaceBinding providerURL="IndirestTestURL" nameInNameSpace="IndirestTestName1" name="IndirestTestBnd" jndiName="IndirestTestJNDI" />
+
+    <IndirectLookupNameSpaceBinding providerURL="IndirestTestURL" nameInNameSpace="IndirestTestName" name="IndirestTestBndNew" jndiName="IndirestTestJNDI" />
+
+    <StringNameSpaceBinding nameInNameSpace="PetStoreNS" name="PetStoreNSIdent" stringToBind="PetStoreProperties" />
+    <StringNameSpaceBinding nameInNameSpace="PetStoreNS1" name="PetStoreNSIdent1" stringToBind="PetStoreProperties" />
+    <StringNameSpaceBinding nameInNameSpace="PetStoreNS2" name="PetStoreNSIdent2" stringToBind="${{PetStoreProperties}}" />
+    <StringNameSpaceBinding nameInNameSpace="PetStoreNS3" name="PetStoreNSIdent3" stringToBind="${{PetStoreProperties2}}.And.${{PetStoreProperties5}}" />
+    <StringNameSpaceBinding nameInNameSpace="PetStoreNS4" name="PetStoreNSIdent4" stringToBind="/usr/WS/${{PetStoreProperties2}}/key/data" />
+    <StringNameSpaceBinding nameInNameSpace="PetStoreNS5" name="PetStoreNSIdent5" stringToBind="/usr/WS/${{PetStoreProperties2}}/.XXXXXX.${{PetStoreProperties5}}" />
+    <StringNameSpaceBinding nameInNameSpace="PetStoreNS6" name="PetStoreNSIdent6" stringToBind="${{PetStoreProperties3}}" />
+
+	<Node name="${{NodeName}}">
+		<Server name="${{ServerName}}">
+	    <IndirectLookupNameSpaceBinding providerURL="IndirestTestURL" nameInNameSpace="IndirestTestName1" name="IndirestTestBnd" jndiName="IndirestTestJNDI" />
+
+	    <IndirectLookupNameSpaceBinding providerURL="IndirestTestURL" nameInNameSpace="IndirestTestName" name="IndirestTestBndNew" jndiName="IndirestTestJNDI" />
+
+	    <StringNameSpaceBinding nameInNameSpace="PetStoreNS" name="PetStoreNSIdent" stringToBind="PetStoreProperties" />
+	    <StringNameSpaceBinding nameInNameSpace="PetStoreNS1" name="PetStoreNSIdent1" stringToBind="PetStoreProperties" />
+	    <StringNameSpaceBinding nameInNameSpace="PetStoreNS2" name="PetStoreNSIdent2" stringToBind="${{PetStoreProperties}}" />
+	    <StringNameSpaceBinding nameInNameSpace="PetStoreNS3" name="PetStoreNSIdent3" stringToBind="${{PetStoreProperties2}}.And.${{PetStoreProperties5}}" />
+	    <StringNameSpaceBinding nameInNameSpace="PetStoreNS4" name="PetStoreNSIdent4" stringToBind="/usr/WS/${{PetStoreProperties2}}/key/data" />
+	    <StringNameSpaceBinding nameInNameSpace="PetStoreNS5" name="PetStoreNSIdent5" stringToBind="/usr/WS/${{PetStoreProperties2}}/.XXXXXX.${{PetStoreProperties5}}" />
+	    <StringNameSpaceBinding nameInNameSpace="PetStoreNS6" name="PetStoreNSIdent6" stringToBind="${{PetStoreProperties3}}" />
+		</Server>
+	</Node>
+  </Cell>
+</resources>
+

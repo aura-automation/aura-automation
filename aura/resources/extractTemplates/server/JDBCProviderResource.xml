@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Cell name="${{CellName}}">
+    <Node name="${{NodeName}}">
+	<Server name="${{ServerName}}">
+    	<JDBCProvider>
+    		<DataSource/>
+    	</JDBCProvider>
+	</Server>
+    </Node>
+  </Cell>
+</resources>
+

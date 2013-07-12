@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<Cell name="${{CellName}}">
+
+	
+		<ServerCluster name="${{ClusterName}}">
+			<J2CResourceAdapter name="SIB JMS Resource Adapter">
+
+				<J2CActivationSpec
+					activationSpec="${{__ActivationSpec_JMS_ActivationSpec}}">
+
+					        <J2EEResourceProperty />
+
+				</J2CActivationSpec>
+
+			</J2CResourceAdapter>
+		</ServerCluster>
+
+	</Cell>
+
+
+</resources>

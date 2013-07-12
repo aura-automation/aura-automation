@@ -1,0 +1,181 @@
+import org.apache.commons.lang.SystemUtils
+
+public class InputDataProcessor {
+
+    def nonInteractive = false
+	def noPrompt = false
+    def auraHome = null
+	def auraRepo = null	
+    def ant = null
+    def shellExt = null
+    def exeExt = null
+	def Common = null
+	def antEnvName = null
+	
+	void process(){
+		
+		listEnvs()
+		println ("myEnvName " + antEnvName)
+		def envName
+		if (antEnvName == null){
+			envName = promptEnv()
+		}else{
+			envName = antEnvName
+		}
+		def envFileName =  auraRepo + File.separator + "environments" + File.separator + envName
+		def envFile = new File(envFileName)
+		boolean fileExists = checkIfEnvDataExists(envFile)
+		
+		if(!envFile.exists()){
+			promptEnvData(envFileName)
+		}else{
+			confirmEnvDataIsCorrect(envFileName)
+		}
+
+		ant.project.setProperty('env.file',envFileName)
+		ant.project.setProperty('env.name',envName)
+		//setAntProperties()
+	}
+
+	def promptEnv() {
+		def envName = common.prompt ("Enter environment name")
+		return envName 
+		
+	}
+
+	void listEnvs(){
+		def envFileDir =  auraRepo + File.separator + "environments" 
+		def dir = new File(envFileDir)
+		println('Below is comma seperated list of known environments')
+		dir.eachFile { 
+		    if (it.isFile()) {
+			print it.name
+			print ", "
+		    }
+		}
+	}
+
+
+	boolean checkIfEnvDataExists(envFile){
+		return envFile.exists()
+	}
+
+	void confirmEnvDataIsCorrect(envFileName){
+		def props = new Properties()
+		new File(envFileName).withInputStream{
+			stream -> props.load(stream)
+		}
+		println("---------------------------------")
+		println("host name " + props["dmgrHostName"])
+		println("host port " + props["dmgrPortNumber"])
+		println("host conntype " + props["wasConnectionType"])
+		println("host user " + props["wasUserName"])
+		println("---------------------------------")
+		if (noPrompt.equalsIgnoreCase("false")){
+			def action = common.prompt ("Do you want to modify[m], continue [c] or abort [o]")
+			if (action.equalsIgnoreCase("m")){
+				modify(envFileName)
+			}
+		}
+	}
+
+	void modify(envFileName){
+		def props = new Properties()
+		new File(envFileName).withInputStream{
+			stream -> props.load(stream)
+		}
+		def hostname = common.prompt ("" , "Enter Host Name (" + props["dmgrHostName"] + ")" ,props["dmgrHostName"])
+		println "New host name is " + hostname
+		def hostport = common.prompt ("" , "Enter Host Port (" + props["dmgrPortNumber"] + ")", props["dmgrPortNumber"] )
+		def connType = common.prompt ("" , "Enter conntype (" + props["wasConnectionType"] + ")" , props["wasConnectionType"] )
+		def userName = common.prompt ("" , "Enter User Name (" + props["wasUserName"] + ")"  , props["wasUserName"] )
+		def password = common.prompt ("Enter Password")
+		
+		println("---------------------------------")
+		println("host name " + hostname)
+		println("host port " + hostport)
+		println("host conntype " + connType)
+		println("host user " + userName)
+		println("---------------------------------")
+		def action = common.prompt ("Do you want to modify[m], save and continue [c] or abort [o]")
+		if (action.equalsIgnoreCase("m")){
+			modify(envFileName)
+		}else if (action.equalsIgnoreCase("c")){	
+			saveEnvData(envFileName,hostname,hostport,connType,userName,password)
+		} else {
+			println("No dsata")
+		}
+	}
+
+	void promptEnvData(envFileName){
+
+		def hostname = common.prompt ("Enter Host Name")
+		def hostport = common.prompt ("Enter Host Port")
+		def connType = common.prompt ("Enter conntype")
+		def userName = common.prompt ("Enter User Name")
+		def password = common.prompt ("Enter Password")
+		saveEnvData(envFileName,hostname,hostport,connType,userName,password)
+	}
+
+	void saveEnvData(envFileName,hostname,hostport,connType,userName,password){
+		File envFile = new File(envFileName)
+		envFile.delete()
+		envFile << ("dmgrHostName=" + hostname)
+		envFile << (System.getProperty("line.separator"))
+		envFile << ("dmgrPortNumber=" + hostport)
+		envFile << (System.getProperty("line.separator"))
+		envFile << ("wasConnectionType=" + connType)
+		envFile << (System.getProperty("line.separator"))
+		envFile << ("wasUserName=" + userName)
+		envFile << (System.getProperty("line.separator"))
+		envFile << ("wasPassword=" + password)
+	}
+
+	void setAntProperties(envFile){
+		ant.project.setProperty('env.file',envFile)
+		ant.project.setProperty('env.file',envFile)
+	}
+	
+	void initProperties(){
+		auraHome = ant.project.properties.'AURA_HOME' 
+		auraRepo = ant.project.properties.'AURA_REPO'
+		antEnvName = ant.project.properties.'env.name'
+		noPrompt = ant.project.properties.'noprompt'
+		common = new Common(ant)
+
+		if (SystemUtils.IS_OS_UNIX){
+			shellExt = '.sh'
+			exeExt = ""
+		}else if (SystemUtils.IS_OS_WINDOWS){
+			shellExt = '.bat'
+			exeExt = ".exe"
+		}
+
+	}	
+	
+	
+	void setAntBuilder(antBuilder) {
+		ant = new AntBuilder(antBuilder.project)
+		antBuilder.project.copyInheritedProperties(ant.project)
+		antBuilder.project.copyUserProperties(ant.project)
+		
+		initProperties()
+	}
+
+	void executeProcess(cmd){
+		def proc = cmd.execute()
+		def sout = new StringBuffer(), serr = new StringBuffer()
+		proc.consumeProcessOutput(sout, serr)
+		proc.waitFor()
+		println "out> $sout err> $serr"
+	//	println "return code: ${ proc.exitValue()}"
+	//	println "stderr: ${proc.err.text}"
+	//	println "stdout: ${proc.in.text}"
+
+
+	}
+
+
+
+
+}

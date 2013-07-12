@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Cell cellType="DISTRIBUTED" name="${{CellName}}">
+    <ServerCluster name="Test-CL" nodeGroupName="DefaultNodeGroup">
+    	<JDBCProvider>
+    		<DataSource/>
+    	</JDBCProvider>
+    </ServerCluster>
+		<Node name="${{NodeName}}">
+			<Server name="${{ServerName}}" serverType="APPLICATION_SERVER">
+			    	<JDBCProvider>
+			    		<DataSource/>
+			    	</JDBCProvider>
+			</Server>
+		</Node>
+
+  </Cell>
+</resources>
+

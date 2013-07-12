@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources version="2.0">
+  <Cell name="${{CellName}}" >
+    <SIBus name="MyBus" >
+    </SIBus>
+  </Cell>
+</resources>
+

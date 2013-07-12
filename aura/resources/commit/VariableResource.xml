@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Cell name="${{CellName}}" >
+	    <VariableMap>
+	      <VariableSubstitutionEntry symbolicName="MICROSOFT_JDBC_DRIVER_NATIVEPATH" value="/usr/WS/${{CellName}}/AppServer/universalDriver/lib" description="The directory that contains native files needed by the Microsoft SQL Server JDBC Driver." />
+	      <VariableSubstitutionEntry symbolicName="MICROSOFT_JDBC_DRIVER_PATH" value="/usr/WS/${{CellName}}/AppServer/universalDriver/lib" description="The directory that contains the Microsoft SQL Server JDBC Driver." />
+	      <VariableSubstitutionEntry symbolicName="DB2UNIVERSAL_JDBC_DRIVER_PATH" value="/usr/WS/${{CellName}}/AppServer/universalDriver/lib" description="The directory that contains the Microsoft SQL Server JDBC Driver." />
+	      <VariableSubstitutionEntry symbolicName="DB2_JDBC_DRIVER_PATH" value="/usr/WS/${{CellName}}/AppServer/universalDriver/lib" description="The directory that contains the Microsoft SQL Server JDBC Driver." />
+
+ 
+
+ 
+	    </VariableMap>
+
+	<Node name="${{NodeName}}">
+	    <VariableMap>
+	      <VariableSubstitutionEntry symbolicName="MICROSOFT_JDBC_DRIVER_NATIVEPATH" value="/usr/WS/${{CellName}}/AppServer/universalDriver/lib" description="The directory that contains native files needed by the Microsoft SQL Server JDBC Driver." />
+	      <VariableSubstitutionEntry symbolicName="MICROSOFT_JDBC_DRIVER_PATH" value="/usr/WS/${{CellName}}/AppServer/universalDriver/lib" description="The directory that contains the Microsoft SQL Server JDBC Driver." />
+	      <VariableSubstitutionEntry symbolicName="DB2UNIVERSAL_JDBC_DRIVER_PATH" value="/usr/WS/${{CellName}}/AppServer/universalDriver/lib" description="The directory that contains the Microsoft SQL Server JDBC Driver." />
+	      <VariableSubstitutionEntry symbolicName="DB2_JDBC_DRIVER_PATH" value="/usr/WS/${{CellName}}/AppServer/universalDriver/lib" description="The directory that contains the Microsoft SQL Server JDBC Driver." />
+	    </VariableMap>
+	</Node>
+
+
+
+ </Cell>
+</resources>
+

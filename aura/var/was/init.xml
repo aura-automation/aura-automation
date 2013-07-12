@@ -1,0 +1,170 @@
+<project name="init">
+
+	<!-- ********************************* --> 
+	<!--	Load custom tasks --> 
+	<!-- ********************************* -->
+
+	<taskdef resource="auradeploy.xml" classpathref="classpath"/>
+	<taskdef resource="auraconfig.xml" classpathref="classpath"/>
+
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+		<classpath>
+		    <fileset dir="${AURA_HOME}/opt/ant-contib" includes="*.jar"/> 
+		</classpath>
+	</taskdef>
+	
+
+
+	<!-- ********************************* --> 
+	<!--   Validate Install				   -->
+	<!-- ********************************* -->
+	<target name ="validate">
+		<!-- Check that ibm jars are on classpath-->
+		<if> 
+			<not>
+				<available classname="com.ibm.websphere.management.AdminClient" >
+				</available>
+			</not>
+		<then>
+			<echo message="ERROR: Add IBM thin client jars to classpath; option 1: add jars to classpath 2: modify WAS_CLASSPATH variable in deploy.sh/bat"/>
+			<property name="validation.fail" value="true"/>
+		</then>	
+		</if>
+		<!-- Check that SOAP, SAS and SSL props exists-->
+		<echo message="Checking if ${SOAPSecurityConfig} exists"/>
+		<if> 
+			<not>
+				<available file="${SOAPSecurityConfig}" />
+
+			</not>
+		<then>
+			<property name="validation.fail" value="true"/>
+			<echo message="ERROR: ${SOAPSecurityConfig} does not exists."/>
+		</then>	
+		<else>
+			<echo message="${SOAPSecurityConfig} exists"/>	
+		</else>
+		</if>
+		
+		<echo message="Checking if ${SSLSecurityConfig} exists"/>
+		<if> 
+			<not>
+				<available file="${CURRENT_DIR}/properties/${env.name}.properties" />
+
+			</not>
+		<then>
+			<echo message="Create env property file."/>
+			<echo message="" file="${CURRENT_DIR}/properties/${env.name}.properties"/>
+		</then>	
+		<else>
+			<echo message="env file exists"/>	
+		</else>
+		</if>
+
+		
+		<echo message="Checking if ${SSLSecurityConfig} exists"/>
+		<if> 
+			<not>
+				<available file="${SSLSecurityConfig}" />
+
+			</not>
+		<then>
+			<echo message="ERROR:  ${SSLSecurityConfig} does not exists."/>
+			<property name="validation.fail" value="true"/>
+		</then>	
+		<else>
+			<echo message="${SSLSecurityConfig} exists"/>	
+		</else>
+		</if>
+		<echo message="Checking if ${SASSecurityConfig} exists"/>
+		<if> 
+			<not>
+				<available file="${SASSecurityConfig}" />
+
+			</not>
+		<then>
+			<echo message="ERROR: ${SASSecurityConfig} does not exists."/>
+			<property name="validation.fail" value="true"/>
+		</then>	
+		<else>
+			<echo message="${SASSecurityConfig} exists"/>	
+		</else>
+		</if>
+
+		<if> 
+			<isset property="validation.fail" />
+		<then>
+			<fail message="ERROR: validation failed, please check the error messages"/>
+		</then>	
+		</if>
+		<!-- Load ssl client props after validating that the file exists
+		-->
+		<!-- Check that keys store files exists-->
+		<property file="${SSLSecurityConfig}"/>
+		<echo message="${com.ibm.ssl.trustStore}" />
+		<echo message="${com.ibm.ssl.keyStore}" />
+		<if> 
+			<not>
+				<available file="${com.ibm.ssl.trustStore}" />
+
+			</not>
+		<then>
+			<echo message="ERROR: ${com.ibm.ssl.trustStore} does not exists."/>
+			<property name="validation.fail" value="true"/>
+		</then>	
+		</if>	
+		<if> 
+			<not>
+				<available file="${com.ibm.ssl.keyStore}" />
+
+			</not>
+		<then>
+			<echo message="ERROR: ${com.ibm.ssl.keyStore} does not exists."/>
+			<property name="validation.fail" value="true"/>
+		</then>	
+		</if>	
+		<if> 
+			<isset property="validation.fail" />
+		<then>
+			<fail message="ERROR: validation failed, please check the error messages"/>
+		</then>	
+		</if>
+
+
+	</target>
+
+	<!-- ********************************* --> 
+	<!--   Initialize			  			-->
+	<!-- ********************************* -->
+
+	<target name="init">
+		 <tstamp>
+			<format property="date" pattern="yyyy-MM-dd"/>
+		</tstamp>
+
+		 <tstamp>
+			<format property="startTime" pattern="dd-MM-yyyy--hh-mm-aa"/>
+		</tstamp>
+		<mkdir dir="${AURA_REPO}/logs/ant"/>
+			
+		<record name="${AURA_REPO}/logs/ant/log_${startTime}.txt" action="start"/>
+		<echo message="Start Time: ${startTime}"/>
+		<echo message="Ant Version :${ant.version}"/>
+		<echo message="Java Version: ${java.version}"/>
+		<mkdir dir="${AURA_REPO}/resources/output/${date}" />
+		<mkdir dir="${AURA_REPO}/resources/report/${date}" />
+	</target>
+	
+	<!-- ********************************* --> 
+	<!--   Delete old files  			-->
+	<!-- ********************************* -->
+
+	<target name="clean">
+		<delete >
+			<fileset dir="${basedir}">
+				<include name="orbtrc*.*"/>
+			</fileset>
+		</delete>
+	</target>
+	
+</project>

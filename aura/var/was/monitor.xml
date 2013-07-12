@@ -1,0 +1,77 @@
+<project name="Monitor" >
+
+	<property name="monitorReportsDir" value="resources/monitorReports"/>
+
+    <target name="monitorEnvironments" depends="init">
+        <foreach target="monitorResources"  param="dir" inheritall="true">
+            <path>
+                <dirset dir="resources/monitor">
+                    <include name="*"/>
+                </dirset>
+            </path>
+        </foreach>
+    </target>
+
+
+
+    <target name="monitorResources" >
+        <basename property="currentEnv" file="${dir}"  />
+
+           
+        <foreach target="doMonitorResources"  param="file" inheritall="true">
+            <fileset dir="resources/monitor/${currentEnv}/xml">
+                <include name="*.xml"/>
+            </fileset>
+        </foreach>
+    </target>
+	
+	<target name="doMonitorResources" depends="loopResourceToMonitor"/>
+<!-- <target name="doMonitorResources" depends="loopResourceToMonitor,mailReports"/> -->	
+    <target name="loopResourceToMonitor" >
+        <echo message="${file}"/>
+        <basename property="xml.filename" file="${file}"  suffix="Resource.xml"/>
+        <property file="${basedir}/resources/monitor/${currentEnv}/infraproperties/${currentEnv}.properties"/>
+
+        <AuraConfigLiteResource resourceXML="${basedir}/resources/monitor/${currentEnv}/xml/${xml.filename}Resource.xml"
+            host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${connectionType}" 
+            userName="${wasUserName}" password="${wasPassword}" connectionMode="remote"
+            applicationName="Aura"
+            operationMode="reportOnly"
+            syncResourceXML="${basedir}/resources/output/${date}/${xml.filename}Resource-${dmgrHostName}-${startTime}.xml"
+            syncReportLocation="${basedir}/resources/report/${date}/${xml.filename}Resource-${dmgrHostName}-${startTime}.html"
+            includeAllChildren="true"
+            environmentProperties="${basedir}/resources/monitor/${currentEnv}/environmentproperties/${environmentProperties}.properties"
+            rulesXML= "${basedir}/resources/rules/rules.xml"
+
+			SOAPSecurityConfig="${SOAPSecurityConfig}"
+			SASSecurityConfig="${SASSecurityConfig}"
+			SSLSecurityConfig="${SSLSecurityConfig}"
+
+            />
+
+			<echo message="Has changed ${hasAnyChange}"/>
+
+			<if>
+				<equals arg1="${hasAnyChange}" arg2="true"/>
+				<then>
+					<mkdir dir="${monitorReportsDir}/${currentEnv}/${date}-${startTime}"/>
+					<copy todir="${monitorReportsDir}/${currentEnv}/${date}-${startTime}" >
+						<fileset dir="${basedir}/resources/monitor/${currentEnv}/xml">
+							<include name="${xml.filename}Resource.xml"/>
+						</fileset>
+						<fileset dir="${basedir}/resources/report/${date}">
+							<include name="${xml.filename}Resource-${dmgrHostName}-${startTime}.html"/>
+						</fileset>
+
+					</copy>
+					<echo message="******** Will move the file as monitor"/>
+				</then>
+			</if>
+    </target>   
+
+	<target name="mailReports">
+		<!-- add this target to depends 
+		-->
+	</target>	
+
+</project>

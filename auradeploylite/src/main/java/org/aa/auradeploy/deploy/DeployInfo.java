@@ -1,6 +1,7 @@
 package org.aa.auradeploy.deploy;
 
 import java.io.File;
+import java.util.Properties;
 
 /**
  * @author Jatin
@@ -23,6 +24,15 @@ public class DeployInfo extends org.aa.common.deploy.DeployInfo{
 
 	private boolean nowait;
 	
+	private Properties properties;
+
+	public Properties getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Properties properties) {
+		this.properties = properties;
+	}
 
 	/**
 	 * @return the eARExportLocation

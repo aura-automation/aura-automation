@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources version="2.0">
+  <Cell name="${{CellName}}" >
+	<SIBus name="MyBus">
+		<SIBusMember cluster="${{ClusterName}}" createTables="true" authAlias="apartech-vm-04CellManager01/meq" dataSourceName="jdbc/ME" schemaName="IBMWSSIB" />
+		 <SIBForeignBus routingType="Direct" type="MQ" description="modified again" name="MyBus-DirectMQ" inboundUserid="mquser" outboundUserid="mquser">
+	     	 </SIBForeignBus>
+	</SIBus>
+
+	<SIBus name="MyMQBus">
+		<SIBusMember cluster="${{ClusterName}}" createTables="true" authAlias="apartech-vm-04CellManager01/meq" dataSourceName="jdbc/ME" schemaName="IBMWSSIB" />
+		 <SIBForeignBus routingType="Direct" type="MQ" description="modified again" name="MyMQBus-DirectMQ3" inboundUserid="mquser" outboundUserid="mquser">
+	     	 </SIBForeignBus>
+	</SIBus>
+
+	<ServerCluster name="${{ClusterName}}">
+		<SIBMessagingEngine name="Test-CL.000-MyMQBus">
+			<SIBMQLink receiverChannelName="MyReceiverChannel1" hostName="MyHost" qmName="MyQueueManager" 
+				protocolName="OutboundBasicMQLink" name="MyConnection-MyMQBus" senderChannelName="MySenderChannel" 
+				foreignBusName="MyMQBus-DirectMQ3" bus="MyMQBus"/>
+		</SIBMessagingEngine>
+
+		<SIBMessagingEngine name="Test-CL.000-MyBus">
+			<SIBMQLink receiverChannelName="MyReceiverChannel-DirectMQ1" hostName="Avatar3" qmName="MyQueueManager" 
+				protocolName="OutboundBasicMQLink" name="MyConnection-DirectMQ1" senderChannelName="MySenderChannel" 
+				foreignBusName="MyBus-DirectMQ" bus="MyBus" /> 
+		</SIBMessagingEngine>
+
+	</ServerCluster>
+
+  </Cell>
+</resources>
+

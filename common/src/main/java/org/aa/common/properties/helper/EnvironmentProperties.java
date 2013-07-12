@@ -31,6 +31,7 @@ public class EnvironmentProperties {
 	
 				}
 			}
+		properties.put("CellName", deployInfo.getCell());	
 		return properties;
 		
 	}

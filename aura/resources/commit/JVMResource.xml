@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Cell  name="${{CellName}}">
+    <Node name="${{NodeName}}" >
+      <Server serverType="APPLICATION_SERVER" name="${{ServerName}}" >
+        <ApplicationServer applicationClassLoaderPolicy="SINGLE" applicationClassLoadingMode="PARENT_LAST">
+			<Classloader>
+				<LibraryRef libraryName="MyLib1"/>
+			</Classloader>
+        </ApplicationServer>
+        <JavaProcessDef workingDirectory="/usr/app/aura" >
+          <JavaVirtualMachine classpath="/usr/app/aura:/usr/app/aura1"  />
+        </JavaProcessDef>
+      </Server>
+    </Node>
+  </Cell>
+</resources>
+

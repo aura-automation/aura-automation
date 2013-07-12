@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Cell name="${{CellName}}">
+    <Node name="${{NodeName}}" >
+      <Server serverType="APPLICATION_SERVER" name="${{ServerName}}" >
+        <ThreadPoolManager enable="true">
+          <ThreadPool maximumSize="50" name="ORB.thread.pool" inactivityTimeout="3500" minimumSize="10" />
+          <ThreadPool maximumSize="3" name="server.startup" description="This pool is used by WebSphere during server startup." inactivityTimeout="30000" />
+          <ThreadPool maximumSize="50" name="Default" minimumSize="20" />
+          <ThreadPool maximumSize="50" name="WebContainer" inactivityTimeout="60000" minimumSize="50" />
+          <ThreadPool maximumSize="20" name="TCPChannel.DCS" minimumSize="20" />
+          <ThreadPool maximumSize="50" name="SIBFAPInboundThreadPool" description="Service integration bus FAP inbound channel thread pool" minimumSize="4" />
+          <ThreadPool maximumSize="50" name="SIBFAPThreadPool" description="Service integration bus FAP outbound channel thread pool" minimumSize="4" />
+          <ThreadPool maximumSize="41" name="SIBJMSRAThreadPool" description="Service Integration Bus JMS Resource Adapter thread pool" inactivityTimeout="3500" minimumSize="35" />
+          <ThreadPool maximumSize="50" name="WMQJCAResourceAdapter" description="WebSphere MQ Resource Adapter thread pool" minimumSize="10" />
+        </ThreadPoolManager>
+      </Server>
+    </Node>
+  </Cell>
+</resources>
+

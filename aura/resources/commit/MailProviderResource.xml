@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Cell name="${{CellName}}">
+    <MailProvider classpath="" nativepath="" description="The built-in mail provider" name="Built-in Mail Provider">
+
+      <ProtocolProvider classpath="" type="TRANSPORT" protocol="smtp" classname="com.sun.mail.smtp.SMTPTransport" />
+      <ProtocolProvider classpath="" protocol="pop3" classname="com.sun.mail.pop3.POP3Store" />
+      <ProtocolProvider classpath="" protocol="imap" classname="com.sun.mail.imap.IMAPStore" />
+
+      <MailSession name="NewMail" mailTransportProtocol="smtp" mailTransportHost="temp" jndiName="mail/mymail" mailStoreProtocol="pop3" provider="Built-in Mail Provider" />
+
+    </MailProvider>
+  </Cell>
+</resources>
+

@@ -20,6 +20,7 @@ import com.ibm.websphere.management.AdminClient;
 import com.ibm.websphere.management.Session;
 import com.ibm.websphere.management.configservice.ConfigService;
 import com.ibm.websphere.management.exception.AdminException;
+import com.ibm.websphere.management.exception.ConfigServiceException;
 import com.ibm.websphere.management.exception.ConnectorException;
 
 public class Connection {
@@ -32,7 +33,7 @@ public class Connection {
 	final Log logger  = LogFactory.getLog(Connection.class);	
 
     protected void createAdminClient(DeployInfo deployInfo)
-    	throws DeployException,AdminException{
+    	throws DeployException,AdminException, ConnectorException{
     	
     	SDAdminClientFactory sdAdminClientFactory  = new SDAdminClientFactory (); 
 
@@ -48,7 +49,20 @@ public class Connection {
     	nodeAgent = connectionObjects.getNodeAgent(); 
     	session = connectionObjects.getSession();
     	sessionID = connectionObjects.getSessionID();
-		
+    	String cellName = getCellName();
+    	deployInfo.setCell(cellName);
+    }
+    
+    private String getCellName() throws ConfigServiceException, ConnectorException{
+		ObjectName[] configIDs = configService.resolve(session, "Cell=");
+		if (configIDs.length > 0){
+			String cellName = configService.getAttribute(session, (ObjectName)configIDs[0], "name").toString();
+			System.out.println(" Cell name is " + cellName);
+			return cellName;
+		}else{
+			return null;
+		}
+
     }
 
     protected ObjectName getObjectName(String query)

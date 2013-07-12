@@ -1,0 +1,24 @@
+<resources-metadata>
+<!--
+	editable:  create | update | none
+	
+ -->
+	<ConfigObject type="Cell" editable="none">
+		<ConfigObject type="Node" editable="none">
+
+			<ConfigObject type="Server" editable="update">
+				<attributes>
+					<attribute name="name" editable="false" />
+				</attributes>
+
+				<ConfigObject type="ClusterMember" editable="update">
+					<attributes>
+						<attribute name="weight" min="1" max="10"/>
+					</attributes>
+				</ConfigObject>
+
+			</ConfigObject> 
+		</ConfigObject> 
+
+	</ConfigObject>
+</resources-metadata>
