@@ -3,41 +3,28 @@
 	<target name="package">
 		<input message="Enter version" addproperty="version" />
 
-		<replace file="deploy.sh" token="/software/jatin/workspace/Aura-Automation/wasliblinux/java" value="" />
-
-		<zip file="aura-quickstart-${version}.zip">
+		<zip file="aura-${version}.zip">
 			<fileset dir=".">
-				<exclude name="**/runtimes/**/*.jar"/>
-				<exclude name="**/resources/output/**"/>
-				<exclude name="**/resources/report/**"/>
-				<exclude name="logs/**" />
-				<exclude name="*.zip" />
-				<exclude name="temp/**" />
-				<exclude name="**/apartech-vm-04WAS8*" />		
-				<exclude name="**/env.properties" />		
-				<exclude name="build.xml" />		
+				<exclude name="**/workdir/**/*.jar"/>
 			</fileset>	
 		</zip>
-
-
-		<replace file="deploy.sh" token="JAVA_HOME=" value="JAVA_HOME=/software/jatin/workspace/Aura-Automation/wasliblinux/java" />
-		<chmod file="deploy.sh" perm="ugo+rx"/>
-
-	</target>	
+	</target>
+	
 	<target name="deploy">
 		<delete>
 			<fileset dir="lib">
 				<include name="aura*.jar"/>
 				<include name="common*.jar"/>
 				<exclude name="commons-logging-*"/>
-
 			</fileset>
 			
 		</delete>
 		<copy todir="lib">
 			<mapper type="flatten"/>
 			<fileset dir="../">
-				<include name="**/target/**/*.jar"/>
+				<include name="**/target/**/aura*.jar"/>
+				<include name="**/target/**/common*.jar"/>
+				<exclude name="**/commons-logging-*"/>
 			</fileset>
 		</copy>
 	</target>
