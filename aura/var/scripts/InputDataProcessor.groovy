@@ -3,7 +3,7 @@ import org.apache.commons.lang.SystemUtils
 public class InputDataProcessor {
 
     def nonInteractive = false
-	def noPrompt = false
+	boolean noPrompt = false
     def auraHome = null
 	def auraRepo = null	
     def ant = null
@@ -15,7 +15,7 @@ public class InputDataProcessor {
 	void process(){
 		
 		listEnvs()
-		println ("myEnvName " + antEnvName)
+		
 		def envName
 		if (antEnvName == null){
 			envName = promptEnv()
@@ -46,12 +46,26 @@ public class InputDataProcessor {
 	void listEnvs(){
 		def envFileDir =  auraRepo + File.separator + "environments" 
 		def dir = new File(envFileDir)
+		dir.mkdirs()
 		println('Below is comma seperated list of known environments')
 		dir.eachFile { 
 		    if (it.isFile()) {
 			print it.name
 			print ", "
 		    }
+		}
+	}
+
+	void listResources(){
+		def scope = ant.project.properties.'scope'
+		def resourceDir =  auraHome + '/resources/extractTemplates/' + scope
+		def dir = new File(resourceDir)
+		println('Below is list of resources that can extracted')
+		dir.eachFile {
+			if (it.isFile()) {
+			print it.name.trim().replace("Resource.xml","")
+			print "    "
+			}
 		}
 	}
 
@@ -71,7 +85,7 @@ public class InputDataProcessor {
 		println("host conntype " + props["wasConnectionType"])
 		println("host user " + props["wasUserName"])
 		println("---------------------------------")
-		if (noPrompt.equalsIgnoreCase("false")){
+		if (!noPrompt){
 			def action = common.prompt ("Do you want to modify[m], continue [c] or abort [o]")
 			if (action.equalsIgnoreCase("m")){
 				modify(envFileName)

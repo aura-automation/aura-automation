@@ -36,7 +36,7 @@ public class Common {
 			}
 			println(warningMessage)
 
-		 /**   if (validator != null) {
+		    if (validator != null) {
 				try {
 					validator.validate(defaultValue)
 				} catch (ValidationException ve) {
@@ -44,7 +44,7 @@ public class Common {
 							"Non-Interactive Mode: problem with default value of '${defaultValue}' " +
 							"for '${promptText}' - " + ve.getValidationMessageArray().join(' '))
 				}
-			} **/
+			} 
 			return defaultValue
 		}
 
@@ -53,11 +53,11 @@ public class Common {
 		while (!valid) {
 			println(promptText)
 			userValue = read(defaultValue)
-		valid = true
-		 /**   if (validator != null) {
+		
+		   if (validator != null) {
 				try {
-					validator.validate(userValue)
-					valid = true
+					valid =validator.validate(userValue)
+					 
 				}
 				catch (ValidationException ve) {
 					for (message in ve.getValidationMessageArray()) {
@@ -67,7 +67,7 @@ public class Common {
 			}
 			else {
 				valid = true
-			} **/
+			} 
 	
 		}
 

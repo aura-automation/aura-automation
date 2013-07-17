@@ -40,7 +40,7 @@
 		<basename property="xml.filename" file="${file}"  suffix="Resource.xml"/>
 
 
-		<AuraConfigLiteResource resourceXML="${AURA_REPO}/resources/commit/${xml.filename}Resource.xml"
+		<AuraConfigLiteResource resourceXML="${CURRENT_DIR}/config/${xml.filename}Resource.xml"
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}"  
 			userName="${wasUserName}" password="${wasPassword}" connectionMode="remote"
 			applicationName="Aura"
@@ -48,7 +48,7 @@
 			syncResourceXML="${basedir}/resources/output/${date}/${xml.filename}Resource-${dmgrHostName}-${sourceEnvFile}-commit-${startTime}.xml"
 			syncReportLocation="${basedir}/resources/report/${date}/${xml.filename}Resource-${dmgrHostName}-${sourceEnvFile}-commit-${startTime}.html"
 			includeAllChildren="false"
-			environmentProperties="${basedir}/resources/environmentProperties/${sourceEnvFile}.properties" 
+			environmentProperties="${CURRENT_DIR}/properties/${env.file}.properties" 
 			
 			SOAPSecurityConfig="${SOAPSecurityConfig}"
 			SASSecurityConfig="${SASSecurityConfig}"
@@ -109,27 +109,27 @@
 
 
 		<echo message="********************************"/>
-		<echo message="Report generated in ${basedir}/resources/report/${date}/${ResourceName}Resource-${dmgrHostName}-${sourceEnvFile}-${startTime}.html"/>
+		<echo message="Report generated in ${basedir}/resources/report/${date}/${ResourceName}Resource-${dmgrHostName}-${env.name}-${startTime}.html"/>
 		<echo message="********************************"/>
 	</target>	
 
 
 	<target name="extractResource" depends="init" description="extract the resource">
-		<setChildrenInclude resource.xml.name="${ResourceName}" />
+		<setChildrenInclude resource.xml.name="${resource.name}" />
 
 
-		<echo message="Processing for extract ${basedir}/resources/${ResourceName}Resource.xml" />
+		<echo message="Processing for extract ${basedir}/resources/${resource.name}Resource.xml" />
 		<echo message="Processing extract using properties ${basedir}/resources/environmentProperties/${sourceEnvFile}.properties" />
 
-		<AuraConfigLiteResource resourceXML="${basedir}/resources/extractTemplates/${scope}/${ResourceName}Resource.xml"
+		<AuraConfigLiteResource resourceXML="${AURA_HOME}/resources/extractTemplates/${scope}/${resource.name}Resource.xml"
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}"  
 			userName="${wasUserName}" password="${wasPassword}" connectionMode="remote"
 			applicationName="Aura"
  			operationMode="sync"
-			syncResourceXML="${basedir}/resources/output/${date}/${ResourceName}Resource-${dmgrHostName}-${sourceEnvFile}-extract-${startTime}.xml"
-			syncReportLocation="${basedir}/resources/report/${date}/${ResourceName}Resource-${dmgrHostName}-${sourceEnvFile}-extract-${startTime}.html"
+			syncResourceXML="${AURA_REPO}/resources/output/${date}/${ResourceName}Resource-${dmgrHostName}-${sourceEnvFile}-extract-${startTime}.xml"
+			syncReportLocation="${AURA_REPO}/resources/report/${date}/${ResourceName}Resource-${dmgrHostName}-${sourceEnvFile}-extract-${startTime}.html"
 			includeAllChildren="${includeAllChildren}"
-			environmentProperties="${basedir}/resources/environmentProperties/${sourceEnvFile}.properties" 
+			environmentProperties="${CURRENT_DIR}/properties/${env.name}.properties" 
 			SOAPSecurityConfig="${SOAPSecurityConfig}"
 			SASSecurityConfig="${SASSecurityConfig}"
 			SSLSecurityConfig="${SSLSecurityConfig}"
@@ -137,7 +137,7 @@
 			/>
 
 		<echo message="********************************"/>
-		<echo message="Report generated in ${basedir}/resources/report/${date}/${ResourceName}Resource-${dmgrHostName}-${sourceEnvFile}-${startTime}.html"/>
+		<echo message="Report generated in ${AURA_REPO}/resources/report/${date}/${resource.name}Resource-${dmgrHostName}-${sourceEnvFile}-extract-${startTime}.html"/>
 		<echo message="********************************"/>
 	</target>	
 
@@ -145,43 +145,44 @@
 		Commit Resources   
              ************************************************************ -->
 
-	<target name="commitResources" depends="init" description="Commit all the changes in resources/commit">
-               <foreach target="doReportResources"  param="file" inheritall="true">
-                         <fileset dir="resources/commit">
-                                 <include name="*.xml"/>
-                         </fileset>
-              </foreach>
+		<target name="commitResources" >
+	           <foreach target="doReportResources"  param="file" inheritall="true">
+                     <fileset dir="resources/commit">
+                             <include name="*.xml"/>
+                     </fileset>
+	          </foreach>
               <input addproperty="confirmCommit"  message="Do you want to commit?. Press Y to continue, Any other key to exit." />
- 		<if>
-       		<equals arg1="${confirmCommit}" arg2="Y" casesensitive="false"/>
-      		 <then>
-       		</then>
-       		<else>
-       			<fail message="Use action cancel"/>
-                       </else>
-                </if>
-
-		<foreach target="docommitResources"  param="file" inheritall="true">
-			<fileset dir="resources/commit">
-				<include name="*.xml"/>
-			</fileset>
-		</foreach>
-	</target>
+			
+			<if>
+				<equals arg1="${confirmCommit}" arg2="Y" casesensitive="false"/>
+			<then>
+			</then>
+			<else>
+				<fail message="Use action cancel"/>
+			</else>
+			</if>
+	
+			<foreach target="docommitResources"  param="file" inheritall="true">
+				<fileset dir="resources/commit">
+					<include name="*.xml"/>
+				</fileset>
+			</foreach>
+		</target>
 
 
        <target name="docommitResources" >
                 <echo message="Processing file for commit: ${file}"/>
                 <basename property="xml.filename" file="${file}"  suffix="Resource.xml"/>
 
-		<AuraConfigLiteResource resourceXML="${basedir}/resources/commit/${xml.filename}Resource.xml"
+		<AuraConfigLiteResource resourceXML="${CURRENT_DIR}/xml/${xml.filename}Resource.xml"
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}"  
 			userName="${wasUserName}" password="${wasPassword}" connectionMode="remote"
 			applicationName="Aura"
  			operationMode="normal"
-			syncResourceXML="${basedir}/resources/output/${date}/commit/${xml.filename}Resource-${dmgrHostName}-${sourceEnvFile}-commit-${startTime}.xml"
-			syncReportLocation="${basedir}/resources/report/${date}/commit/${xml.filename}Resource-${dmgrHostName}-${sourceEnvFile}-commit-${startTime}.html"
+			syncResourceXML="${AURA_REPO}/resources/output/${date}/commit/${xml.filename}Resource-${dmgrHostName}-${sourceEnvFile}-commit-${startTime}.xml"
+			syncReportLocation="${AURA_REPO}/resources/report/${date}/commit/${xml.filename}Resource-${dmgrHostName}-${sourceEnvFile}-commit-${startTime}.html"
 			includeAllChildren="false"
-			environmentProperties="${basedir}/resources/environmentProperties/${sourceEnvFile}.properties" 
+			environmentProperties="${CURRENT_DIR}/properties/${sourceEnvFile}.properties" 
 			SOAPSecurityConfig="${SOAPSecurityConfig}"
 			SASSecurityConfig="${SASSecurityConfig}"
 			SSLSecurityConfig="${SSLSecurityConfig}"
@@ -197,68 +198,6 @@
 		/>
 
 	</target>	
-
-	
-	<!-- ************************************************************
-		GetInput Resources   
-             ************************************************************ -->
-	<target name="processFileName" >
-		<basename property="resourceXMLName" file="${resourceFile}" suffix="Resource.xml"/>
-		<echo message="${resourceXMLName}; " file="temp/resourceXMLNames.properties" append="true"/>
-	</target>
-
-	<target name="inputResourceName" >
-		<echo message="***********************************"/>
-		<echo message="Enter Scope to extract: cell or server or cluster "/>
-		<echo message="***********************************"/>
-		<input addproperty="scope" />
-
-		<mkdir dir="temp"/>	
-		<echo message="ResourceXMLnames=" file="temp/resourceXMLNames.properties"/>
-
-		<foreach param="resourceFile" target="processFileName" inheritall="true">
-			<fileset dir="resources/extractTemplates/${scope}">
-				<include name="*.xml"/>
-			</fileset>	
-		</foreach>
-		<property file="temp/resourceXMLNames.properties"/>
-
-		<echo message="***********************************"/>
-		<echo message="${ResourceXMLnames}"/>
-		<echo message="Enter Resource Name to extract from list above"/>
-		<echo message="***********************************"/>
-		
-		<input addproperty="ResourceName" />
-
-
-	</target>
-
-	<!-- ************************************************************
-		Confirm Data   
-             ************************************************************ -->
-
-	<target name="confirmData">
-		<echo message="***********************************"/>
-		<echo message="dmgrHostName	: ${dmgrHostName}"/>	
-		<echo message="dmgrPortNumber	: ${dmgrPortNumber}"/>	
-		<echo message="connectionType	: ${wasConnectionType}"/>	
-		<echo message="clusterName	: ${clusterName}"/>	
-		<echo message="ResourceName	:${ResourceName}"/>	
-
-		<echo message="***********************************"/>
-
-		<input message="Please check the environment details above, Press Y to continue, Press N to reenter, Any other key to exit."
-			addproperty="confirmEnvDetails"
-			/>
-
-
-		<if>	
-			<equals arg1="${confirmEnvDetails}" arg2="Y" casesensitive="false"/>
-			<then>
-				<echo message="See the magic!!"/>
-			</then>	
-		</if>
-	</target>
 
 	
 	<!-- ************************************************************

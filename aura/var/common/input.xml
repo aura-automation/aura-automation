@@ -27,6 +27,33 @@
 		<property file="${env.file}"/>	
 	</target>
 
+	<!-- ************************************************************
+		GetInput Resources   
+             ************************************************************ -->
+
+	<target name="inputResourceName" >
+		<echo message="***********************************"/>
+		<echo message="Enter Scope to extract: cell or server or cluster "/>
+		<echo message="***********************************"/>
+		<input addproperty="scope" />
+
+		
+		<groovy>
+			def InputDataProcessor inputDataProcessor = new InputDataProcessor()
+			inputDataProcessor.setAntBuilder(ant)
+			inputDataProcessor.listResources()
+		</groovy>
+
+		<echo message="***********************************"/>
+		<echo message="Enter Resource Name to extract from list above"/>
+		<echo message="***********************************"/>
+		
+		<input addproperty="resource.name" />
+
+
+	</target>
+
+
 	<target name="install-plugin">
 		<groovy>
 			def PluginInstaller pluginInstaller = new PluginInstaller()
