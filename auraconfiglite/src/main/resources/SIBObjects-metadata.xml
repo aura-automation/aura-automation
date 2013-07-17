@@ -1,0 +1,110 @@
+<resources-metadata>
+
+		<ConfigObject type="SIBMessagingEngine" shouldCreate="false"
+			relation="SIBMessagingEngine" syncFindModeContainmentPath="true">
+			<!-- not sure why was return attribute used here   
+			<containment>
+				<attribute value="busName" returnAttribute="name" />
+			</containment>
+			-->
+			<containment>
+				<attribute value="name" />
+			</containment>
+
+			<ConfigObject type="SIBDatastore"
+				shouldCreate="true" attributeName="dataStore">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+
+			<ConfigObject type="SIBQueueLocalizationPoint"
+				shouldCreate="true" attributeName="localizationPoints" relation="localizationPoints" 
+				syncFindModeContainmentPath="true"
+				isArray="true" findAndResolve="true">
+				<containment>
+					<attribute value="identifier" />
+				</containment>
+				<link-attribute linkAttibuteName="targetUuid"
+					targetObjectMatchAttributeName="identifier"
+					targetObject="SIBQueue" targetAttribute="uuid">
+				</link-attribute>
+				<!--  link-attribute linkAttibuteName="engineUuid" targetObject="SIBMessagingEngine" 
+					targetObjectMatchAttributeName="name" targetAttribute="uuid"/>
+				-->
+			</ConfigObject>
+
+
+
+			<ConfigObject
+				type="SIBTopicSpaceLocalizationPoint"
+				attributeName="localizationPoints" isProperty="true" isArray="true"
+				findAndResolve="true">
+				<containment>
+					<attribute value="identifier" />
+				</containment>
+				<link-attribute linkAttibuteName="targetUuid"
+					targetObjectMatchAttributeName="identifier" targetObject="SIBTopicSpace"
+					targetAttribute="uuid">
+				</link-attribute>
+
+			</ConfigObject>
+
+			<ConfigObject
+				type="SIBMQLinkSenderChannelLocalizationPoint"
+				attributeName="localizationPoints" isProperty="true" isArray="true"
+				findAndResolve="true">
+				<containment>
+					<attribute value="identifier" />
+				</containment>
+				<link-attribute linkAttibuteName="targetUuid"
+					targetObjectMatchAttributeName="name" targetObject="SIBMQLink"
+					targetAttribute="uuid">
+				</link-attribute>
+
+			</ConfigObject>
+
+			<ConfigObject type="SIBMQLink" shouldCreate="true" isArray="true" syncFindModeContainmentPath="true"
+				relation="mqLink" attributeName="mqLink"  isCommandManaged="true" customCodeManaged="SIBMQLink">
+				<containment>
+					<attribute value="name" />
+				</containment>
+				<command createCommand="createSIBMQLink" 
+							modifyCommand="modifySIBMQLink">
+					
+					<attribute-mapping commandAttribute="foreignBusName" type="additional" configAttribute="foreignBusName" />
+					<attribute-mapping commandAttribute="senderChannelTransportChain" type="additional" configAttribute="protocolName" />
+					<attribute-mapping commandAttribute="bus" type="additional" configAttribute="bus" />
+					<attribute-mapping commandAttribute="messagingEngine" type="parent" configAttribute="messagingEngine" />
+					<attribute-mapping commandAttribute="queueManagerName" type="mapping" configAttribute="qmName" />
+
+
+				</command>
+
+				<link-attribute linkAttibuteName="targetUuid"
+					targetObjectMatchAttributeName="name"
+					targetAttribute="uuid"
+					targetObject="SIBVirtualMQLink">
+				</link-attribute>
+
+				<ConfigObject type="SIBMQLinkSenderChannel"
+					shouldCreate="true" relation="senderChannel">
+					<containment>
+						<attribute value="null" />
+					</containment>
+					<link-attribute linkAttibuteName="sendStream"
+						targetObjectMatchAttributeName="identifier"
+						targetObject="SIBMQLinkSenderChannelLocalizationPoint">
+					</link-attribute>
+				</ConfigObject>
+				<ConfigObject type="SIBMQLinkReceiverChannel"
+					shouldCreate="true" relation="receiverChannel">
+					<containment>
+						<attribute value="null" />
+					</containment>
+				</ConfigObject>
+			</ConfigObject>
+		</ConfigObject>
+
+</resources-metadata>
+			

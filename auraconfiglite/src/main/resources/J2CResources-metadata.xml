@@ -5,10 +5,100 @@
 		<containment>
 			<attribute value="name" />
 		</containment>
+		
+		<!-- syncFindModeContainmentPath=TRUE removed as this was causing all the sibling objects to be extracted. i.e. when extracting 
+			Q, Act Spec was also getting extracted when includeAllChildren was true.
+			But  includeAllChildren was false nothing was getting extracted..
+			
+			After fixing above issue was that with includeAllChildren = false in ant command resulted in no properties being extracted for 
+			J2CAdminObject, code is fixed by adding 
+		 -->
+		<ConfigObject type="J2CAdminObject" findAndResolve="true" shouldIncludeAllChildren="true"
+			shouldCreate="true" relation="J2CAdminObject" syncPreMatchAttribute="adminObject" matchAttribute="jndiName">
+			<containment>
+				<attribute value="name" />
+			</containment>
+
+				<ConfigObject type="J2EEResourceProperty" syncFindModeContainmentPath="true"
+					isProperty="true" isArray="true" findAndResolve="true"
+					attributeName="properties">
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+							
+		
+		</ConfigObject>
+
+		<!-- syncFindModeContainmentPath=TRUE removed as this was causing all the sibling objects to be extracted. i.e. when extracting 
+			Q, Act Spec was also getting extracted when includeAllChildren was true.
+			But  includeAllChildren was false nothing was getting extracted..
+		 -->
+
+		<ConfigObject type="J2CConnectionFactory" shouldCreate="true" shouldIncludeAllChildren="true"
+			relation="J2CConnectionFactory" matchAttribute="jndiName" findAndResolve="true" 
+			syncPreMatchAttribute="connectionDefinition" >
+			<containment>
+				<attribute value="name" />
+			</containment>
+			<ConfigObject type="J2EEResourcePropertySet" isAttributeCount0="true"
+				attributeName="propertySet" isProperty="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="J2EEResourceProperty"
+					attributeName="properties" isProperty="true" isArray="true"
+					findAndResolve="true">
+					<containment>
+						<attribute value="name" />
+					</containment>
+
+				</ConfigObject>
+			</ConfigObject>
+			<ConfigObject type="ConnectionPool" shouldCreate="true"
+				relation="connectionPool" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+				<ConfigObject type="J2EEResourceProperty" syncFindModeContainmentPath="true"
+					attributeName="properties" isArray="true" isProperty="true"
+					shouldCreate="false" findAndResolve="true">
+					<containment>
+						<attribute value="name" />
+					</containment>
+				</ConfigObject>
+			</ConfigObject>
+			<ConfigObject type="MappingModule" shouldCreate="true"
+				relation="mapping" syncFindModeContainmentPath="true">
+				<containment>
+					<attribute value="null" />
+				</containment>
+			</ConfigObject>
+
+		</ConfigObject>
+		<!-- syncFindModeContainmentPath=TRUE removed as this was causing all the sibling objects to be extracted. i.e. when extracting 
+			Q, Act Spec was also getting extracted when includeAllChildren was true.
+			But  includeAllChildren was false nothing was getting extracted..
+		 -->
+
+		<ConfigObject type="J2CActivationSpec" shouldCreate="true" shouldIncludeAllChildren="true"
+			findAndResolve="true" relation="J2CActivationSpec" matchAttribute="jndiName" syncPreMatchAttribute="activationSpec"
+				>
+			<containment>
+				<attribute value="name" />
+			</containment>
+			<ConfigObject type="J2EEResourceProperty"
+				attributeName="resourceProperties" isArray="true" isProperty="true"
+				shouldCreate="false" findAndResolve="true">
+				<containment>
+					<attribute value="name" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+		
 
 		<ConfigObject type="MQConnectionFactory" findAndResolve="true"
-			shouldCreate="true" relation="MQConnectionFactory" matchAttribute="jndiName"
-			>
+			shouldCreate="true" relation="MQConnectionFactory" matchAttribute="jndiName">
 			<containment>
 				<attribute value="name" />
 			</containment>

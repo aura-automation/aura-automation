@@ -474,14 +474,18 @@ public class WASConfigReaderHelper {
 				
 					// check if this attribute is used by command link. If it is used then get it populated.
 					if ((deployInfo.getVersionInfo().getMajorNumber() >=2)){
+						logger.trace(" Resource XML version is >=2");
+
 						CommandLinkAttribute commandLinkAttribute = resourceHelper.isThisLinkAttributeForCommand(newResource, attributeName);
+						logger.trace(" Is attributeName " + attributeName +" command link?");
 						if (commandLinkAttribute != null ){
-							
+							logger.trace(" AttributeName " + attributeName +" is command link");
 							java.util.Vector<Resource> children  = newResource.getInComingChildren();
 							if (children!=null){
 								for (int i=0 ; i < children.size(); i++){
 									Resource child = (Resource)children.get(i);
 									if (child.getResourceMetaData().getType().equalsIgnoreCase(commandLinkAttribute.getTargetObjectType())){
+										logger.trace(" Getting value for attribute " + commandLinkAttribute.getTargetObjectAttribute() );
 										String value = child.getAttributeList().get(commandLinkAttribute.getTargetObjectAttribute()).toString();
 										logger.trace(" +++++++++++ Will add " + commandLinkAttribute.getLinkAttibuteName() + " value " + value);
 										inComingAttributeList.put(commandLinkAttribute.getLinkAttibuteName(), value);
