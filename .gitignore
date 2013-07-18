@@ -17,3 +17,7 @@ aurawasinstall/installer/install.properties
 aurawasinstall/installer/lib
 1.0.3
 daytrader*
+PetClinic
+lib
+*SNAPSHOT.zip
+workdir

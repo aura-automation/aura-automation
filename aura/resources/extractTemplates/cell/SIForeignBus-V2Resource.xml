@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources version="2.0">
-<Cell name="${{CellName}}">
-	<SIBus>
-		<SIBForeignBus>
-
-		</SIBForeignBus>
-
-	</SIBus>
-
-
-</Cell>
+	<Cell name="${{CellName}}">
+		<SIBus>
+			<SIBForeignBus>
+			</SIBForeignBus>
+		</SIBus>
+	</Cell>
 </resources>

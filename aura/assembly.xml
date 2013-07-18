@@ -1,0 +1,17 @@
+  <assembly>
+  	<id>aura</id>
+  	<formats>
+  		<format>zip</format>
+  	</formats>
+  	<fileSets>
+  		<fileSet>
+  			<includes>
+  				<include>**.*</include>
+  			</includes>
+  			<excludes>
+  				<exclude>**/target/**</exclude>
+  				<exclude>**/*SNAPSHOT*.zip</exclude>
+  			</excludes>
+  		</fileSet>
+  	</fileSets>
+  </assembly>

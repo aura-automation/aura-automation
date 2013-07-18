@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<Cell name="${{CellName}}">
+		<ServerCluster>
+			<ObjectPoolProvider>
+				<ObjectPoolManagerInfo/>
+			</ObjectPoolProvider>
+		</ServerCluster>		
+	</Cell>
+</resources>

@@ -14,7 +14,7 @@
 		<delete>
 			<fileset dir="lib">
 				<include name="aura*.jar"/>
-				<include name="common*.jar"/>
+				<include name="common-1*.jar"/>
 				<exclude name="commons-logging-*"/>
 			</fileset>
 			

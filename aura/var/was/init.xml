@@ -161,7 +161,10 @@
 
 	<target name="clean">
 		<delete >
-			<fileset dir="${basedir}">
+			<fileset dir="${AURA_HOME}">
+				<include name="orbtrc*.*"/>
+			</fileset>
+			<fileset dir="${CURRENT_DIR}">
 				<include name="orbtrc*.*"/>
 			</fileset>
 		</delete>

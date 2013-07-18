@@ -26,9 +26,4 @@ set ANT_LIB=%AURA_HOME%/opt/apache-ant-1.7.1/lib/*;%AURA_HOME%/lib/*
 "%JAVA_HOME%/bin/java" -classpath "%PROPERTIES_LIB%;%ANT_LIB%;%WAS_CLASSPATH%" -DCURRENT_DIR=%CD% -DAURA_HOME=%AURA_HOME% -DAURA_REPO=%AURA_REPO% org.apache.tools.ant.launch.Launcher -buildfile %AURA_HOME%/var/common/plugin.xml check-was-plugin
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-"%JAVA_HOME%/bin/java" -classpath "%PROPERTIES_LIB%;%ANT_LIB%;%WAS_CLASSPATH%" -DCURRENT_DIR=%CD% -DAURA_HOME=%AURA_HOME% -DAURA_REPO=%AURA_REPO% org.apache.tools.ant.launch.Launcher -buildfile %AURA_HOME%/var/was/deploy.xml %*
-
-
-
-
-
+"%JAVA_HOME%/bin/java" -classpath "%PROPERTIES_LIB%;%ANT_LIB%;%WAS_CLASSPATH%" -DCURRENT_DIR=%CD% -DAURA_HOME=%AURA_HOME% -DAURA_REPO=%AURA_REPO% org.apache.tools.ant.launch.Launcher -buildfile %AURA_HOME%/var/was/main.xml %*

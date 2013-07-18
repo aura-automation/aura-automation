@@ -19,11 +19,12 @@
 
 	
 	<target name="input">
-		<groovy>
-			def InputDataProcessor inputDataProcessor = new InputDataProcessor()
-			inputDataProcessor.setAntBuilder(ant)
-			inputDataProcessor.process()
-		</groovy>
+			<groovy>
+				def InputDataProcessor inputDataProcessor = new InputDataProcessor()
+				inputDataProcessor.setAntBuilder(ant)
+				inputDataProcessor.process()
+			</groovy>
+			
 		<property file="${env.file}"/>	
 	</target>
 
@@ -37,18 +38,25 @@
 		<echo message="***********************************"/>
 		<input addproperty="scope" />
 
-		
-		<groovy>
-			def InputDataProcessor inputDataProcessor = new InputDataProcessor()
-			inputDataProcessor.setAntBuilder(ant)
-			inputDataProcessor.listResources()
-		</groovy>
-
-		<echo message="***********************************"/>
-		<echo message="Enter Resource Name to extract from list above"/>
-		<echo message="***********************************"/>
-		
-		<input addproperty="resource.name" />
+		<if>
+			<not>
+				<equals arg1="noprompt" arg2="true" />
+			</not>
+			<then>	
+				
+				<groovy>
+					def InputDataProcessor inputDataProcessor = new InputDataProcessor()
+					inputDataProcessor.setAntBuilder(ant)
+					inputDataProcessor.listResources()
+				</groovy>
+	
+				<echo message="***********************************"/>
+				<echo message="Enter Resource Name to extract from list above"/>
+				<echo message="***********************************"/>
+			
+				<input addproperty="resource.name" />
+			</then>	
+		</if>	
 
 
 	</target>
@@ -61,5 +69,6 @@
 			pluginInstaller.process()
 		</groovy>
 	</target>
+
 
 </project>

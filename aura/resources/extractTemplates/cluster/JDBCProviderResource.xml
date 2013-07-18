@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <Cell cellType="DISTRIBUTED" name="${{CellName}}">
-    <ServerCluster name="Test-CL" nodeGroupName="DefaultNodeGroup">
+  <Cell name="${{CellName}}">
+    <ServerCluster >
     	<JDBCProvider>
     		<DataSource/>
     	</JDBCProvider>

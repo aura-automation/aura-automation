@@ -14,10 +14,9 @@ public class InputDataProcessor {
 	
 	void process(){
 		
-		listEnvs()
-		
 		def envName
-		if (antEnvName == null){
+		if ((noPrompt == null) ||  (noPrompt  == "") || (!noPrompt)){
+			listEnvs()
 			envName = promptEnv()
 		}else{
 			envName = antEnvName
@@ -26,8 +25,8 @@ public class InputDataProcessor {
 		def envFile = new File(envFileName)
 		boolean fileExists = checkIfEnvDataExists(envFile)
 		
-		if(!envFile.exists()){
-			promptEnvData(envFileName)
+		if(!envFile.exists() ){
+			getEnvData(envFileName)
 		}else{
 			confirmEnvDataIsCorrect(envFileName)
 		}
@@ -48,7 +47,8 @@ public class InputDataProcessor {
 		def dir = new File(envFileDir)
 		dir.mkdirs()
 		println('Below is comma seperated list of known environments')
-		dir.eachFile { 
+		int idx = 0
+		dir.eachFile {  
 		    if (it.isFile()) {
 			print it.name
 			print ", "
@@ -61,10 +61,10 @@ public class InputDataProcessor {
 		def resourceDir =  auraHome + '/resources/extractTemplates/' + scope
 		def dir = new File(resourceDir)
 		println('Below is list of resources that can extracted')
-		dir.eachFile {
+		dir.eachFile { index ->
 			if (it.isFile()) {
-			print it.name.trim().replace("Resource.xml","")
-			print "    "
+				print it.name.trim().replace("Resource.xml","")
+				print "    "
 			}
 		}
 	}
@@ -121,7 +121,7 @@ public class InputDataProcessor {
 		}
 	}
 
-	void promptEnvData(envFileName){
+	void getEnvData(envFileName){
 
 		def hostname = common.prompt ("Enter Host Name")
 		def hostport = common.prompt ("Enter Host Port")

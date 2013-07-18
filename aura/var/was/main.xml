@@ -1,0 +1,35 @@
+<project name="aura" default="help">
+	<import file="../common/input.xml"/> 
+
+	<import file="init.xml"/> 
+	
+
+	<import file="monitor.xml"/>
+	<import file="auraconfiglite.xml"/>
+	<import file="auradeploylite.xml"/>
+	<import file="monitor.xml"/>
+	<import file="plugin.xml"/> 
+
+	<target name="was:extractAll" depends="clean,init,input,validate,extractAllResouces"/>
+	<target name="was:extract" depends="clean,init,input,validate,inputResourceName,extractResource"/>
+	<target name="was:apply" depends="clean,init,input,commitResources"/> 
+    <target name="was:preview" depends="clean,init,input,reportResources"/>
+    <target name="was:compareFiles" depends="clean,init,input,setResourceToCompare,docompareFiles"/>
+	<target name="was:monitor" depends="clean,init,input,monitorEnvironments"/>
+
+
+	<target name="help">
+		<echo>
+Supported targets are
+was:extract 
+     [-Dnoprompt=false -Dscope=[server, cluster, cell]  -Dresource.name= -Denv.name=]
+was:extractAll
+	[-Dnoprompt=false -Denv.name=]
+was:apply
+was:preview
+was:compareFiles
+was:monitor" 
+		</echo>			
+	</target>
+
+</project>

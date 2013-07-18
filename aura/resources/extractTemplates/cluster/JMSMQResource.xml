@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <Cell name="${{CellName}}">
-        <ServerCluster name="${{ClusterName}}">
+        <ServerCluster>
             <JMSProvider name="WebSphere MQ JMS Provider">
                 <MQConnectionFactory>
                     <J2EEResourceProperty/>

@@ -16,12 +16,11 @@ public class PluginInstaller{
 	
 	void process(){
 		boolean pluginInstalled = checkWASPlugin()
-		
 		if (!pluginInstalled ){
 			installPlugin()
 		}
 	}
-	
+
 	void installPlugin(){
 		println("WAS Plugin is not installed")
 		
@@ -72,7 +71,13 @@ public class PluginInstaller{
 		
 		copy (secPropsDir + File.separator + "sas.client.props" , propsDir) 
 		copy (secPropsDir + File.separator + "soap.client.props" , propsDir) 
-		copy (secPropsDir + File.separator + "ssl.client.props" , propsDir) 
+		copy (secPropsDir + File.separator + "ssl.client.props" , propsDir)
+		// parse the ssl config file and change user root to plugins dir. This is to enable loading of certs
+		ConfigurationManager confManager = new ConfigurationManager()
+		confManager.setProperty(propsDir + File.separator + "ssl.client.props",
+			,"user.root"
+			,plugindir)
+
 	}
 	
 	void promptSSLStore(){

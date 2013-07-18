@@ -2,9 +2,9 @@
 <resources>
 	<Cell name="${{CellName}}">
 		<Node>
-	        <Server>
-				<J2CResourceAdapter/>
+			<Server>
+				<Library/>
 			</Server>
-		</Node>		
+		</Node>
 	</Cell>
 </resources>
