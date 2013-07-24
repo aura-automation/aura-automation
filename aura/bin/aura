@@ -19,9 +19,6 @@ else
     exit 1	
 fi
 
-
-PATH=${AURA_HOME}/opt/ant/bin:${JAVA_HOME}/bin:$PATH
-
 if [ "$JAVA_HOME" != "" ]
 then
     echo "Java Home is " $JAVA_HOME
@@ -32,11 +29,13 @@ fi
 
 
 export AURA_REPO=$HOME/.aura_repo
+export PATH=${AURA_HOME}/opt/ant/bin:${JAVA_HOME}/bin:$PATH
 
 PROPERTIES_LIB=$AURA_HOME/properties
 
 WAS_CLASSPATH=$AURA_REPO/plugins/was-remote/lib/*
 ANT_LIB=$AURA_HOME/opt/apache-ant-1.7.1/lib/*:$AURA_HOME/lib/*
+
 
 "$JAVA_HOME/bin/java" -classpath "$PROPERTIES_LIB:$ANT_LIB:$WAS_CLASSPATH" -DCURRENT_DIR=$(pwd) -DAURA_HOME=$AURA_HOME -DAURA_REPO=$AURA_REPO org.apache.tools.ant.launch.Launcher -buildfile $AURA_HOME/var/common/plugin.xml check-was-plugin
 

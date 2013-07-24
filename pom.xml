@@ -104,6 +104,7 @@
     <module>common</module>
     <module>auraconfiglite</module>
     <module>auradeploylite</module>
+    <module>aura</module>
   </modules>
 
  <distributionManagement>

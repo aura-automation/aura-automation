@@ -3,16 +3,29 @@
 	<!-- ********************************* --> 
 	<!--	Load custom tasks --> 
 	<!-- ********************************* -->
+	<path id="groovy-classpath">
+		<fileset dir="${AURA_HOME}/opt">
+		    <include name="groovy-*/embeddable/*.jar" />
+		</fileset>
+		<fileset dir="${AURA_HOME}/lib">
+		    <include name="*.jar" />
+		</fileset>
 
-	<taskdef resource="auradeploy.xml" classpathref="classpath"/>
-	<taskdef resource="auraconfig.xml" classpathref="classpath"/>
+   		<dirset dir="${AURA_HOME}/var" includes="scripts"/>		
+	</path>
+
+	<taskdef resource="auradeploy.xml" classpathref="groovy-classpath"/>
+	<taskdef resource="auraconfig.xml" classpathref="groovy-classpath"/>
 
 	<taskdef resource="net/sf/antcontrib/antlib.xml">
 		<classpath>
 		    <fileset dir="${AURA_HOME}/opt/ant-contib" includes="*.jar"/> 
 		</classpath>
 	</taskdef>
-	
+
+	<taskdef name="groovy"
+	         classname="org.codehaus.groovy.ant.Groovy"
+	         classpathref="groovy-classpath"/>
 
 
 	<!-- ********************************* --> 

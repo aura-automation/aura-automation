@@ -1,36 +1,15 @@
 <project name="input">
 
-	<path id="classpath">
-		<fileset dir="${AURA_HOME}/opt">
-		    <include name="groovy-*/embeddable/*.jar" />
-		</fileset>
-		<fileset dir="${AURA_HOME}/lib">
-		    <include name="*.jar" />
-		</fileset>
-
-      		<dirset dir="${AURA_HOME}/var" includes="scripts"/>		
-	</path>
-
-    <pathconvert property="classpathstring" refid="classpath" />
-
-	<taskdef name="groovy"
-	         classname="org.codehaus.groovy.ant.Groovy"
-	         classpathref="classpath"/>
-
-	
 	<target name="input">
-			<groovy>
-				def InputDataProcessor inputDataProcessor = new InputDataProcessor()
-				inputDataProcessor.setAntBuilder(ant)
-				inputDataProcessor.process()
-			</groovy>
+		<groovy>
+			def InputDataProcessor inputDataProcessor = new InputDataProcessor()
+			inputDataProcessor.setAntBuilder(ant)
+			inputDataProcessor.process()
+		</groovy>
 			
 		<property file="${env.file}"/>	
 	</target>
 
-	<!-- ************************************************************
-		GetInput Resources   
-             ************************************************************ -->
 
 	<target name="inputResourceName" >
 		<echo message="***********************************"/>
@@ -55,6 +34,28 @@
 				<echo message="***********************************"/>
 			
 				<input addproperty="resource.name" />
+			</then>	
+		</if>	
+
+
+	</target>
+
+
+
+	<target name="inputDeployData" >
+
+		<if>
+			<not>
+				<equals arg1="noprompt" arg2="true" />
+			</not>
+			<then>	
+				
+				<groovy>
+					def InputDataProcessor inputDataProcessor = new InputDataProcessor()
+					inputDataProcessor.setAntBuilder(ant)
+					inputDataProcessor.promptDeployData()
+				</groovy>
+	
 			</then>	
 		</if>	
 

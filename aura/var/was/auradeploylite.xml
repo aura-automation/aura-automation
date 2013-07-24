@@ -1,37 +1,23 @@
 <project name="Deploy" >
-	<property name="applicationName" value="DefaultApp" />
-	<property name="environment" value="DEV" />
-	<property name="tag" value="Tag_1_0_0" />
-	
-
 	<property name="remoteworkdir" value="/tmp/deploy" />
 
 	<property name="remote.workdir.ear" value="${remoteworkdir}/${workdir}/${applicationName}/ear" />
 	<property name="remote.workdir.deploydata" value="${remoteworkdir}/${workdir}/${applicationName}/deploydata" />
-
-	<property name="workdir.ear" value="${basedir}/${workdir}/${applicationName}/binaries/ear" />
-	<property name="workdir.deploydata" value="${basedir}/${workdir}/${applicationName}/binaries/deploydata" />
-
-	<property name="workdir.environments" value="${basedir}/${workdir}/${applicationName}/environments/${environment}" />
-	
-	<property name="multiEARLocation" value="${workdir.ear}" />
-	<property name="multiEARDeployData" value="${workdir.deploydata}" />
-
 	<property name="remoteMultiEARLocation" value="${remoteworkdir}"/>
 	
-	<property name="applicatioName" value="defaultApp" />
 
+	<property name="multiEARLocation" value="${CURRENT_DIR}/ear" />
+	<property name="multiEARDeployData" value="${CURRENT_DIR}/ear" />
 
-	
-
-	
-	<target name="startApplication" depends="init" description="Start Application">
+		
+	<target name="startApplication">
 
 		<AuraApplication 
-			cell="${CellName}" cluster="${Cluster}" server="${Server}" 
-			earFileLocation="${basedir}\SlickDeploy\ear\soa\${EARLocation}" userName="${user}" password="${password}" 
-			port="${dmgrPortNumber}" node="${node}" host="${dmgrHostName}" isMultiEAR="true" MultiEARLocation="${multiEARLocation}" 
-			connectionType="${connectionType}" operation="start" 
+			applicationName="aura" cluster="${cluster.name}" server="${server.name}" 
+			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
+			userName="${wasUserName}" password="${wasPassword}"			
+			isMultiEAR="true" MultiEARLocation="${multiEARLocation}" 
+			operation="start" 
 			soapSecurityConfig="${SOAPSecurityConfig}"
 			sslSecurityConfig="${SSLSecurityConfig}"
 			sasSecurityConfig="${SASSecurityConfig}"
@@ -40,11 +26,12 @@
 
 	</target>
 
-	<target name="stopApplication" depends="init" description="Stop Application">
-		<AuraApplication cell="${CellName}" cluster="${Cluster}" server="${Server}" 
-			earFileLocation="${basedir}\SlickDeploy\ear\soa\${EARLocation}" userName="${user}" password="${password}" 
-			port="${dmgrPortNumber}" node="${node}" host="${dmgrHostName}" isMultiEAR="true" MultiEARLocation="${multiEARLocation}" 
-			connectionType="${connectionType}" operation="stop" 
+	<target name="stopApplication">
+		<AuraApplication applicationName="aura" cluster="${cluster.name}" server="${server.name}" 
+			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
+			userName="${wasUserName}" password="${wasPassword}" 
+			isMultiEAR="true" MultiEARLocation="${multiEARLocation}" 
+			operation="stop" 
 			soapSecurityConfig="${SOAPSecurityConfig}"
 			sslSecurityConfig="${SSLSecurityConfig}"
 			sasSecurityConfig="${SASSecurityConfig}"
@@ -53,14 +40,16 @@
 			/>
 	</target>
 
-	<target name="exportApplication" depends="init" description="Stop Application">
+	<target name="exportApplication" >
+		<property name="exportLocation" value="${AURA_REPO}/resources/ear/${date}/${startTime}"/>
+		<mkdir dir="${exportLocation}"/>
 
-		<mkdir dir="${multiEARLocation}/backup"/>
-
-		<AuraApplication cell="${CellName}" cluster="${Cluster}" server="${Server}" 
-			earFileLocation="${basedir}\SlickDeploy\ear\soa\${EARLocation}" userName="${user}" password="${password}" 
-			port="${dmgrPortNumber}" node="${node}" host="${dmgrHostName}" isMultiEAR="true" MultiEARLocation="${multiEARLocation}" 
-			connectionType="${connectionType}" operation="export" earExportLocation="${multiEARLocation}/backup" 
+		<AuraApplication applicationName="aura" cluster="${cluster.name}" server="${server.name}" 
+			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
+			userName="${wasUserName}" password="${wasPassword}" 
+			isMultiEAR="true" MultiEARLocation="${multiEARLocation}" 
+			operation="export" 
+			earExportLocation="${exportLocation}" 
 			soapSecurityConfig="${SOAPSecurityConfig}"
 			sslSecurityConfig="${SSLSecurityConfig}"
 			sasSecurityConfig="${SASSecurityConfig}"
@@ -72,7 +61,6 @@
 	<target name="process" >
 		<AuraProcessEAR  multiEARLocation="${multiEARLocation}" multiEARDeployData="${multiEARDeployData}" 
 			isMultiEAR="true" VirtualHost="default_host" />
-
 	</target>
 	
 
@@ -109,9 +97,8 @@
 	
 	<target name="auraDeploy" >
 	
-		<AuraDeployLite applicationName="easyDeploy" cluster="${targetCluster}" server="${server}" 
+		<AuraDeployLite applicationName="aura" cluster="${cluster.name}" server="${server.name}" 
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
-
 			userName="${wasUserName}" password="${wasPassword}" 
 			failIfResourceAbsent="false" isMultiEAR="true" 
 			multiEARLocation="${multiEARLocation}" 
@@ -127,8 +114,6 @@
 			defaultValues="true"
 			releaseMI = "${releaseMI}"
 
-
-			
 			targetOS="Linux"
 
 			reStartClusterAfterDeploy="false"	
@@ -138,13 +123,33 @@
 
 	</target>
 
-		<!--	remoteEARDirectory="${remote.workdir.ear}" -->
+	<target name="uninstallApplication" >
 	
-	
-	
-	<target name="deployOnly" depends="process,auraDeploy">
+		<AuraDeployLite applicationName="aura" cluster="${cluster.name}" server="${server.name}" 
+			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
+			userName="${wasUserName}" password="${wasPassword}" 
+			failIfResourceAbsent="false" isMultiEAR="true" 
+			multiEARLocation="${multiEARLocation}" 
+			multiEARDeployData="${multiEARDeployData}" 
+			webserver="${webserver}"  
+			SleepTimeForSyncRequest="5000" parentLastClassLoaderMode="false" 
+			generateEJBDeployCode="false"  
+			soapSecurityConfig="${SOAPSecurityConfig}"
+			sslSecurityConfig="${SSLSecurityConfig}"
+			sasSecurityConfig="${SASSecurityConfig}"
+			jaacSecurityConfig="${JAACSecurityConfig}"
+			startingweight="1"
+			defaultValues="true"
+			releaseMI = "${releaseMI}"
+			operation="uninstall"
+			targetOS="Linux"
+
+			reStartClusterAfterDeploy="false"	
+			/>
+
+		<echo message="Deploy sucessfull on ${_Nodes}"  />
+
 	</target>
 
-	<target name="deploy" depends="init,clean,process,copyFileForUnix,auraDeploy"/>
 
 </project>

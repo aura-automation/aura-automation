@@ -26,4 +26,6 @@
 		</groovy>
 	</target>
 
+	<target name="was:install-plugin">
+	</target>
 </project>

@@ -11,6 +11,7 @@ public class InputDataProcessor {
     def exeExt = null
 	def Common = null
 	def antEnvName = null
+	def targetInvoked = null
 	
 	void process(){
 		
@@ -25,7 +26,10 @@ public class InputDataProcessor {
 		def envFile = new File(envFileName)
 		boolean fileExists = checkIfEnvDataExists(envFile)
 		
-		if(!envFile.exists() ){
+		// if noPrompt is true and env does not exists, error
+		if((!envFile.exists()) && (noPrompt != null) && (noPrompt)){
+			ant.fail("env data missing, cannot run in noprompt mode")
+		}else if (!envFile.exists()){
 			getEnvData(envFileName)
 		}else{
 			confirmEnvDataIsCorrect(envFileName)
@@ -33,7 +37,6 @@ public class InputDataProcessor {
 
 		ant.project.setProperty('env.file',envFileName)
 		ant.project.setProperty('env.name',envName)
-		//setAntProperties()
 	}
 
 	def promptEnv() {
@@ -117,7 +120,7 @@ public class InputDataProcessor {
 		}else if (action.equalsIgnoreCase("c")){	
 			saveEnvData(envFileName,hostname,hostport,connType,userName,password)
 		} else {
-			println("No dsata")
+			println("No data")
 		}
 	}
 
@@ -131,6 +134,26 @@ public class InputDataProcessor {
 		saveEnvData(envFileName,hostname,hostport,connType,userName,password)
 	}
 
+	void promptDeployData(){
+		def clusterName = common.prompt ("Enter Cluster Name")
+		if ((clusterName ==null) || (clusterName.trim().equals(""))){ 
+			def serverName = common.prompt ("Enter Server Name")
+			if ((serverName ==null)|| (serverName.trim().equals(""))){
+				promptDeployData()
+			}else{
+				ant.project.setProperty('server.name',serverName) 
+			}
+		}else{
+			ant.project.setProperty('cluster.name',clusterName)   
+		}
+
+	}
+	
+	void getClusterServerName(){
+		def clusterName = common.prompt ("Enter Cluster Name")
+		def serverName = common.prompt ("Enter Server Name")
+	}
+		
 	void saveEnvData(envFileName,hostname,hostport,connType,userName,password){
 		File envFile = new File(envFileName)
 		envFile.delete()
@@ -156,7 +179,8 @@ public class InputDataProcessor {
 		antEnvName = ant.project.properties.'env.name'
 		noPrompt = ant.project.properties.'noprompt'
 		common = new Common(ant)
-
+		targetInvoked = ant.project.properties.'targetInvoked'
+		
 		if (SystemUtils.IS_OS_UNIX){
 			shellExt = '.sh'
 			exeExt = ""
@@ -188,8 +212,4 @@ public class InputDataProcessor {
 
 
 	}
-
-
-
-
 }

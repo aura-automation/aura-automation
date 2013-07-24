@@ -14,9 +14,15 @@
 	<target name="was:extract" depends="clean,init,input,validate,inputResourceName,extractResource"/>
 	<target name="was:apply" depends="clean,init,input,commitResources"/> 
     <target name="was:preview" depends="clean,init,input,reportResources"/>
-    <target name="was:compareFiles" depends="clean,init,input,setResourceToCompare,docompareFiles"/>
-	<target name="was:monitor" depends="clean,init,input,monitorEnvironments"/>
 
+    <target name="was:startApp" depends="clean,init,input,startApplication"/>
+    <target name="was:stopApp" depends="clean,init,input,stopApplication"/>
+    <target name="was:deployApp" depends="clean,init,input,inputDeployData,process,auraDeploy"/>
+    <target name="was:uninstallApp" depends="clean,init,input,uninstallApplication"/>
+    <target name="was:exportApp" depends="clean,init,input,exportApplication"/>
+
+	<target name="was:monitor" depends="clean,init,monitorEnvironments"/>
+    <target name="was:compareFiles" depends="clean,init,input,setResourceToCompare,docompareFiles"/>
 
 	<target name="help">
 		<echo>
@@ -26,7 +32,21 @@ was:extract
 was:extractAll
 	[-Dnoprompt=false -Denv.name=]
 was:apply
+	[-Dnoprompt=false -Denv.name=]
 was:preview
+	[-Dnoprompt=false -Denv.name=]
+
+was:startApp
+	[-Dnoprompt=true -Denv.name=(env name)]
+was:stopApp
+	[-Dnoprompt=true -Denv.name=(env name)]
+was:exportApp
+	[-Dnoprompt=true -Denv.name=(env name)]
+was:deployApp
+	[-Dnoprompt=true -Denv.name=(env name)]
+was:uninstallApp
+	[-Dnoprompt=true -Denv.name=(env name)]
+
 was:compareFiles
 was:monitor" 
 		</echo>			

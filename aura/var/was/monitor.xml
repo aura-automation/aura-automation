@@ -2,7 +2,7 @@
 
 	<property name="monitorReportsDir" value="resources/monitorReports"/>
 
-    <target name="monitorEnvironments" depends="init">
+    <target name="monitorEnvironments">
         <foreach target="monitorResources"  param="dir" inheritall="true">
             <path>
                 <dirset dir="resources/monitor">
@@ -12,12 +12,9 @@
         </foreach>
     </target>
 
-
-
     <target name="monitorResources" >
         <basename property="currentEnv" file="${dir}"  />
 
-           
         <foreach target="doMonitorResources"  param="file" inheritall="true">
             <fileset dir="resources/monitor/${currentEnv}/xml">
                 <include name="*.xml"/>
