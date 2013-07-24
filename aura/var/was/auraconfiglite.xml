@@ -28,7 +28,7 @@
 	<macrodef name="reportResources">
 		<sequential>
 			<foreach target="doReportResources"  param="file" inheritall="true">
-				<fileset dir="${CURRENT_DIR}/xml">
+				<fileset dir="${CURRENT_DIR}/resources">
 					<include name="*.xml"/>
 				</fileset>
 			</foreach>
@@ -40,7 +40,7 @@
 		<basename property="xml.filename" file="${file}"  suffix="Resource.xml"/>
 
 
-		<AuraConfigLiteResource resourceXML="${CURRENT_DIR}/xml/${xml.filename}Resource.xml"
+		<AuraConfigLiteResource resourceXML="${CURRENT_DIR}/resources/${xml.filename}Resource.xml"
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}"  
 			userName="${wasUserName}" password="${wasPassword}" connectionMode="remote"
 			applicationName="Aura"
@@ -174,7 +174,7 @@
                 <echo message="Processing file for commit: ${file}"/>
                 <basename property="xml.filename" file="${file}"  suffix="Resource.xml"/>
 
-		<AuraConfigLiteResource resourceXML="${CURRENT_DIR}/xml/${xml.filename}Resource.xml"
+		<AuraConfigLiteResource resourceXML="${CURRENT_DIR}/resources/${xml.filename}Resource.xml"
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}"  
 			userName="${wasUserName}" password="${wasPassword}" connectionMode="remote"
 			applicationName="Aura"
@@ -221,8 +221,8 @@
 
 	<target name="docompareFiles" >
 		<property name="ResourceName" value="JDBCProvider"/>
-		<property name="resourceXML1" value="${basedir}/workdir/DefaultApp/config/xml/${resource.name}Resource.xml"/>
-		<property name="resourceXML2" value="${basedir}/workdir/archive/DefaultApp/config/xml/${resource.name}Resource.xml"/>
+		<property name="resourceXML1" value="${basedir}/workdir/DefaultApp/config/resources/${resource.name}Resource.xml"/>
+		<property name="resourceXML2" value="${basedir}/workdir/archive/DefaultApp/config/resources/${resource.name}Resource.xml"/>
 
 		<property name="environmentProperties1" value="${basedir}/resources/environmentProperties/${env.name}.properties"/>
 		<property name="environmentProperties2" value="${basedir}/resources/environmentProperties/${env.name}.properties"/>
