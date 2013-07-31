@@ -196,9 +196,9 @@ public class Deploy extends Connection{
     	FileTransferConfig fileTransferConfig = fileTransferClient.getFileTransferConfig();
     	fileTransferConfig.setTransferRequestTimeout(20);
     	fileTransferConfig.setSecurityEnabled(true);
-    	System.out.println("staging " + fileTransferConfig.getStagingLocation() );
-    	System.out.println("TransferRequestTimeout " + fileTransferConfig.getTransferRequestTimeout() );
-    	System.out.println("TransferRetryCount " + fileTransferConfig.getTransferRetryCount() );
+    	logger.trace("staging " + fileTransferConfig.getStagingLocation() );
+    	logger.trace("TransferRequestTimeout " + fileTransferConfig.getTransferRequestTimeout() );
+    	logger.trace("TransferRetryCount " + fileTransferConfig.getTransferRetryCount() );
     	fileTransferClient.setFileTransferConfig(fileTransferConfig);
     	
     	//fileTransferConfig.setStagingLocation( fileTransferConfig.getStagingLocation() + "\\upload");
@@ -364,8 +364,6 @@ public class Deploy extends Connection{
 				    		SDLog.log("Deploy type is MultiEAR"); 
 				    		SDLog.log("Location of the EAR is " + deployInfo.getMultiEARLocation());
 				    		SDLog.log("");
-
-						//	uploadApplication(deployInfo);
 							
 							ObjectName[] configIDs = configService.resolve(session, "Cell=");
 							if (configIDs.length > 0){
@@ -390,15 +388,20 @@ public class Deploy extends Connection{
 							if (deployInfo.getRemoteEARDirectory() !=null){
 								deployInfo.setEARFileLocation(deployInfo.getRemoteEARDirectory() + deployInfo.getFileSeperator() + files[i].getName());
 							}else{
-								String uploadedFilelodation = uploadApplication(deployInfo,deployInfo.getMultiEARLocation() + File.separator + files[i].getName());
-			/**					FileTransferClient ftClient =  FileTransferFactory.getFileTransferClient(adminClient);
-								logger.trace( " Staging Location " + ftClient.getFileTransferConfig().getStagingLocation());
-								logger.trace( " Staging Location " + ftClient.getFileTransferConfig().getStagingLocation());
-								FileTransferConfig config = ftClient.getFileTransferConfig();
-								logger.trace( " " + config.getStagingLocation()); 
-								ftClient.uploadFile(new File(deployInfo.getMultiEARLocation() + File.separator + files[i].getName()), "upload" + File.separatorChar  + sessionID + File.separatorChar +  files[i].getName());
-				**/				
-								deployInfo.setEARFileLocation(uploadedFilelodation);
+								// upload only if operation requires install 
+								if (deployInfo.getOperation().equalsIgnoreCase(DeployValues.APPLICATION_OPERATION_REINSTALL) || 
+										deployInfo.getOperation().equalsIgnoreCase(DeployValues.APPLICATION_OPERATION_INSTALL)){
+
+									String uploadedFilelodation = uploadApplication(deployInfo,deployInfo.getMultiEARLocation() + File.separator + files[i].getName());
+				/**					FileTransferClient ftClient =  FileTransferFactory.getFileTransferClient(adminClient);
+									logger.trace( " Staging Location " + ftClient.getFileTransferConfig().getStagingLocation());
+									logger.trace( " Staging Location " + ftClient.getFileTransferConfig().getStagingLocation());
+									FileTransferConfig config = ftClient.getFileTransferConfig();
+									logger.trace( " " + config.getStagingLocation()); 
+									ftClient.uploadFile(new File(deployInfo.getMultiEARLocation() + File.separator + files[i].getName()), "upload" + File.separatorChar  + sessionID + File.separatorChar +  files[i].getName());
+					**/				
+									deployInfo.setEARFileLocation(uploadedFilelodation);
+								}
 							
 							}
 							
@@ -640,9 +643,7 @@ public class Deploy extends Connection{
 							logger.warn("Starting install.");
 							DeployState.installStatus= JMXApplication.NOTIFICATION_INPROGRESS;
 							
-	//			   			doResources(deployInfo);	
 					        installApplication(deployInfo);
-	//						regenPlugin(deployInfo);				
 							
 						}else  if ((DeployState.installStatus.equalsIgnoreCase(JMXApplication.NOTIFICATION_COMPLETED)) ){
 							editApplication(deployInfo);
