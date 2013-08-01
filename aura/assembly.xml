@@ -6,11 +6,12 @@
   	<fileSets>
   		<fileSet>
   			<includes>
-  				<include>**.*</include>
+  				<include>**/*.*</include>
   			</includes>
   			<excludes>
   				<exclude>**/target/**</exclude>
   				<exclude>**/*SNAPSHOT*.zip</exclude>
+  				<exclude>**/workdir/**</exclude>
   			</excludes>
   		</fileSet>
   	</fileSets>
