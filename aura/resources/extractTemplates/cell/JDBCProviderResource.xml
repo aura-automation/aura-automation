@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <Cell name="${{CellName}}">
-    <Node>
-	<Server>
-	    	<JDBCProvider>
-	    	</JDBCProvider>
-	</Server>
-    </Node>
+    	<JDBCProvider>
+    	</JDBCProvider>
   </Cell>
 </resources>
 

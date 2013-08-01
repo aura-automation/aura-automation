@@ -3,7 +3,9 @@
   <Cell name="${{CellName}}">
     <ServerCluster >
     	<JDBCProvider>
-
+    		<DataSource>
+			<ConnectionPool/>
+    		</DataSource>
     	</JDBCProvider>
     </ServerCluster>
   </Cell>

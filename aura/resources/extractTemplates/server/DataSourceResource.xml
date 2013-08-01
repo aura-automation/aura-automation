@@ -4,6 +4,9 @@
     <Node>
 	<Server>
 	    	<JDBCProvider>
+	    		<DataSource>
+	    			<ConnectionPool/>
+	    		</DataSource>
 	    	</JDBCProvider>
 	</Server>
     </Node>
