@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Cell name="${{CellName}}">
+    <Node>
+
+	    	<JDBCProvider>
+	    		<DataSource>
+	    			<ConnectionPool/>
+	    		</DataSource>
+	    	</JDBCProvider>
+
+    </Node>
+  </Cell>
+</resources>
+

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<Cell name="${{CellName}}">
+		<Node>
+			<J2CResourceAdapter/>
+		</Node>		
+	</Cell>
+</resources>
