@@ -67,22 +67,70 @@
 		Extract Resources   
              ************************************************************ -->
 	<target name="extractAllResouces" >
-		<foreach target="doextractResources"  param="file" inheritall="true">
-			<fileset dir="${AURA_HOME}/resources/extractTemplates/server">
-				<include name="*.xml"/>
-			</fileset>
-		</foreach>
+		<if>
+		<or>
+			<not>
+				<isset property="scope"/>
+			</not>
+			<equals arg1="${scope}" arg2="cell" casesensitive="true"/>
+		</or>
+		<then>
 		<foreach target="doextractResources"  param="file" inheritall="true">
 			<fileset dir="${AURA_HOME}/resources/extractTemplates/cell">
 				<include name="*.xml"/>
 			</fileset>
 		</foreach>
+		</then>
+		</if>
+
+		<if>
+		<or>
+			<not>
+				<isset property="scope"/>
+			</not>
+			<equals arg1="${scope}" arg2="node" casesensitive="true"/>
+		</or>
+		<then>
+		<foreach target="doextractResources"  param="file" inheritall="true">
+			<fileset dir="${AURA_HOME}/resources/extractTemplates/node">
+				<include name="*.xml"/>
+			</fileset>
+		</foreach>
+		</then>
+		</if>
 		
+
+		<if>
+		<or>
+			<not>
+				<isset property="scope"/>
+			</not>
+			<equals arg1="${scope}" arg2="cluster" casesensitive="true"/>
+		</or>
+		<then>
 		<foreach target="doextractResources"  param="file" inheritall="true">
 			<fileset dir="${AURA_HOME}/resources/extractTemplates/cluster">
 				<include name="*.xml"/>
 			</fileset>
 		</foreach>
+		</then>
+		</if>
+
+		<if>
+		<or>
+			<not>
+				<isset property="scope"/>
+			</not>
+			<equals arg1="${scope}" arg2="server" casesensitive="true"/>
+		</or>
+		<then>
+		<foreach target="doextractResources"  param="file" inheritall="true">
+			<fileset dir="${AURA_HOME}/resources/extractTemplates/server">
+				<include name="*.xml"/>
+			</fileset>
+		</foreach>
+		</then>
+		</if>
 
 	</target>
 

@@ -10,10 +10,10 @@
 	<import file="monitor.xml"/>
 	<import file="plugin.xml"/> 
 
-	<target name="was:extractAll" depends="clean,init,input,validate,extractAllResouces"/>
-	<target name="was:extract" depends="clean,init,input,validate,inputResourceName,extractResource"/>
+	<target name="was:extractAll" depends="clean,init,input,validate,inputScope,extractAllResouces"/>
+	<target name="was:extract" depends="clean,init,input,validate,inputScope,inputResourceName,extractResource"/>
 	<target name="was:apply" depends="clean,init,input,commitResources"/> 
-    <target name="was:preview" depends="clean,init,input,reportResources"/>
+	<target name="was:preview" depends="clean,init,input,reportResources"/>
 
     <target name="was:startApp" depends="clean,init,input,startApplication"/>
     <target name="was:stopApp" depends="clean,init,input,stopApplication"/>

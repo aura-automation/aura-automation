@@ -10,12 +10,25 @@
 		<property file="${env.file}"/>	
 	</target>
 
+	<target name="inputScope" >
+		<echo message="${noprompt}"/>
+		<if>
+			<equals arg1="${noprompt}" arg2="true" />
+			<then>
+				<echo message="Scope set ${scope}"/>
+			</then>	
+			<else>
+
+			<echo message="***********************************"/>
+			<echo message="Enter Scope to extract: cell or node or server or cluster "/>
+			<echo message="***********************************"/>
+			<input addproperty="scope" />
+
+			</else>	
+		</if>	
+	</target>
 
 	<target name="inputResourceName" >
-		<echo message="***********************************"/>
-		<echo message="Enter Scope to extract: cell or server or cluster "/>
-		<echo message="***********************************"/>
-		<input addproperty="scope" />
 
 		<if>
 			<not>

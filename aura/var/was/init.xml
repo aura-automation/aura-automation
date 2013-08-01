@@ -164,7 +164,7 @@
 		<echo message="Start Time: ${startTime}"/>
 		<echo message="Ant Version :${ant.version}"/>
 		<echo message="Java Version: ${java.version}"/>
-		<mkdir dir="${AURA_REPO}/resources/output/${date}" />
+		<mkdir dir="${AURA_REPO}/resources/config/${date}" />
 		<mkdir dir="${AURA_REPO}/resources/report/${date}" />
 	</target>
 	
