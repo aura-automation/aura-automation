@@ -64,7 +64,7 @@ public class InputDataProcessor {
 		def resourceDir =  auraHome + '/resources/extractTemplates/' + scope
 		def dir = new File(resourceDir)
 		println('Below is list of resources that can extracted')
-		dir.eachFile { index ->
+		dir.eachFile { 
 			if (it.isFile()) {
 				print it.name.trim().replace("Resource.xml","")
 				print "    "
