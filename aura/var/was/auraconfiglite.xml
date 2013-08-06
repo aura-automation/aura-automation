@@ -40,7 +40,7 @@
 		<basename property="xml.filename" file="${file}"  suffix="Resource.xml"/>
 
 
-		<AuraConfigLiteResource resourceXML="${CURRENT_DIR}/resources/${xml.filename}Resource.xml"
+		<AuraConfigLiteResource resourceXML="${file}"
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}"  
 			userName="${wasUserName}" password="${wasPassword}" connectionMode="remote"
 			applicationName="Aura"
@@ -222,7 +222,7 @@
                 <echo message="Processing file for commit: ${file}"/>
                 <basename property="xml.filename" file="${file}"  suffix="Resource.xml"/>
 
-		<AuraConfigLiteResource resourceXML="${CURRENT_DIR}/resources/${xml.filename}Resource.xml"
+		<AuraConfigLiteResource resourceXML="${file}"
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}"  
 			userName="${wasUserName}" password="${wasPassword}" connectionMode="remote"
 			applicationName="Aura"
