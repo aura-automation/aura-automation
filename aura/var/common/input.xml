@@ -84,5 +84,15 @@
 		</groovy>
 	</target>
 
+	<target name="load-aura-xml">
+		<groovy>
+			def AuraXML auraxml = new AuraXML()
+			auraxml.setAntBuilder(ant)
+			auraxml.loadAuraXML()
+		</groovy>
+		<echo message="${resource.location}"/>
+		<echo message="${resource.property.location}"/>
+	</target>
+
 
 </project>

@@ -25,15 +25,18 @@
 		Preview Resources   
              ************************************************************ -->
 
-	<macrodef name="reportResources">
-		<sequential>
-			<foreach target="doReportResources"  param="file" inheritall="true">
-				<fileset dir="${CURRENT_DIR}/resources">
-					<include name="*.xml"/>
-				</fileset>
-			</foreach>
-		</sequential>
-	</macrodef>
+	<target name="reportAllResourcesDirs">
+		<foreach target="reportCurrentResourcesDir"  param="currentResourceDir" list="${resource.location}" inheritall="true">
+		</foreach>
+	</target>
+
+	<target name="reportCurrentResourcesDir">
+		<foreach target="doReportResources"  param="file" inheritall="true">
+			<fileset dir="${CURRENT_DIR}/${currentResourceDir}">
+				<include name="*.xml"/>
+			</fileset>
+		</foreach>
+	</target>
 	
 	<target name="doReportResources" >
 		<echo message="${file}"/>
@@ -48,7 +51,7 @@
 			syncResourceXML="${AURA_REPO}/resources/config/${date}/${xml.filename}Resource-${dmgrHostName}-${env.name}-preview-${startTime}.xml"
 			syncReportLocation="${AURA_REPO}/resources/report/${date}/${xml.filename}Resource-${dmgrHostName}-${env.name}-preview-${startTime}.html"
 			includeAllChildren="false"
-			environmentProperties="${CURRENT_DIR}/properties/${env.name}.properties" 
+			environmentProperties="${CURRENT_DIR}/${resource.property.location}/${env.name}.properties" 
 			
 			SOAPSecurityConfig="${SOAPSecurityConfig}"
 			SASSecurityConfig="${SASSecurityConfig}"
@@ -59,8 +62,8 @@
 	</target>	
 
 
-	<target name="reportResources">
-		<reportResources/>
+	<target name="reportResources" depends="reportAllResourcesDirs">
+		
 	</target>
 
 	<!-- ************************************************************
@@ -148,7 +151,7 @@
 			syncResourceXML="${AURA_REPO}/resources/config/${date}/${xml.filename}Resource-${dmgrHostName}-${env.name}-extract-${startTime}.xml"
 			syncReportLocation="${AURA_REPO}/resources/report/${date}/${xml.filename}Resource-${dmgrHostName}-${env.name}-extract-${startTime}.html"
 			includeAllChildren="${includeAllChildren}"
-			environmentProperties="${CURRENT_DIR}/properties/${env.name}.properties" 
+			environmentProperties="${CURRENT_DIR}/${resource.property.location}/${env.name}.properties" 
 			SOAPSecurityConfig="${SOAPSecurityConfig}"
 			SASSecurityConfig="${SASSecurityConfig}"
 			SSLSecurityConfig="${SSLSecurityConfig}"
@@ -177,7 +180,7 @@
 			syncResourceXML="${AURA_REPO}/resources/config/${date}/${resource.name}Resource-${dmgrHostName}-${env.name}-extract-${startTime}.xml"
 			syncReportLocation="${AURA_REPO}/resources/report/${date}/${resource.name}Resource-${dmgrHostName}-${env.name}-extract-${startTime}.html"
 			includeAllChildren="${includeAllChildren}"
-			environmentProperties="${CURRENT_DIR}/properties/${env.name}.properties" 
+			environmentProperties="${CURRENT_DIR}/${resource.property.location}/${env.name}.properties" 
 			SOAPSecurityConfig="${SOAPSecurityConfig}"
 			SASSecurityConfig="${SASSecurityConfig}"
 			SSLSecurityConfig="${SSLSecurityConfig}"
@@ -230,7 +233,7 @@
 			syncResourceXML="${AURA_REPO}/resources/config/${date}/commit/${xml.filename}Resource-${dmgrHostName}-${env.name}-commit-${startTime}.xml"
 			syncReportLocation="${AURA_REPO}/resources/report/${date}/commit/${xml.filename}Resource-${dmgrHostName}-${env.name}-commit-${startTime}.html"
 			includeAllChildren="false"
-			environmentProperties="${CURRENT_DIR}/properties/${env.name}.properties" 
+			environmentProperties="${CURRENT_DIR}/${resource.property.location}/${env.name}.properties" 
 			SOAPSecurityConfig="${SOAPSecurityConfig}"
 			SASSecurityConfig="${SASSecurityConfig}"
 			SSLSecurityConfig="${SSLSecurityConfig}"
