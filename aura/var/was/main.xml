@@ -43,7 +43,7 @@ was:stopApp
 was:exportApp
 	[-Dnoprompt=true -Denv.name=(env name)]
 was:deployApp
-	[-Dnoprompt=true -Denv.name=(env name)]
+	[-Dnoprompt=true -Denv.name=(env name) -Dwebserver.name= [-Dcluster.name=] [-Dserver.name= -Dnode.name=] ]
 was:uninstallApp
 	[-Dnoprompt=true -Denv.name=(env name)]
 

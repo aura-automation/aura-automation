@@ -135,18 +135,27 @@ public class InputDataProcessor {
 	}
 
 	void promptDeployData(){
-		def clusterName = common.prompt ("Enter Cluster Name")
-		if ((clusterName ==null) || (clusterName.trim().equals(""))){ 
-			def serverName = common.prompt ("Enter Server Name")
-			if ((serverName ==null)|| (serverName.trim().equals(""))){
-				promptDeployData()
-			}else{
-				ant.project.setProperty('server.name',serverName) 
+		if (!noPrompt){
+			def clusterName = ""
+			def nodeName = ""
+			def serverName = ""
+			def webServer = ""
+			
+			clusterName = common.prompt ("Enter Cluster Name")
+			if ((clusterName ==null) || (clusterName.trim().equals(""))){ 
+				def serverName = common.prompt ("Enter Server Name")
+				if ((serverName ==null)|| (serverName.trim().equals(""))){
+					promptDeployData()
+				}else{
+					def nodeName = common.prompt ("Enter Node Name")
+				}
 			}
-		}else{
-			ant.project.setProperty('cluster.name',clusterName)   
+			webserverName = common.prompt ("Enter WebServer")
+			ant.project.setProperty('node.name',nodeName)
+			ant.project.setProperty('server.name',serverName)
+			ant.project.setProperty('cluster.name',clusterName)
+			ant.project.setProperty('webserver.name',webserverName)
 		}
-
 	}
 	
 	void getClusterServerName(){
