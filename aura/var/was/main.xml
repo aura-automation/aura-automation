@@ -15,11 +15,11 @@
 	<target name="was:apply" depends="clean,init,load-aura-xml,input,commitResources"/> 
 	<target name="was:preview" depends="clean,init,load-aura-xml,input,reportResources"/>
 
-    <target name="was:startApp" depends="clean,init,input,startApplication"/>
-    <target name="was:stopApp" depends="clean,init,input,stopApplication"/>
-    <target name="was:deployApp" depends="clean,init,input,inputDeployData,process,auraDeploy"/>
-    <target name="was:uninstallApp" depends="clean,init,input,uninstallApplication"/>
-    <target name="was:exportApp" depends="clean,init,input,exportApplication"/>
+    <target name="was:startApp" depends="clean,init,load-aura-xml,input,startApplication"/>
+    <target name="was:stopApp" depends="clean,init,load-aura-xml,input,stopApplication"/>
+    <target name="was:deployApp" depends="clean,init,load-aura-xml,input,inputDeployData,process,copyFileForUnix,auraDeploy"/>
+    <target name="was:uninstallApp" depends="clean,init,load-aura-xml,input,uninstallApplication"/>
+    <target name="was:exportApp" depends="clean,init,load-aura-xml,input,exportApplication"/>
 
 	<target name="was:monitor" depends="clean,init,monitorEnvironments"/>
     <target name="was:compareFiles" depends="clean,init,input,setResourceToCompare,docompareFiles"/>

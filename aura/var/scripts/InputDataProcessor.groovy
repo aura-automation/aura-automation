@@ -143,11 +143,11 @@ public class InputDataProcessor {
 			
 			clusterName = common.prompt ("Enter Cluster Name")
 			if ((clusterName ==null) || (clusterName.trim().equals(""))){ 
-				def serverName = common.prompt ("Enter Server Name")
+				serverName = common.prompt ("Enter Server Name")
 				if ((serverName ==null)|| (serverName.trim().equals(""))){
 					promptDeployData()
 				}else{
-					def nodeName = common.prompt ("Enter Node Name")
+					nodeName = common.prompt ("Enter Node Name")
 				}
 			}
 			webserverName = common.prompt ("Enter WebServer")

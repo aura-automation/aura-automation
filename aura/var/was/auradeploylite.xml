@@ -16,7 +16,7 @@
 			applicationName="aura" cluster="${cluster.name}" server="${server.name}" 
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
 			userName="${wasUserName}" password="${wasPassword}"			
-			isMultiEAR="true" MultiEARLocation="${multiEARLocation}" 
+			isMultiEAR="true" MultiEARLocation="${ear.location}" 
 			operation="start" 
 			soapSecurityConfig="${SOAPSecurityConfig}"
 			sslSecurityConfig="${SSLSecurityConfig}"
@@ -30,7 +30,7 @@
 		<AuraApplication applicationName="aura" cluster="${cluster.name}" server="${server.name}" 
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
 			userName="${wasUserName}" password="${wasPassword}" 
-			isMultiEAR="true" MultiEARLocation="${multiEARLocation}" 
+			isMultiEAR="true" MultiEARLocation="${ear.location}" 
 			operation="stop" 
 			soapSecurityConfig="${SOAPSecurityConfig}"
 			sslSecurityConfig="${SSLSecurityConfig}"
@@ -47,7 +47,7 @@
 		<AuraApplication applicationName="aura" cluster="${cluster.name}" server="${server.name}" 
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
 			userName="${wasUserName}" password="${wasPassword}" 
-			isMultiEAR="true" MultiEARLocation="${multiEARLocation}" 
+			isMultiEAR="true" MultiEARLocation="${ear.location}" 
 			operation="export" 
 			earExportLocation="${exportLocation}" 
 			soapSecurityConfig="${SOAPSecurityConfig}"
@@ -59,11 +59,22 @@
 	</target>
 
 	<target name="process" >
-		<AuraProcessEAR  multiEARLocation="${multiEARLocation}" multiEARDeployData="${multiEARDeployData}" 
+		<AuraProcessEAR  multiEARLocation="${ear.location}" multiEARDeployData="${deploydata.location}" 
 			isMultiEAR="true" VirtualHost="default_host" />
 	</target>
 	
 
+	<target name="copyFileForUnix">
+
+		<sshexec host="${dmgrHostName}" user="${unix.user}" keyfile ="${keyfile}" command="touch somefile">
+		</sshexec>
+
+		<scp todir="${unix.user}@${dmgrHostName}:${remote.workdir.ear}" keyfile="${keyfile}" trust="yes" passphrase="">
+			<fileset dir="${ear.location}"/>
+		</scp>
+	</target>
+
+<!--
 	<target name="copyFileForUnix">
 		<echo message= "Delete files from ${remoteMultiEARLocation} on ${dmgrHostName} as ${user.name}"/>
 
@@ -93,7 +104,7 @@
 		</exec>
 
 	</target>
-
+-->
 	
 	<target name="auraDeploy" >
 	
@@ -101,8 +112,8 @@
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
 			userName="${wasUserName}" password="${wasPassword}" 
 			failIfResourceAbsent="false" isMultiEAR="true" 
-			multiEARLocation="${multiEARLocation}" 
-			multiEARDeployData="${multiEARDeployData}" 
+			multiEARLocation="${ear.location}" 
+			multiEARDeployData="${deploydata.location}" 
 			webserver="${webserver}"  
 			SleepTimeForSyncRequest="5000" parentLastClassLoaderMode="false" 
 			generateEJBDeployCode="false"  
@@ -117,6 +128,8 @@
 			targetOS="Linux"
 
 			reStartClusterAfterDeploy="false"	
+			
+			remoteEARDirectory="${remote.workdir.ear}"
 			/>
 
 		<echo message="Deploy sucessfull on ${_Nodes}"  />
@@ -129,8 +142,8 @@
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
 			userName="${wasUserName}" password="${wasPassword}" 
 			failIfResourceAbsent="false" isMultiEAR="true" 
-			multiEARLocation="${multiEARLocation}" 
-			multiEARDeployData="${multiEARDeployData}" 
+			multiEARLocation="${ear.location}" 
+			multiEARDeployData="${deploydata.location}" 
 			webserver="${webserver}"  
 			SleepTimeForSyncRequest="5000" parentLastClassLoaderMode="false" 
 			generateEJBDeployCode="false"  
