@@ -45,7 +45,7 @@
 
 		<AuraConfigLiteResource resourceXML="${file}"
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}"  
-			userName="${wasUserName}" password="${wasPassword}" connectionMode="remote"
+			userName="${wasUserName}" password="${wasPassword.uncoded}" connectionMode="remote"
 			applicationName="Aura"
  			operationMode="reportOnly"
 			syncResourceXML="${AURA_REPO}/resources/config/${date}/${xml.filename}Resource-${dmgrHostName}-${env.name}-preview-${startTime}.xml"
@@ -145,7 +145,7 @@
 		
 		<AuraConfigLiteResource resourceXML="${file}"
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}"  
-			userName="${wasUserName}" password="${wasPassword}" connectionMode="remote"
+			userName="${wasUserName}" password="${wasPassword.uncoded}" connectionMode="remote"
 			applicationName="Aura"
  			operationMode="sync"
 			syncResourceXML="${AURA_REPO}/resources/config/${date}/${xml.filename}Resource-${dmgrHostName}-${env.name}-extract-${startTime}.xml"
@@ -174,7 +174,7 @@
 
 		<AuraConfigLiteResource resourceXML="${AURA_HOME}/resources/extractTemplates/${scope}/${resource.name}Resource.xml"
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}"  
-			userName="${wasUserName}" password="${wasPassword}" connectionMode="remote"
+			userName="${wasUserName}" password="${wasPassword.uncoded}" connectionMode="remote"
 			applicationName="Aura"
  			operationMode="sync"
 			syncResourceXML="${AURA_REPO}/resources/config/${date}/${resource.name}Resource-${dmgrHostName}-${env.name}-extract-${startTime}.xml"
@@ -227,7 +227,7 @@
 
 		<AuraConfigLiteResource resourceXML="${file}"
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}"  
-			userName="${wasUserName}" password="${wasPassword}" connectionMode="remote"
+			userName="${wasUserName}" password="${wasPassword.uncoded}" connectionMode="remote"
 			applicationName="Aura"
  			operationMode="normal"
 			syncResourceXML="${AURA_REPO}/resources/config/${date}/commit/${xml.filename}Resource-${dmgrHostName}-${env.name}-commit-${startTime}.xml"
@@ -241,7 +241,7 @@
 
 		<AuraSyncNode 
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}"  
-			userName="${wasUserName}" password="${wasPassword}" connectionMode="remote"
+			userName="${wasUserName}" password="${wasPassword.uncoded}" connectionMode="remote"
 			SOAPSecurityConfig="${SOAPSecurityConfig}"
 			SASSecurityConfig="${SASSecurityConfig}"
 			SSLSecurityConfig="${SSLSecurityConfig}"

@@ -62,12 +62,12 @@
 		<echo message="Checking if ${SSLSecurityConfig} exists"/>
 		<if> 
 			<not>
-				<available file="${CURRENT_DIR}/properties/${env.name}.properties" />
+				<available file="${CURRENT_DIR}/${resource.property.location}/${env.name}.properties" />
 
 			</not>
 		<then>
 			<echo message="Create env property file."/>
-			<echo message="" file="${CURRENT_DIR}/properties/${env.name}.properties"/>
+			<echo message="" file="${CURRENT_DIR}/${resource.property.location}/${env.name}.properties"/>
 		</then>	
 		<else>
 			<echo message="env file exists"/>	

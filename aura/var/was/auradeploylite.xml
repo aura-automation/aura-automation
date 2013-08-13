@@ -15,7 +15,7 @@
 		<AuraApplication 
 			applicationName="aura" cluster="${cluster.name}" server="${server.name}" 
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
-			userName="${wasUserName}" password="${wasPassword}"			
+			userName="${wasUserName}" password="${wasPassword.uncoded}"			
 			isMultiEAR="true" MultiEARLocation="${ear.location}" 
 			operation="start" 
 			soapSecurityConfig="${SOAPSecurityConfig}"
@@ -29,7 +29,7 @@
 	<target name="stopApplication">
 		<AuraApplication applicationName="aura" cluster="${cluster.name}" server="${server.name}" 
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
-			userName="${wasUserName}" password="${wasPassword}" 
+			userName="${wasUserName}" password="${wasPassword.uncoded}" 
 			isMultiEAR="true" MultiEARLocation="${ear.location}" 
 			operation="stop" 
 			soapSecurityConfig="${SOAPSecurityConfig}"
@@ -46,7 +46,7 @@
 
 		<AuraApplication applicationName="aura" cluster="${cluster.name}" server="${server.name}" 
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
-			userName="${wasUserName}" password="${wasPassword}" 
+			userName="${wasUserName}" password="${wasPassword.uncoded}" 
 			isMultiEAR="true" MultiEARLocation="${ear.location}" 
 			operation="export" 
 			earExportLocation="${exportLocation}" 
@@ -110,7 +110,7 @@
 	
 		<AuraDeployLite applicationName="aura" cluster="${cluster.name}" server="${server.name}" 
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
-			userName="${wasUserName}" password="${wasPassword}" 
+			userName="${wasUserName}" password="${wasPassword.uncoded}" 
 			failIfResourceAbsent="false" isMultiEAR="true" 
 			multiEARLocation="${ear.location}" 
 			multiEARDeployData="${deploydata.location}" 
@@ -140,7 +140,7 @@
 	
 		<AuraDeployLite applicationName="aura" cluster="${cluster.name}" server="${server.name}" 
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}" 
-			userName="${wasUserName}" password="${wasPassword}" 
+			userName="${wasUserName}" password="${wasPassword.uncoded}" 
 			failIfResourceAbsent="false" isMultiEAR="true" 
 			multiEARLocation="${ear.location}" 
 			multiEARDeployData="${deploydata.location}" 

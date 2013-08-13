@@ -1,4 +1,5 @@
 import org.apache.commons.lang.SystemUtils
+import org.aa.common.encryption.Encrypt
 
 public class InputDataProcessor {
 
@@ -12,6 +13,7 @@ public class InputDataProcessor {
 	def Common = null
 	def antEnvName = null
 	def targetInvoked = null
+	Encrypt encrypt = new Encrypt ();
 	
 	void process(){
 		
@@ -35,6 +37,8 @@ public class InputDataProcessor {
 			confirmEnvDataIsCorrect(envFileName)
 		}
 
+		ant.project.setProperty('wasPassword.uncoded',encrypt.getDecryptedProperty("wasPassword", envFileName, "jayst"))
+		
 		ant.project.setProperty('env.file',envFileName)
 		ant.project.setProperty('env.name',envName)
 	}
@@ -118,7 +122,7 @@ public class InputDataProcessor {
 		if (action.equalsIgnoreCase("m")){
 			modify(envFileName)
 		}else if (action.equalsIgnoreCase("c")){	
-			saveEnvData(envFileName,hostname,hostport,connType,userName,password)
+			saveEnvData(envFileName,hostname,hostport,connType,userName,encrypt.encryptString(password,"jayst"))
 		} else {
 			println("No data")
 		}
@@ -174,7 +178,7 @@ public class InputDataProcessor {
 		envFile << (System.getProperty("line.separator"))
 		envFile << ("wasUserName=" + userName)
 		envFile << (System.getProperty("line.separator"))
-		envFile << ("wasPassword=" + password)
+		envFile << ("wasPassword=" + encrypt.encryptString(password,"jayst"))
 	}
 
 	void setAntProperties(envFile){
