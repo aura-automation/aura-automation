@@ -3,11 +3,11 @@
   <parent>
     <groupId>org.aa.aura</groupId>
     <artifactId>aura</artifactId>
-    <version>1.0.4_RC2-SNAPSHOT</version>
+    <version>1.0.4</version>
   </parent>
   <groupId>org.aa.auraconfiglite</groupId>
   <artifactId>aura</artifactId>
-  <version>1.0.4_RC2-SNAPSHOT</version>
+  <version>1.0.4</version>
   <name>aura-cli</name>
   <url>http://maven.apache.org</url>
   <build>
@@ -46,17 +46,17 @@
 	<dependency>
 		<groupId>org.aa.common</groupId>
 		<artifactId>common</artifactId>
-		<version>1.0.04_RC2-SNAPSHOT</version>
+		<version>1.0.4</version>
 	</dependency>
 	<dependency>
 		<groupId>org.aa.auraconfiglite</groupId>
 		<artifactId>auraconfiglite</artifactId>
-		<version>1.0.4_RC2-SNAPSHOT</version>
+		<version>1.0.4</version>
 	</dependency>
 	<dependency>
 		<groupId>org.aa.auradeploylite</groupId>
 		<artifactId>auradeploylite</artifactId>
-		<version>1.0.4_RC2-SNAPSHOT</version>
+		<version>1.0.4</version>
 	</dependency>
 	<dependency>
 		<groupId>commons-configuration</groupId>
