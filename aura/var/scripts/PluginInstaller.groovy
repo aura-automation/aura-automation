@@ -84,8 +84,8 @@ public class PluginInstaller{
 		Validator validator = new Validator()
 		validator.addFileValidation()
 
-		def keyStoreFile = common.prompt(null, "Enter the location of key store file","",validator)	
-		def trustStoreFile = common.prompt(null, "Enter the location of trust store file","",validator)
+		def keyStoreFile = common.prompt(null, "Enter the location of key store file,  e.g. c:/WebSphere/AppServer/etc/key.p12","",validator)	
+		def trustStoreFile = common.prompt(null, "Enter the location of trust store file e.g. c:/WebSphere/AppServer/etc/trust.p12","",validator)
 		
 		copy (keyStoreFile, etcDir)
 		copy (trustStoreFile, etcDir)

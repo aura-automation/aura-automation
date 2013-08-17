@@ -27,8 +27,15 @@ else
     exit 1	
 fi
 
+if [ "$AURA_REPO" != "" ]
+then
+    echo "Aura Repo " $AURA_REPO
+else
+    export AURA_REPO=$HOME/.aura_repo
+    echo "Aura Repo " $AURA_REPO
+fi
 
-export AURA_REPO=$HOME/.aura_repo
+
 export PATH=${AURA_HOME}/opt/ant/bin:${JAVA_HOME}/bin:$PATH
 export username=$(whoami)
 

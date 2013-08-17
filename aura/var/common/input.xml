@@ -11,7 +11,7 @@
 	</target>
 
 	<target name="inputScope" >
-		<echo message="${noprompt}"/>
+		
 		<if>
 			<equals arg1="${noprompt}" arg2="true" />
 			<then>
