@@ -66,12 +66,13 @@
 
 	<target name="copyFileForUnix">
 
-		<sshexec host="${dmgrHostName}" user="${unix.user}" keyfile ="${keyfile}" command="touch somefile">
+		<sshexec host="${dmgrHostName}"  username="${unix.user}" keyfile="${keyfile}" command="touch somefile">
 		</sshexec>
 
 		<scp todir="${unix.user}@${dmgrHostName}:${remote.workdir.ear}" keyfile="${keyfile}" trust="yes" passphrase="">
-			<fileset dir="${ear.location}"/>
+				<fileset dir="${CURRENT_DIR}/${ear.location}"/>
 		</scp>
+	
 	</target>
 
 <!--
@@ -160,7 +161,7 @@
 			reStartClusterAfterDeploy="false"	
 			/>
 
-		<echo message="Deploy sucessfull on ${_Nodes}"  />
+		<echo message="Deployed on ${_Nodes}"  />
 
 	</target>
 

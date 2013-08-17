@@ -21,7 +21,9 @@
     <target name="was:uninstallApp" depends="clean,init,load-aura-xml,input,uninstallApplication"/>
     <target name="was:exportApp" depends="clean,init,load-aura-xml,input,exportApplication"/>
 
-	<target name="was:monitor" depends="clean,init,monitorEnvironments"/>
+    <target name="serve" depends="clean,init,load-aura-xml,_serve"/>
+
+    <target name="was:monitor" depends="clean,init,monitorEnvironments"/>
     <target name="was:compareFiles" depends="clean,init,input,setResourceToCompare,docompareFiles"/>
 
 	<target name="help">

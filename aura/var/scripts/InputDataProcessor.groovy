@@ -40,11 +40,11 @@ public class InputDataProcessor {
 		ant.project.setProperty('wasPassword.uncoded',encrypt.getDecryptedProperty("wasPassword", envFileName, "jayst"))
 		
 		ant.project.setProperty('env.file',envFileName)
-		ant.project.setProperty('env.name',envName)
+		ant.project.setProperty('target.name',envName)
 	}
 
 	def promptEnv() {
-		def envName = common.prompt ("Enter environment name")
+		def envName = common.prompt ("Enter target name")
 		return envName 
 		
 	}
@@ -154,7 +154,7 @@ public class InputDataProcessor {
 					nodeName = common.prompt ("Enter Node Name")
 				}
 			}
-			webserverName = common.prompt ("Enter WebServer")
+			def webserverName = common.prompt ("Enter WebServer")
 			ant.project.setProperty('node.name',nodeName)
 			ant.project.setProperty('server.name',serverName)
 			ant.project.setProperty('cluster.name',clusterName)
@@ -189,7 +189,7 @@ public class InputDataProcessor {
 	void initProperties(){
 		auraHome = ant.project.properties.'AURA_HOME' 
 		auraRepo = ant.project.properties.'AURA_REPO'
-		antEnvName = ant.project.properties.'env.name'
+		antEnvName = ant.project.properties.'target.name'
 		noPrompt = ant.project.properties.'noprompt'
 		common = new Common(ant)
 		targetInvoked = ant.project.properties.'targetInvoked'

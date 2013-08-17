@@ -94,5 +94,15 @@
 		<echo message="${resource.property.location}"/>
 	</target>
 
+	<target name="_serve">
+		<groovy>
+			def JettyServer server = new JettyServer()
+
+			server.startServer()
+		</groovy>
+		<echo message="${resource.location}"/>
+		<echo message="${resource.property.location}"/>
+	</target>
+
 
 </project>

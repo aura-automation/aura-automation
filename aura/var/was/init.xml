@@ -11,7 +11,11 @@
 		    <include name="*.jar" />
 		</fileset>
 
-   		<dirset dir="${AURA_HOME}/var" includes="scripts"/>		
+   		<dirset dir="${AURA_HOME}/var" includes="scripts"/>	
+		<fileset dir="${AURA_HOME}/opt/jetty-6.1.26/lib">
+			<include name="*.jar"/>
+		</fileset>
+	
 	</path>
 
 	<taskdef resource="auradeploy.xml" classpathref="groovy-classpath"/>
