@@ -66,7 +66,7 @@
 
 	<target name="copyFileForUnix">
 
-		<sshexec host="${dmgrHostName}"  username="${unix.user}" keyfile="${keyfile}" command="touch somefile">
+		<sshexec host="${dmgrHostName}"  username="${unix.user}" keyfile="${keyfile}" passphrase="" command="touch somefile">
 		</sshexec>
 
 		<scp todir="${unix.user}@${dmgrHostName}:${remote.workdir.ear}" keyfile="${keyfile}" trust="yes" passphrase="">
