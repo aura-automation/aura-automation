@@ -28,6 +28,6 @@ auradeploylite key features
 
 Documentation
 
-https://github.com/aura-automation/aura-automation/wiki
+http://aura-automation.github.io
 
 
