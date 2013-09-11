@@ -20,6 +20,7 @@ public class AuraXML{
 		def deploydatalocation = "ear/deploydata"
 		def unixuser = user
 		def keyfile = userHome + File.separator + "id_rsa"
+		def webserverPort = "8080"
 
 		if (auraXML.exists()){
 			XMLConfiguration config = new XMLConfiguration(auraXML)
@@ -31,6 +32,7 @@ public class AuraXML{
 			deploydatalocation = config.getProperty("aura-was-deploy.deploydata")?:deploydatalocation
 			unixuser = config.getProperty("aura-was-deploy.unix-user")?:unixuser
 			keyfile = config.getProperty("aura-was-deploy.keyfile")?:keyfile
+			webserverPort = config.getProperty("webserver-port")?:webserverPort
 							
 		}else{
 			println("using defaults, no xml found " + currentDir + File.separator + "aura.xml")
@@ -46,6 +48,8 @@ public class AuraXML{
 		ant.project.setProperty('deploydata.location',  deploydatalocation)
 		ant.project.setProperty('unix.user',  unixuser)
 		ant.project.setProperty('keyfile',  keyfile)
+		ant.project.setProperty('webserverPort',  webserverPort)
+		
 	}
 
 	void initProperties(){
