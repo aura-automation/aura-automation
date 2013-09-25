@@ -23,7 +23,7 @@
 			</ConfigObject>
 		</ConfigObject>
 
-		<ConfigObject type="AppDeploymentOptions" shouldCreate="false"
+  		<ConfigObject type="AppDeploymentOptions" shouldCreate="false"
 			isApplicationManaged="true" isAttributeCount0="true">
 			<containment>
 				<attribute value="null" />
@@ -45,6 +45,19 @@
 				isApplicationManaged="true" >
 				<containment>
 					<attribute value="module" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>
+
+		<ConfigObject type="MapJaspiProvider" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="uri" />
 				</containment>
 			</ConfigObject>
 		</ConfigObject>
@@ -591,6 +604,46 @@
 				</containment>
 			</ConfigObject>
 		</ConfigObject>					
-		
+
+		<!--Added from WAS7 onwards 
+		 -->
+		 <ConfigObject type="ModuleBuildID" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="uri" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>					
+
+		 <ConfigObject type="CustomActivationPlan" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="uri" />
+				</containment>
+			</ConfigObject>
+		</ConfigObject>		 		
+
+	  	 <ConfigObject type="SharedLibRelationship" shouldCreate="false"
+			isApplicationManaged="true" isAttributeCount0="true">
+			<containment>
+				<attribute value="null" />
+			</containment>
+			<ConfigObject type="data" shouldCreate="false"
+				isApplicationManaged="true" >
+				<containment>
+					<attribute value="uri" />
+				</containment>
+			</ConfigObject> 
+		</ConfigObject>			
 	</ConfigObject>
 </resources-metadata>

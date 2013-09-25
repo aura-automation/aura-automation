@@ -12,22 +12,16 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.Vector;
 
-import javax.management.ObjectName;
 
 import org.aa.auraconfig.resources.Resource;
 import org.aa.auraconfig.resources.ResourceDiffReportHelper;
 import org.aa.auraconfig.resources.ResourceHelper;
-import org.aa.auraconfig.resources.metadata.ResourceMetaData;
-import org.aa.auraconfig.resources.metadata.ResourceMetaDataHelper;
-import org.aa.auraconfig.resources.parser.ResourceParserHelper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.aa.common.Constants.DeployValues;
 import org.aa.common.deploy.DeployInfo;
 import org.aa.common.exception.DeployException;
 import org.aa.common.log.SDLog;
-import com.ibm.ejs.ras.SystemOutStream;
 import com.ibm.websphere.management.AdminClient;
 import com.ibm.websphere.management.Session;
 import com.ibm.websphere.management.application.AppConstants;
@@ -39,8 +33,6 @@ import com.ibm.websphere.management.application.client.AppDeploymentException;
 import com.ibm.websphere.management.application.client.AppDeploymentTask;
 import com.ibm.websphere.management.configservice.ConfigService;
 import com.ibm.websphere.management.exception.AdminException;
-import com.ibm.websphere.management.exception.ConfigServiceException;
-import com.ibm.websphere.management.exception.ConnectorException;
 
 public class ApplicationReadManager {
 
@@ -106,10 +98,9 @@ public class ApplicationReadManager {
 
 		Hashtable prefs = new Hashtable(); 
 		prefs.put(AppConstants.APPDEPL_LOCALE, Locale.getDefault()); 
-		System.out.println("Creating instance of AppDeplController");	
-		System.out.println("Created instance of AppDeplController sucessfully");	
+		SDLog.log("Creating instance of AppDeplController");	
+		SDLog.log("Created instance of AppDeplController successfully");	
 		
-		System.out.println("Created instance of AppDeplController sucessfully");	
 		prefs.put(AppConstants.APPDEPL_LOCALE, Locale.getDefault());
 		Properties props = new Properties();
 		props.put(AppConstants.APPDEPL_DFLTBNDG , AppConstants.YES_KEY);
@@ -120,18 +111,18 @@ public class ApplicationReadManager {
 		AppDeploymentTask task = flowController.getFirstTask();
 		
 		String applicationName = (new File(earName)).getName();
-		SDLog.log("Incoming ConfigObjects for the containment path " + resource.getContainmentPath() + " "+ applicationName);
+		SDLog.log("Incoming ConfigObjects " + resource.getContainmentPath() +  applicationName);
 
 		Resource newResource = createNewResource(applicationName);
 		
 		 while (task != null){
-			// System.out.println("task.getName() " +  task.getName());
+		//	 System.out.println("task.getName() " +  task.getName());
 			 if (task.getTaskData()!=null){
-				// System.out.println("	Data not null " +  task.getName());
+		//		 System.out.println("	Data not null " +  task.getName());
 					processChildren(task,newResource,newResource);
 
 			 }else{
-				// System.out.println("	Data is null " +  task.getName());
+		//		 System.out.println("	Data is null " +  task.getName());
 			 }
 			    task = flowController.getNextTask();
 
@@ -198,7 +189,7 @@ public class ApplicationReadManager {
 		newResource.setParentTree(resource.getParentTree());
 		newResource.setResourceMetaData(resource.getResourceMetaData());
 		**/
-		SDLog.log("In application Manager the new resource meta data type is  " + resource.getResourceMetaData().getType());
+		logger.trace("In application Manager the new resource meta data type is  " + resource.getResourceMetaData().getType());
 		HashMap attributeList = new HashMap();
 		attributeList.put("name", applicationName);
 		
@@ -247,8 +238,8 @@ public class ApplicationReadManager {
 			for (int j = 0; j < currectDataVector.size();j++){
 				AppDeploymentTask task = (AppDeploymentTask)currectDataVector.get(j);
 				String[][] data = task.getTaskData();
-			//	System.out.println("$$$$$$$$ Task Name is " + task.getName() );
-			//	printColumnName(task);
+		//		System.out.println("$$$$$$$$ Task Name is " + task.getName() );
+		//		printColumnName(task);
 				if (data!=null){
 					Resource  childResource ;
 					if (extractAll){
@@ -292,8 +283,8 @@ public class ApplicationReadManager {
 			if (task!=null){
 				logger.trace("Start processing " + task.getName() );
 				String[][] data = task.getTaskData();
-			//	System.out.println("$$$$$$$$ Task Name is " + task.getName() );
-			//	printColumnName(task);
+		//		System.out.println("$$$$$$$$ Task Name is " + task.getName() );
+		//		printColumnName(task);
 				if (data!=null){
 
 					Resource  childResource ;
@@ -392,7 +383,7 @@ public class ApplicationReadManager {
 		int dataRows = data.length;
 
 		if (data!=null){
-			// System.out.println("Data is not null " + deplTask.getName());
+			SDLog.log ("Getting config data for " + deplTask.getName());
 			Vector columnName = new Vector();
 			HashMap columnMap = new HashMap();
 			int columnMatchNumber =-1;
@@ -437,7 +428,7 @@ public class ApplicationReadManager {
 		    	for (int columnCnt=0 ; columnCnt< columnLength; columnCnt++){
 			    	
 		    		/**
-		    		 * This is resolve the coulmn number from column name
+		    		 * This is resolve the column number from column name
 		    		 */
 			    	
 		    		if (dataRowCnt==0){
@@ -465,20 +456,23 @@ public class ApplicationReadManager {
 					childResource.setModifiedAttributes(incomingAttrList);
 				else
 					childResource.getModifiedAttributes().addAll(incomingAttrList);
-
-		    	System.out.println( ""); 
-		  
 		    }
+			SDLog.log ( ""); 
 		}
 		    
 	}
 	
 	private void printColumnName(AppDeploymentTask deplTask){
+		if (deplTask != null){
 		String[] colName = deplTask.getColumnNames();
+		
 		int columnLength = colName.length;
 
 		for (int columnCnt=0 ; columnCnt< columnLength; columnCnt++){
 			System.out.println("		Column Number is " + columnCnt + " column Name is " + colName[columnCnt] );
+		}
+		}else{
+			System.out.println("deplTask is null");
 		}
 
 	}

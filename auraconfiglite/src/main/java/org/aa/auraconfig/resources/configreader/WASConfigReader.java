@@ -155,10 +155,7 @@ public class WASConfigReader {
 					logger.trace("Parent is dummy hence will not process this " + resource.getContainmentPath());
 				}
 			}
-			/** else{
-				SDLog.log( children[childCnt].getName() + " not supported");
-			} **/
-
+			
 			// If type ServerCluster then set scope.
 			if (type.equalsIgnoreCase("ServerCluster")) {
 				if (children[childCnt].getConfigId() != null) {
