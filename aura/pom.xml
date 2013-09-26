@@ -3,11 +3,11 @@
   <parent>
     <groupId>org.aa.aura</groupId>
     <artifactId>aura</artifactId>
-    <version>1.5.0_SNAPSHOT</version>
+    <version>1.0.5_SNAPSHOT</version>
   </parent>
   <groupId>org.aa.auraconfiglite</groupId>
   <artifactId>aura</artifactId>
-  <version>1.5.0_SNAPSHOT</version>
+  <version>1.0.5_SNAPSHOT</version>
   <name>aura-cli</name>
   <url>http://maven.apache.org</url>
   <build>

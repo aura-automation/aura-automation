@@ -4,7 +4,7 @@
   <groupId>org.aa.aura</groupId>
   <artifactId>aura</artifactId>
   
-	<version>1.5.0_SNAPSHOT</version>
+	<version>1.0.5_SNAPSHOT</version>
   <packaging>pom</packaging>
   <licenses>
     <license>
