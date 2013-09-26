@@ -48,10 +48,10 @@
 			userName="${wasUserName}" password="${wasPassword.uncoded}" connectionMode="remote"
 			applicationName="Aura"
  			operationMode="reportOnly"
-			syncResourceXML="${AURA_REPO}/resources/config/${date}/${xml.filename}Resource-${dmgrHostName}-${env.name}-preview-${startTime}.xml"
-			syncReportLocation="${AURA_REPO}/resources/report/${date}/${xml.filename}Resource-${dmgrHostName}-${env.name}-preview-${startTime}.html"
+			syncResourceXML="${outputFileBase}/config/${xml.filename}Resource-${dmgrHostName}-${target.name}-preview-${startTime}.xml"
+			syncReportLocation="${outputFileBase}/report/${xml.filename}Resource-${dmgrHostName}-${target.name}-preview-${startTime}.html"
 			includeAllChildren="false"
-			environmentProperties="${CURRENT_DIR}/${resource.property.location}/${env.name}.properties" 
+			environmentProperties="${CURRENT_DIR}/${resource.property.location}/${target.name}.properties" 
 			
 			SOAPSecurityConfig="${SOAPSecurityConfig}"
 			SASSecurityConfig="${SASSecurityConfig}"
@@ -148,10 +148,10 @@
 			userName="${wasUserName}" password="${wasPassword.uncoded}" connectionMode="remote"
 			applicationName="Aura"
  			operationMode="sync"
-			syncResourceXML="${AURA_REPO}/resources/config/${date}/${xml.filename}Resource-${dmgrHostName}-${env.name}-extract-${startTime}.xml"
-			syncReportLocation="${AURA_REPO}/resources/report/${date}/${xml.filename}Resource-${dmgrHostName}-${env.name}-extract-${startTime}.html"
+			syncResourceXML="${outputFileBase}/config/${xml.filename}Resource-${dmgrHostName}-${target.name}-extract-${startTime}.xml"
+			syncReportLocation="${outputFileBase}/report/${xml.filename}Resource-${dmgrHostName}-${target.name}-extract-${startTime}.html"
 			includeAllChildren="${includeAllChildren}"
-			environmentProperties="${CURRENT_DIR}/${resource.property.location}/${env.name}.properties" 
+			environmentProperties="${CURRENT_DIR}/${resource.property.location}/${target.name}.properties" 
 			SOAPSecurityConfig="${SOAPSecurityConfig}"
 			SASSecurityConfig="${SASSecurityConfig}"
 			SSLSecurityConfig="${SSLSecurityConfig}"
@@ -160,7 +160,7 @@
 
 
 		<echo message="********************************"/>
-		<echo message="Report generated in ${basedir}/resources/report/${date}/${xml.filename}Resource-${dmgrHostName}-${env.name}-${startTime}.html"/>
+		<echo message="Report generated in ${basedir}/resources/report/${date}/${xml.filename}Resource-${dmgrHostName}-${target.name}-${startTime}.html"/>
 		<echo message="********************************"/>
 	</target>	
 
@@ -170,17 +170,17 @@
 
 
 		<echo message="Processing for extract ${basedir}/resources/${resource.name}Resource.xml" />
-		<echo message="Processing extract using properties ${basedir}/resources/environmentProperties/${env.name}.properties" />
+		<echo message="Processing extract using properties ${basedir}/resources/environmentProperties/${target.name}.properties" />
 
 		<AuraConfigLiteResource resourceXML="${AURA_HOME}/resources/extractTemplates/${scope}/${resource.name}Resource.xml"
 			host="${dmgrHostName}" port="${dmgrPortNumber}" connectionType="${wasConnectionType}"  
 			userName="${wasUserName}" password="${wasPassword.uncoded}" connectionMode="remote"
 			applicationName="Aura"
  			operationMode="sync"
-			syncResourceXML="${AURA_REPO}/resources/config/${date}/${resource.name}Resource-${dmgrHostName}-${env.name}-extract-${startTime}.xml"
-			syncReportLocation="${AURA_REPO}/resources/report/${date}/${resource.name}Resource-${dmgrHostName}-${env.name}-extract-${startTime}.html"
+			syncResourceXML="${outputFileBase}/config/${resource.name}Resource-${dmgrHostName}-${target.name}-extract-${startTime}.xml"
+			syncReportLocation="${outputFileBase}/report/${resource.name}Resource-${dmgrHostName}-${target.name}-extract-${startTime}.html"
 			includeAllChildren="${includeAllChildren}"
-			environmentProperties="${CURRENT_DIR}/${resource.property.location}/${env.name}.properties" 
+			environmentProperties="${CURRENT_DIR}/${resource.property.location}/${target.name}.properties" 
 			SOAPSecurityConfig="${SOAPSecurityConfig}"
 			SASSecurityConfig="${SASSecurityConfig}"
 			SSLSecurityConfig="${SSLSecurityConfig}"
@@ -188,7 +188,7 @@
 			/>
 
 		<echo message="********************************"/>
-		<echo message="Report generated in ${AURA_REPO}/resources/report/${date}/${resource.name}Resource-${dmgrHostName}-${env.name}-extract-${startTime}.html"/>
+		<echo message="Report generated in ${outputFileBase}/report/${resource.name}Resource-${dmgrHostName}-${target.name}-extract-${startTime}.html"/>
 		<echo message="********************************"/>
 	</target>	
 
@@ -230,10 +230,10 @@
 			userName="${wasUserName}" password="${wasPassword.uncoded}" connectionMode="remote"
 			applicationName="Aura"
  			operationMode="normal"
-			syncResourceXML="${AURA_REPO}/resources/config/${date}/commit/${xml.filename}Resource-${dmgrHostName}-${env.name}-commit-${startTime}.xml"
-			syncReportLocation="${AURA_REPO}/resources/report/${date}/commit/${xml.filename}Resource-${dmgrHostName}-${env.name}-commit-${startTime}.html"
+			syncResourceXML="${outputFileBase}/config/commit/${xml.filename}Resource-${dmgrHostName}-${target.name}-commit-${startTime}.xml"
+			syncReportLocation="${outputFileBase}/report/commit/${xml.filename}Resource-${dmgrHostName}-${target.name}-commit-${startTime}.html"
 			includeAllChildren="false"
-			environmentProperties="${CURRENT_DIR}/${resource.property.location}/${env.name}.properties" 
+			environmentProperties="${CURRENT_DIR}/${resource.property.location}/${target.name}.properties" 
 			SOAPSecurityConfig="${SOAPSecurityConfig}"
 			SASSecurityConfig="${SASSecurityConfig}"
 			SSLSecurityConfig="${SSLSecurityConfig}"
@@ -275,19 +275,19 @@
 		<property name="resourceXML1" value="${basedir}/workdir/DefaultApp/config/resources/${resource.name}Resource.xml"/>
 		<property name="resourceXML2" value="${basedir}/workdir/archive/DefaultApp/config/resources/${resource.name}Resource.xml"/>
 
-		<property name="environmentProperties1" value="${basedir}/resources/environmentProperties/${env.name}.properties"/>
-		<property name="environmentProperties2" value="${basedir}/resources/environmentProperties/${env.name}.properties"/>
+		<property name="environmentProperties1" value="${basedir}/resources/environmentProperties/${target.name}.properties"/>
+		<property name="environmentProperties2" value="${basedir}/resources/environmentProperties/${target.name}.properties"/>
 
 		<AuraConfigLiteXML resourceXML1="${resourceXML1}" 
 			resourceXML2="${resourceXML2}"
 			environmentProperties1 = "${environmentProperties1}"
 			environmentProperties2 = "${environmentProperties2}"
-			syncResourceXML="${basedir}/resources/config/${date}/${xml.filename}Resource-${dmgrHostName}-${env.name}-commit-${startTime}.xml"
-			syncReportLocation="${basedir}/resources/report/${date}/${xml.filename}Resource-${dmgrHostName}-${env.name}-commit-${startTime}.html"
+			syncResourceXML="${basedir}/resources/config/${date}/${xml.filename}Resource-${dmgrHostName}-${target.name}-commit-${startTime}.xml"
+			syncReportLocation="${basedir}/resources/report/${date}/${xml.filename}Resource-${dmgrHostName}-${target.name}-commit-${startTime}.html"
 			includeAllChildren="false"/>
 
 		<echo message="********************************"/>
-		<echo message="Report generated in ${basedir}/resources/report/${date}/${resource.name}Resource-${dmgrHostName}-${env.name}-${startTime}.html"/>
+		<echo message="Report generated in ${basedir}/resources/report/${date}/${resource.name}Resource-${dmgrHostName}-${target.name}-${startTime}.html"/>
 		<echo message="********************************"/>
 
 	</target>

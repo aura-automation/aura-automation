@@ -11,7 +11,8 @@ public class AuraXML{
 	def noPrompt = null
 	def currentDir = null
 	def ant = null
-	
+	def date = null
+
 	void loadAuraXML(){
 		def auraXML = new File(currentDir + File.separator + "aura.xml")
 		def resources = "resources"
@@ -21,6 +22,7 @@ public class AuraXML{
 		def unixuser = user
 		def keyfile = userHome + File.separator + "id_rsa"
 		def webserverPort = "8080"
+		def outputFileBase=auraRepo + "/resources/" + date +"/"
 
 		if (auraXML.exists()){
 			XMLConfiguration config = new XMLConfiguration(auraXML)
@@ -33,6 +35,8 @@ public class AuraXML{
 			unixuser = config.getProperty("aura-was-deploy.unix-user")?:unixuser
 			keyfile = config.getProperty("aura-was-deploy.keyfile")?:keyfile
 			webserverPort = config.getProperty("webserver-port")?:webserverPort
+			outputFileBase = config.getProperty("aura-was-config.output-file-base-location")?currentDir + File.separator + config.getProperty("aura-was-config.output-file-base-location"):outputFileBase
+			
 							
 		}else{
 			println("using defaults, no xml found " + currentDir + File.separator + "aura.xml")
@@ -49,7 +53,13 @@ public class AuraXML{
 		ant.project.setProperty('unix.user',  unixuser)
 		ant.project.setProperty('keyfile',  keyfile)
 		ant.project.setProperty('webserverPort',  webserverPort)
+		ant.project.setProperty('outputFileBase',  outputFileBase)
+		makeDirs(outputFileBase)
 		
+	}
+
+	void makeDirs(dirname){
+		new File(dirname).mkdirs()
 	}
 
 	void initProperties(){
@@ -60,6 +70,7 @@ public class AuraXML{
 		noPrompt = ant.project.properties.'noprompt'
 		user = ant.project.properties.'USER'
 		userHome = ant.project.properties.'USER_HOME'
+		date = ant.project.properties.'date'
 	
 	}
 	

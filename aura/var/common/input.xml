@@ -90,19 +90,23 @@
 			auraxml.setAntBuilder(ant)
 			auraxml.loadAuraXML()
 		</groovy>
-		<echo message="${resource.location}"/>
-		<echo message="${resource.property.location}"/>
 	</target>
 
 	<target name="_serve">
+		<echo message="${webserverPort}"/>	
 		<groovy>
 			def JettyServer server = new JettyServer()
-
+			server.setAntBuilder(ant)
 			server.startServer()
 		</groovy>
-		<echo message="${resource.location}"/>
-		<echo message="${resource.property.location}"/>
 	</target>
 
+	<target name="db">
+		<groovy>
+			def AuraDB server = new AuraDB()
+			server.setAntBuilder(ant)
+			server.read()
+		</groovy>
+	</target>
 
 </project>
