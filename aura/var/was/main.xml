@@ -26,6 +26,7 @@
     <target name="was:monitor" depends="clean,init,monitorEnvironments"/>
     <target name="was:compareFiles" depends="clean,init,input,setResourceToCompare,docompareFiles"/>
 
+	
 	<target name="help">
 		<echo>
 Supported targets are
