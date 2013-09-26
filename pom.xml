@@ -3,7 +3,8 @@
 
   <groupId>org.aa.aura</groupId>
   <artifactId>aura</artifactId>
-  <version>1.0.5-SNAPSHOT</version>
+  
+	<version>1.5.0_SNAPSHOT</version>
   <packaging>pom</packaging>
   <licenses>
     <license>
