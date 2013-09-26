@@ -1,33 +1,20 @@
-aura-automation provides 2 modules auraconfiglite and auradeploylite. auraconfiglite is used for WebSphere configuration automation and auradeploylite is used for deployment automation.
-Download
+Aura is very minimalistic and very efficient. The most important thing to realize about Aura is that it creates a simple xml representation of your config without requiring heavy tools. Traditional/Commercial tools require a database, server-side code, UI which is self defeating when you want rapid time to market.
 
-Download the quick start zip from
-https://sourceforge.net/projects/auraautomation/files/
-or 
-http://download.centauros-solutions.co.uk/aura-quickstart-1.0.3-RC1-1.zip
+Therefore if you like to keep things simple and you prefer the command-line over an admin panel UI then give Aura a try.
 
-auraconfiglite key features
+Developers like Aura because we can write configuration like we write code:
 
-    Autodiscovery of configuration item attributes
-    WebSphere configuration automation
-    XML based easy to read configuration files
-    Preview configuration changes
-    Monitor configurations for drift from know set
-    Extract configuration
-    Transform configuration to be environment augnostics
-    Rule based configuration management
-    ANT based; easy to integrated with any existing scripts
-    Easily extensible as metadata defined in xml files
+    Ability to write configuration in XML in your favorite text-editor.
+    Ability to preview changes against environments.
+    No release notes or manaul steps required.
+    Ability to extract configuration from know good envirnment.
+    Ability to version configuration with source code.
+    Ability to use rules to block certain configuration types.
+    Easy to read reports.
 
-auradeploylite key features
-
-    Application Deloyment with EAR configurations
-    Application operations like uninstall, install, stop, start, update, export
-    Supports multi ear deployments
-    Node Sync monitoring after deloyment
 
 Documentation
 
-https://github.com/aura-automation/aura-automation/wiki
+http://aura-automation.github.io
 
 
