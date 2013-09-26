@@ -5,11 +5,15 @@
 	<!-- ********************************* -->
 	<path id="groovy-classpath">
 		<fileset dir="${AURA_HOME}/opt">
-		    <include name="groovy-*/embeddable/*.jar" />
+		    <include name="groovy-2.1.6/embeddable/*.jar" />
+		</fileset>
+		<fileset dir="${AURA_HOME}/opt">
+		    <include name="jettison/*.jar" />
 		</fileset>
 		<fileset dir="${AURA_HOME}/lib">
 		    <include name="*.jar" />
 		</fileset>
+	
 
    		<dirset dir="${AURA_HOME}/var" includes="scripts"/>	
 		<fileset dir="${AURA_HOME}/opt/jetty-6.1.26/lib">
@@ -63,15 +67,15 @@
 		</else>
 		</if>
 		
-		<echo message="Checking if ${SSLSecurityConfig} exists"/>
+		<echo message="Checking if ${CURRENT_DIR}/${resource.property.location}/${target.name}.properties exists"/>
 		<if> 
 			<not>
-				<available file="${CURRENT_DIR}/${resource.property.location}/${env.name}.properties" />
+				<available file="${CURRENT_DIR}/${resource.property.location}/${target.name}.properties" />
 
 			</not>
 		<then>
 			<echo message="Create env property file."/>
-			<echo message="" file="${CURRENT_DIR}/${resource.property.location}/${env.name}.properties"/>
+			<echo message="" file="${CURRENT_DIR}/${resource.property.location}/${target.name}.properties"/>
 		</then>	
 		<else>
 			<echo message="env file exists"/>	
@@ -168,8 +172,7 @@
 		<echo message="Start Time: ${startTime}"/>
 		<echo message="Ant Version :${ant.version}"/>
 		<echo message="Java Version: ${java.version}"/>
-		<mkdir dir="${AURA_REPO}/resources/config/${date}" />
-		<mkdir dir="${AURA_REPO}/resources/report/${date}" />
+		
 	</target>
 	
 	<!-- ********************************* --> 
