@@ -39,6 +39,7 @@ public class AuraXML{
 			
 							
 		}else{
+			new File("properties").mkdir()
 			println("using defaults, no xml found " + currentDir + File.separator + "aura.xml")
 		}
 		

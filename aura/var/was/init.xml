@@ -5,7 +5,7 @@
 	<!-- ********************************* -->
 	<path id="groovy-classpath">
 		<fileset dir="${AURA_HOME}/opt">
-		    <include name="groovy-2.1.6/embeddable/*.jar" />
+		    <include name="groovy-1.7.4/embeddable/*.jar" />
 		</fileset>
 		<fileset dir="${AURA_HOME}/opt">
 		    <include name="jettison/*.jar" />
