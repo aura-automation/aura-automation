@@ -20,7 +20,8 @@ cd ${SHELL_PATH}
 ANT_HOME=opt/apache-ant-${MY_ANT_VERSION}
 export ANT_HOME
 
-# overwrite CLASSPATH for Ant
+# overwrite CLASSPA:q
+TH for Ant
 CLASSPATH=
 export CLASSPATH
 
