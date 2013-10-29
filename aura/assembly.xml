@@ -6,7 +6,7 @@
   	<fileSets>
   		<fileSet>
   			<includes>
-  				<include>**/*.*</include>
+  				<include>**/*</include>
   			</includes>
   			<excludes>
   				<exclude>**/target/**</exclude>
