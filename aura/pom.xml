@@ -3,11 +3,11 @@
   <parent>
     <groupId>org.aa.aura</groupId>
     <artifactId>aura</artifactId>
-    <version>1.0.5_RC2-SNAPSHOT</version>
+    <version>1.0.5_RC1</version>
   </parent>
   <groupId>org.aa.auraconfiglite</groupId>
   <artifactId>aura</artifactId>
-  <version>1.0.5_RC2-SNAPSHOT</version>
+  <version>1.0.5_RC1</version>
   <name>aura-cli</name>
   <url>http://maven.apache.org</url>
   <build>
@@ -18,7 +18,11 @@
   			<configuration>
   				<descriptor>assembly.xml</descriptor>
   			</configuration>
-  		</plugin>
+  		
+   			<goals>
+         			<goal>install,package,deploy</goal>
+                	</goals>
+		</plugin>
   		<plugin>
   			<artifactId>maven-dependency-plugin</artifactId>
   			<version>2.8</version>
@@ -46,17 +50,17 @@
 	<dependency>
 		<groupId>org.aa.common</groupId>
 		<artifactId>common</artifactId>
-		<version>1.0.5_RC2-SNAPSHOT</version>
+		<version>1.0.5_RC1</version>
 	</dependency>
 	<dependency>
 		<groupId>org.aa.auraconfiglite</groupId>
 		<artifactId>auraconfiglite</artifactId>
-		<version>1.0.5_RC2-SNAPSHOT</version>
+		<version>1.0.5_RC1</version>
 	</dependency>
 	<dependency>
 		<groupId>org.aa.auradeploylite</groupId>
 		<artifactId>auradeploylite</artifactId>
-		<version>1.0.5_RC2-SNAPSHOT</version>
+		<version>1.0.5_RC1</version>
 	</dependency>
 	<dependency>
 		<groupId>commons-configuration</groupId>
