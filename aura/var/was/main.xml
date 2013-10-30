@@ -31,24 +31,24 @@
 		<echo>
 Supported targets are
 was:extract 
-     [-Dnoprompt=false -Dscope=[server, cluster, cell]  -Dresource.name= -Denv.name=]
+     [-Dnoprompt=false -Dscope=[server, cluster, cell]  -Dresource.name= -Dtarget.name=]
 was:extractAll
-	[-Dnoprompt=false -Denv.name=]
+	[-Dnoprompt=false -Dtarget.name=]
 was:apply
-	[-Dnoprompt=false -Denv.name=]
+	[-Dnoprompt=false -Dtarget.name=]
 was:preview
-	[-Dnoprompt=false -Denv.name=]
+	[-Dnoprompt=false -Dtarget.name=]
 
 was:startApp
-	[-Dnoprompt=true -Denv.name=(env name)]
+	[-Dnoprompt=true -Dtarget.name=(env name)]
 was:stopApp
-	[-Dnoprompt=true -Denv.name=(env name)]
+	[-Dnoprompt=true -Dtarget.name=(env name)]
 was:exportApp
-	[-Dnoprompt=true -Denv.name=(env name)]
+	[-Dnoprompt=true -Dtarget.name=(env name)]
 was:deployApp
-	[-Dnoprompt=true -Denv.name=(env name) -Dwebserver.name= [-Dcluster.name=] [-Dserver.name= -Dnode.name=] ]
+	[-Dnoprompt=true -Dtarget.name=(env name) -Dwebserver.name= [-Dcluster.name=] [-Dserver.name= -Dnode.name=] ]
 was:uninstallApp
-	[-Dnoprompt=true -Denv.name=(env name)]
+	[-Dnoprompt=true -Dtarget.name=(env name)]
 
 was:compareFiles
 was:monitor" 
